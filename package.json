@@ -1,0 +1,54 @@
+{
+  "name": "concanvas",
+  "version": "1.0.0",
+  "description": "An app for web users who want to draw on a collective, real-time updating canvas.",
+  "main": "index.js",
+  "scripts": {
+    "lint": "run-p lint:*",
+    "lint:html": "htmlhint ./**/*.html",
+    "lint:css": "stylelint ./**/*.css",
+    "lint:js": "eslint ./**/*.js",
+    "test": "npm run lint",
+    "precommit": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielduffield/concanvas.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danielduffield/concanvas/issues"
+  },
+  "homepage": "https://github.com/danielduffield/concanvas#readme",
+  "dependencies": {
+    "eslint": "3.19.0",
+    "eslint-config-standard": "10.2.1",
+    "eslint-plugin-import": "2.3.0",
+    "eslint-plugin-node": "4.2.2",
+    "eslint-plugin-promise": "3.5.0",
+    "eslint-plugin-react": "7.0.1",
+    "eslint-plugin-standard": "3.0.1",
+    "htmlhint": "0.9.13",
+    "husky": "0.13.4",
+    "npm-run-all": "4.0.2",
+    "stylelint": "7.10.1",
+    "stylelint-config-standard": "16.0.0",
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-redux": "^5.0.5",
+    "redux": "^3.7.2"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
+    "babelify": "^7.3.0",
+    "browserify": "^14.4.0",
+    "chai": "^4.1.1",
+    "mocha": "^3.5.0",
+    "nyc": "^11.1.0",
+    "watchify": "^3.9.0"
+  }
+}
