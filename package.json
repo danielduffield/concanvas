@@ -10,6 +10,8 @@
     "lint:js": "eslint ./**/*.js",
     "test": "npm run lint",
     "precommit": "npm test",
+
+    "start": "node server/index.js",
     "watch:server": "nodemon server/index.js"
   },
   "repository": {
