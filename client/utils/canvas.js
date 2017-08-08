@@ -27,22 +27,22 @@ export default class Canvas extends React.Component {
     let y1 = this.clientY
     let y2 = this.previousY
 
-    var steep = (Math.abs(y2 - y1) > Math.abs(x2 - x1))
+    const steep = (Math.abs(y2 - y1) > Math.abs(x2 - x1))
     if (steep) {
-      var x = x1
+      let x = x1
       x1 = y1
       y1 = x
 
-      var y = y2
+      let y = y2
       y2 = x2
       x2 = y
     }
     if (x1 > x2) {
-      x = x1
+      let x = x1
       x1 = x2
       x2 = x
 
-      y = y1
+      let y = y1
       y1 = y2
       y2 = y
     }
@@ -52,7 +52,7 @@ export default class Canvas extends React.Component {
     let error = 0
     let de = dy / dx
     let yStep = -1
-    y = y1
+    let y = y1
 
     if (y1 < y2) {
       yStep = 1
@@ -60,7 +60,7 @@ export default class Canvas extends React.Component {
 
     const lineThickness = 2
 
-    for (x = x1; x < x2; x++) {
+    for (let x = x1; x < x2; x++) {
       if (steep) {
         this.ctx.fillRect(y, x, lineThickness, lineThickness)
       }
