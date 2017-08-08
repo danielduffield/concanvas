@@ -23,6 +23,8 @@
   },
   "homepage": "https://github.com/danielduffield/concanvas#readme",
   "dependencies": {
+    "body-parser": "^1.17.2",
+    "dotenv": "^4.0.0",
     "eslint": "3.19.0",
     "eslint-config-standard": "10.2.1",
     "eslint-plugin-import": "2.3.0",
@@ -30,17 +32,16 @@
     "eslint-plugin-promise": "3.5.0",
     "eslint-plugin-react": "7.0.1",
     "eslint-plugin-standard": "3.0.1",
+    "express": "^4.15.4",
     "htmlhint": "0.9.13",
     "husky": "0.13.4",
     "npm-run-all": "4.0.2",
-    "stylelint": "7.10.1",
-    "stylelint-config-standard": "16.0.0",
-    "body-parser": "^1.17.2",
-    "express": "^4.15.4",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.5",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "stylelint": "7.10.1",
+    "stylelint-config-standard": "16.0.0"
   },
   "devDependencies": {
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
