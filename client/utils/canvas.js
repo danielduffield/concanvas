@@ -6,10 +6,12 @@ const socket = io.connect()
 export default class Canvas extends React.Component {
   constructor(props) {
     super(props)
+    this.saveTimer = null
     this.clickTimer = null
     this.canvas = null
     this.ctx = null
 
+    this.lastSaved = null
     this.previousX = 0
     this.previousY = 0
     this.clientX = 0
@@ -23,6 +25,20 @@ export default class Canvas extends React.Component {
   }
   componentDidMount() {
     socket.on('mouse', data => this.paintEvent(data.x, data.y, data.prevX, data.prevY))
+
+    this.saveTimer = setInterval(async () => {
+      const saved = this.canvas.toDataURL()
+      if (this.lastSaved !== saved) {
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ saved })
+        })
+        console.log(response)
+      }
+      this.lastSaved = saved
+      console.log('SAVED', saved)
+    }, 10000)
   }
   paintEvent(mouseX, mouseY, previousX, previousY) {
     this.ctx = this.canvas.getContext('2d')
