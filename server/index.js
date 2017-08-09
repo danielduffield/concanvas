@@ -17,10 +17,10 @@ io.sockets.on('connection', newConnection)
 
 function newConnection(socket) {
   console.log('new connection: ' + socket.id)
-
   socket.on('mouse', getPaintData)
-}
 
-function getPaintData(data) {
-  console.log(data)
+  function getPaintData(data) {
+    socket.broadcast.emit('mouse', data)
+    console.log(data)
+  }
 }
