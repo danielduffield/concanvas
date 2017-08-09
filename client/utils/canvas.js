@@ -2,7 +2,6 @@ import React from 'react'
 
 import io from 'socket.io-client'
 const socket = io.connect('http://localhost:2000')
-socket.on('mouse', data => console.log(data))
 
 export default class Canvas extends React.Component {
   constructor(props) {
@@ -21,15 +20,9 @@ export default class Canvas extends React.Component {
     this.handleMouseDown = this.handleMouseDown.bind(this)
     this.handleMouseUp = this.handleMouseUp.bind(this)
     this.paintEvent = this.paintEvent.bind(this)
-    this.triggerPaintEvent = this.triggerPaintEvent.bind(this)
   }
-  triggerPaintEvent() {
-    socket.on('mouse', logFeedback)
-    this.paintEvent()
-
-    function logFeedback(data) {
-      console.log(data)
-    }
+  componentDidMount() {
+    socket.on('mouse', data => this.paintEvent(data.x, data.y, 0, 0))
   }
   paintEvent(mouseX, mouseY, previousX, previousY) {
     this.ctx = this.canvas.getContext('2d')
