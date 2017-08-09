@@ -1,5 +1,8 @@
 import React from 'react'
 
+import io from 'socket.io-client'
+const socket = io.connect()
+
 export default class Canvas extends React.Component {
   constructor(props) {
     super(props)
@@ -18,14 +21,17 @@ export default class Canvas extends React.Component {
     this.handleMouseUp = this.handleMouseUp.bind(this)
     this.paintEvent = this.paintEvent.bind(this)
   }
-  paintEvent() {
+  componentDidMount() {
+    socket.on('mouse', data => this.paintEvent(data.x, data.y, data.prevX, data.prevY))
+  }
+  paintEvent(mouseX, mouseY, previousX, previousY) {
     this.ctx = this.canvas.getContext('2d')
     this.ctx.fillStyle = '#000000'
 
-    let x1 = this.clientX
-    let x2 = this.previousX
-    let y1 = this.clientY
-    let y2 = this.previousY
+    let x1 = mouseX
+    let x2 = previousX
+    let y1 = mouseY
+    let y2 = previousY
 
     const steep = (Math.abs(y2 - y1) > Math.abs(x2 - x1))
     if (steep) {
@@ -75,11 +81,22 @@ export default class Canvas extends React.Component {
   updateCoordinates(event) {
     const coordinates = getCoordinates(this.canvas, event)
 
-    this.previousX = this.clientX
-    this.previousY = this.clientY
+    this.previousX = this.clientX ? this.clientX : coordinates.x
+    this.previousY = this.clientY ? this.clientY : coordinates.y
+
     this.clientX = coordinates.x
     this.clientY = coordinates.y
-    if (this.painting) this.paintEvent()
+    if (this.painting) {
+      const paintData = {
+        x: this.clientX,
+        y: this.clientY,
+        prevX: this.previousX,
+        prevY: this.previousY
+      }
+      socket.emit('mouse', paintData)
+
+      this.paintEvent(this.clientX, this.clientY, this.previousX, this.previousY)
+    }
   }
   handleMouseDown(event) {
     this.painting = true
