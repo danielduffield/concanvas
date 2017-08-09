@@ -31,6 +31,7 @@ export default class Canvas extends React.Component {
 
     this.saveTimer = setInterval(async () => {
       const saved = this.canvas.toDataURL()
+
       if (this.lastSaved !== saved) {
         const response = await fetch('/', {
           method: 'POST',
@@ -52,6 +53,7 @@ export default class Canvas extends React.Component {
     const response = await fetch('/saved-canvas')
     const canvasData = JSON.parse(await response.json())
     img.src = canvasData.saved
+    this.lastSaved = canvasData.saved
   }
   paintEvent(mouseX, mouseY, previousX, previousY) {
 
