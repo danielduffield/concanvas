@@ -17,6 +17,7 @@ export default class Canvas extends React.Component {
     this.clientX = 0
     this.clientY = 0
     this.painting = false
+    this.socketId = null
 
     this.updateCoordinates = this.updateCoordinates.bind(this)
     this.handleMouseDown = this.handleMouseDown.bind(this)
@@ -26,6 +27,9 @@ export default class Canvas extends React.Component {
   }
   componentDidMount() {
     socket.on('mouse', data => this.paintEvent(data.x, data.y, data.prevX, data.prevY))
+    socket.on('connectionId', id => {
+      this.socketId = id
+    })
 
     this.loadCanvas()
 
@@ -36,7 +40,7 @@ export default class Canvas extends React.Component {
         const response = await fetch('/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ saved })
+          body: JSON.stringify({ saved, socketId: this.socketId })
         })
         console.log(response)
       }

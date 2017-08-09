@@ -42,7 +42,8 @@ app.post('/', (req, res) => {
       console.log('DELETED ', toDelete)
     })
   })
-  writeFileAsync('canvas-state/instances/canvas-' + Date.now() + '.json', JSON.stringify(req.body))
+  const fileId = Date.now() + '-' + req.body.socketId
+  writeFileAsync('canvas-state/instances/canvas-' + fileId + '.json', JSON.stringify(req.body))
     .then(() => {
       console.log('SAVED!')
       res.sendStatus(201)
@@ -54,6 +55,7 @@ io.sockets.on('connection', newConnection)
 
 function newConnection(socket) {
   console.log('new connection: ' + socket.id)
+  socket.emit('connectionId', socket.id)
   socket.on('mouse', getPaintData)
 
   function getPaintData(data) {
