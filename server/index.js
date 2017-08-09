@@ -26,10 +26,12 @@ app.get('/saved-canvas', (req, res) => {
 
 app.post('/', (req, res) => {
   console.log(req.body)
-  fs.writeFile('saved-canvas.json', JSON.stringify(req.body), 'utf8').then(() => {
-    console.log('SAVED!')
-    res.sendStatus(201)
-  })
+  writeFileAsync('saved-canvas.json', JSON.stringify(req.body))
+    .then(() => {
+      console.log('SAVED!')
+      res.sendStatus(201)
+    })
+    .catch(err => console.log(err))
 })
 
 io.sockets.on('connection', newConnection)
@@ -49,6 +51,15 @@ function readFileAsync(fileName) {
     fs.readFile(fileName, 'utf8', (err, data) => {
       if (err) return reject(err)
       return resolve(data)
+    })
+  })
+}
+
+function writeFileAsync(fileName, data) {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(fileName, data, 'utf8', (err) => {
+      if (err) return reject(err)
+      else return resolve()
     })
   })
 }
