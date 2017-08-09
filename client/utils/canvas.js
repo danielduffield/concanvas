@@ -29,7 +29,6 @@ export default class Canvas extends React.Component {
 
     this.loadCanvas()
 
-    /*
     this.saveTimer = setInterval(async () => {
       const saved = this.canvas.toDataURL()
       if (this.lastSaved !== saved) {
@@ -41,9 +40,7 @@ export default class Canvas extends React.Component {
         console.log(response)
       }
       this.lastSaved = saved
-      console.log('SAVED', saved)
     }, 10000)
-    */
   }
   async loadCanvas() {
     this.ctx = this.canvas.getContext('2d')
