@@ -1,5 +1,8 @@
 import React from 'react'
 
+import io from 'socket.io-client'
+const socket = io('http://localhost:2000')
+
 export default class Canvas extends React.Component {
   constructor(props) {
     super(props)
@@ -79,7 +82,16 @@ export default class Canvas extends React.Component {
     this.previousY = this.clientY
     this.clientX = coordinates.x
     this.clientY = coordinates.y
-    if (this.painting) this.paintEvent()
+    if (this.painting) {
+      const paintData = {
+        x: this.clientX,
+        y: this.clientY
+      }
+      console.log(paintData)
+      socket.emit('mouse', paintData)
+
+      this.paintEvent()
+    }
   }
   handleMouseDown(event) {
     this.painting = true
