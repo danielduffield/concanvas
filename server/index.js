@@ -25,8 +25,7 @@ app.get('/saved-canvas', (req, res) => {
 })
 
 app.post('/', (req, res) => {
-  console.log(req.body)
-  writeFileAsync('saved-canvas.json', JSON.stringify(req.body))
+  writeFileAsync('canvas-state/saved-canvas-' + Date.now() + '.json', JSON.stringify(req.body))
     .then(() => {
       console.log('SAVED!')
       res.sendStatus(201)
