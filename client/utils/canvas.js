@@ -78,8 +78,9 @@ export default class Canvas extends React.Component {
   updateCoordinates(event) {
     const coordinates = getCoordinates(this.canvas, event)
 
-    this.previousX = this.clientX
-    this.previousY = this.clientY
+    this.previousX = this.clientX ? this.clientX : coordinates.x
+    this.previousY = this.clientY ? this.clientY : coordinates.y
+
     this.clientX = coordinates.x
     this.clientY = coordinates.y
     if (this.painting) {
