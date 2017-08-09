@@ -1,7 +1,7 @@
 import React from 'react'
 
 import io from 'socket.io-client'
-const socket = io.connect('http://localhost:2000')
+const socket = io.connect()
 
 export default class Canvas extends React.Component {
   constructor(props) {
