@@ -10,8 +10,6 @@ const jsonParser = bodyParser.json()
 
 const { readFileAsync, writeFileAsync, readdirAsync, unlinkAsync } = require('./utils/fsAsyncFunctions')
 
-let currentCanvas = null
-
 server.listen(process.env.PORT, () => console.log('Listening on PORT...'))
 
 app.use(jsonParser)
@@ -34,18 +32,14 @@ app.get('/saved-canvas', (req, res) => {
 
 app.post('/', (req, res) => {
   readdirAsync('canvas-state/instances').then(data => {
-    console.log(data)
-    currentCanvas = data[data.length - 1]
-    console.log(currentCanvas)
     const toDelete = data.shift()
     unlinkAsync('canvas-state/instances/' + toDelete).then(() => {
-      console.log('DELETED ', toDelete)
     })
   })
   const fileId = Date.now() + '-' + req.body.socketId
   writeFileAsync('canvas-state/instances/canvas-' + fileId + '.json', JSON.stringify(req.body))
     .then(() => {
-      console.log('SAVED!')
+      console.log('Canvas Saved')
       res.sendStatus(201)
     })
     .catch(err => console.log(err))
@@ -54,7 +48,6 @@ app.post('/', (req, res) => {
 io.sockets.on('connection', newConnection)
 
 function newConnection(socket) {
-  console.log('new connection: ' + socket.id)
   socket.emit('connectionId', socket.id)
   socket.on('mouse', getPaintData)
 
