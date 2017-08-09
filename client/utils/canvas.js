@@ -22,15 +22,14 @@ export default class Canvas extends React.Component {
     this.handleMouseDown = this.handleMouseDown.bind(this)
     this.handleMouseUp = this.handleMouseUp.bind(this)
     this.paintEvent = this.paintEvent.bind(this)
+    this.loadCanvas = this.loadCanvas.bind(this)
   }
   componentDidMount() {
     socket.on('mouse', data => this.paintEvent(data.x, data.y, data.prevX, data.prevY))
-    this.ctx = this.canvas.getContext('2d')
-    this.ctx.fillStyle = '#000000'
-    const img = new Image()
-    img.onload = () => {
-      this.ctx.drawImage(img, 0, 0)
-    }
+
+    this.loadCanvas()
+
+    /*
     this.saveTimer = setInterval(async () => {
       const saved = this.canvas.toDataURL()
       if (this.lastSaved !== saved) {
@@ -44,8 +43,19 @@ export default class Canvas extends React.Component {
       this.lastSaved = saved
       console.log('SAVED', saved)
     }, 10000)
+    */
   }
-
+  async loadCanvas() {
+    this.ctx = this.canvas.getContext('2d')
+    this.ctx.fillStyle = '#000000'
+    const img = new Image()
+    img.onload = () => {
+      this.ctx.drawImage(img, 0, 0)
+    }
+    const response = await fetch('/saved-canvas')
+    const canvasData = JSON.parse(await response.json())
+    img.src = canvasData.saved
+  }
   paintEvent(mouseX, mouseY, previousX, previousY) {
 
     let x1 = mouseX

@@ -18,7 +18,7 @@ app.use(express.static('server/public'))
 app.get('/', (req, res) => res.send('Hello World!'))
 
 app.get('/saved-canvas', (req, res) => {
-  readFileAsync('saved-canvas.json').then(data => {
+  readFileAsync('canvas-state/last-saved.json').then(data => {
     res.json(data)
   })
   .catch(err => res.status(500).json(err))
