@@ -22,7 +22,7 @@ export default class Canvas extends React.Component {
     this.paintEvent = this.paintEvent.bind(this)
   }
   componentDidMount() {
-    socket.on('mouse', data => this.paintEvent(data.x, data.y, 0, 0))
+    socket.on('mouse', data => this.paintEvent(data.x, data.y, data.prevX, data.prevY))
   }
   paintEvent(mouseX, mouseY, previousX, previousY) {
     this.ctx = this.canvas.getContext('2d')
@@ -89,7 +89,9 @@ export default class Canvas extends React.Component {
     if (this.painting) {
       const paintData = {
         x: this.clientX,
-        y: this.clientY
+        y: this.clientY,
+        prevX: this.previousX,
+        prevY: this.previousY
       }
       socket.emit('mouse', paintData)
 
