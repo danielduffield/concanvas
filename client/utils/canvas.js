@@ -13,11 +13,14 @@ export default class Canvas extends React.Component {
     this.canvas = null
     this.ctx = null
 
-    this.lastSaved = null
     this.previousX = 0
     this.previousY = 0
     this.clientX = 0
     this.clientY = 0
+    this.lineWidth = 0
+    this.currentColor = null
+
+    this.lastSaved = null
     this.painting = false
     this.socketId = null
     this.unsavedData = []
@@ -27,6 +30,11 @@ export default class Canvas extends React.Component {
     this.handleMouseUp = this.handleMouseUp.bind(this)
     this.paintEvent = this.paintEvent.bind(this)
     this.loadCanvas = this.loadCanvas.bind(this)
+    this.updatePaintStyle = this.updatePaintStyle.bind(this)
+  }
+  updatePaintStyle(width, color) {
+    this.lineWidth = width
+    this.currentColor = color
   }
   componentDidMount() {
     socket.on('mouse', data => this.paintEvent(data.x, data.y, data.prevX, data.prevY))
@@ -155,7 +163,7 @@ export default class Canvas extends React.Component {
             this.canvas = canvas
           }}>
         </canvas>
-        <PaintToolbar/>
+        <PaintToolbar updatePaintStyle={this.updatePaintStyle}/>
       </div>
     )
   }
