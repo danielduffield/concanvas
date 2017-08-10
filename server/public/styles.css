@@ -21,3 +21,65 @@
   border: 2px solid dimgrey;
   background-color: white;
 }
+
+.container {
+  text-align: center;
+}
+
+#my-canvas {
+  border: 2px solid black;
+}
+
+#paint-tools {
+  margin: 0 auto;
+  border: 2px solid black;
+  width: 600px;
+  height: 135px;
+  background-color: palegoldenrod;
+  text-align: left;
+}
+
+.toolbar-module {
+  border: 2px solid black;
+  position: relative;
+  background-color: lightpink;
+  float: left;
+  width: 76px;
+  height: 76px;
+  margin: 10px 0 10px 10px;
+}
+
+.toolbar-label {
+  position: relative;
+  height: 30px;
+  width: 80px;
+  float: left;
+  margin: 0 0 0 10px;
+  bottom: 40px;
+  line-height: 30px;
+  text-align: center;
+}
+
+#palette-container {
+  border: 2px solid black;
+  width: 300px;
+  height: 110px;
+  background-color: gainsboro;
+  float: left;
+  margin: 10px 10px 10px 15px;
+}
+
+#palette-label {
+  width: 300px;
+  float: left;
+  margin: 0 0 0 12px;
+}
+
+.color-module {
+  border: 2px solid black;
+  float: left;
+  height: 26px;
+  width: 26px;
+  margin: 5px 10px 0;
+  background-color: lightblue;
+}
