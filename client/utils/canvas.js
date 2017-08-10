@@ -37,7 +37,7 @@ export default class Canvas extends React.Component {
     this.currentColor = color
   }
   componentDidMount() {
-    socket.on('mouse', data => this.paintEvent(data.x, data.y, data.prevX, data.prevY))
+    socket.on('mouse', data => this.paintEvent(data.x, data.y, data.prevX, data.prevY, data.size, data.color))
     socket.on('connectionId', id => {
       this.socketId = id
     })
@@ -71,11 +71,13 @@ export default class Canvas extends React.Component {
     const canvasData = await response.json()
     img.src = canvasData.saved
     this.lastSaved = canvasData.saved
-
-    this.unsavedData.forEach(mark => this.paintEvent(mark.x, mark.y, mark.prevX, mark.prevY))
+    console.log(this.unsavedData)
+    this.unsavedData.forEach(mark => this.paintEvent(mark.x, mark.y, mark.prevX, mark.prevY, mark.size, mark.color))
     this.unsavedData = []
   }
-  paintEvent(mouseX, mouseY, previousX, previousY) {
+  paintEvent(mouseX, mouseY, previousX, previousY, width, color) {
+
+    this.ctx.fillStyle = color
 
     let x1 = mouseX
     let x2 = previousX
@@ -113,12 +115,10 @@ export default class Canvas extends React.Component {
       yStep = 1
     }
 
-    const lineThickness = 2
-
     for (let x = x1; x < x2; x++) {
       steep
-      ? this.ctx.fillRect(y, x, lineThickness, lineThickness)
-      : this.ctx.fillRect(x, y, lineThickness, lineThickness)
+      ? this.ctx.fillRect(y, x, width, width)
+      : this.ctx.fillRect(x, y, width, width)
 
       error += slope
       if (error >= 0.5) {
@@ -140,11 +140,13 @@ export default class Canvas extends React.Component {
         x: this.clientX,
         y: this.clientY,
         prevX: this.previousX,
-        prevY: this.previousY
+        prevY: this.previousY,
+        size: 2,
+        color: this.currentColor
       }
       socket.emit('mouse', paintData)
 
-      this.paintEvent(this.clientX, this.clientY, this.previousX, this.previousY)
+      this.paintEvent(this.clientX, this.clientY, this.previousX, this.previousY, 2, this.currentColor)
     }
   }
   handleMouseDown(event) {
