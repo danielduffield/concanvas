@@ -32,9 +32,13 @@ app.get('/saved-canvas', (req, res) => {
   .catch(err => res.status(500).json(err))
 })
 
-app.post('/', (req, res) => {
-  console.log(unsavedData)
+app.get('/test-stroke', (req, res) => {
+  readFileAsync('canvas-state/test-stroke.json').then(data => {
+    res.send(data)
+  })
+})
 
+app.post('/', (req, res) => {
   readdirAsync('canvas-state/instances').then(data => {
     console.log(data.length)
     if (data.length > 10) {
@@ -48,6 +52,7 @@ app.post('/', (req, res) => {
   writeFileAsync('canvas-state/instances/canvas-' + fileId + '.json', JSON.stringify(req.body))
     .then(() => {
       console.log('Canvas Saved')
+      unsavedData = []
       res.sendStatus(201)
     })
     .catch(err => console.log(err))
@@ -57,6 +62,7 @@ io.sockets.on('connection', newConnection)
 
 function newConnection(socket) {
   socket.emit('connectionId', socket.id)
+  socket.emit('unsavedData', unsavedData)
   socket.on('mouse', getPaintData)
 
   function getPaintData(data) {

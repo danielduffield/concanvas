@@ -18,6 +18,7 @@ export default class Canvas extends React.Component {
     this.clientY = 0
     this.painting = false
     this.socketId = null
+    this.unsavedData = []
 
     this.updateCoordinates = this.updateCoordinates.bind(this)
     this.handleMouseDown = this.handleMouseDown.bind(this)
@@ -30,7 +31,9 @@ export default class Canvas extends React.Component {
     socket.on('connectionId', id => {
       this.socketId = id
     })
-
+    socket.on('unsavedData', data => {
+      this.unsavedData = data
+    })
     this.loadCanvas()
 
     this.saveTimer = setInterval(async () => {
@@ -58,6 +61,9 @@ export default class Canvas extends React.Component {
     const canvasData = JSON.parse(await response.json())
     img.src = canvasData.saved
     this.lastSaved = canvasData.saved
+
+    this.unsavedData.forEach(mark => this.paintEvent(mark.x, mark.y, mark.prevX, mark.prevY))
+    this.unsavedData = []
   }
   paintEvent(mouseX, mouseY, previousX, previousY) {
 
