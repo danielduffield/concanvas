@@ -22,7 +22,10 @@ app.get('/', (req, res) => res.send('Hello World!'))
 
 app.get('/saved-canvas', (req, res) => {
   let canvasPath = 'canvas-state/blank.json'
-  readdirAsync('canvas-state/instances').then(data => {
+  fs.ensureDir('canvas-state/instances').then(() => {
+    return readdirAsync('canvas-state/instances')
+  })
+  .then(data => {
     if (data.length) {
       canvasPath = 'canvas-state/instances/' + data[data.length - 1]
     }
@@ -34,10 +37,7 @@ app.get('/saved-canvas', (req, res) => {
 })
 
 app.post('/', (req, res) => {
-  fs.ensureDir('canvas-state/instances').then(() => {
-    return readdirAsync('canvas-state/instances')
-  })
-  .then(instances => {
+  readdirAsync('canvas-state/instances').then(instances => {
     console.log(instances.length)
     if (instances.length > 10) {
       const toDelete = instances.shift()
