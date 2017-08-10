@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const app = express()
+const fs = require('fs-extra')
 
 const server = require('http').Server(app)
 const io = require('socket.io').listen(server)
@@ -33,10 +34,13 @@ app.get('/saved-canvas', (req, res) => {
 })
 
 app.post('/', (req, res) => {
-  readdirAsync('canvas-state/instances').then(data => {
-    console.log(data.length)
-    if (data.length > 10) {
-      const toDelete = data.shift()
+  fs.ensureDir('canvas-state/instances').then(() => {
+    return readdirAsync('canvas-state/instances')
+  })
+  .then(instances => {
+    console.log(instances.length)
+    if (instances.length > 10) {
+      const toDelete = instances.shift()
       unlinkAsync('canvas-state/instances/' + toDelete).then(() => {
         console.log('Oldest instance deleted')
       })
