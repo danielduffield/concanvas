@@ -58,7 +58,7 @@ export default class Canvas extends React.Component {
       this.ctx.drawImage(img, 0, 0)
     }
     const response = await fetch('/saved-canvas')
-    const canvasData = JSON.parse(await response.json())
+    const canvasData = await response.json()
     img.src = canvasData.saved
     this.lastSaved = canvasData.saved
 

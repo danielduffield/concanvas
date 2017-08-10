@@ -28,7 +28,7 @@ app.get('/saved-canvas', (req, res) => {
       canvasPath = 'canvas-state/instances/' + data[data.length - 1]
     }
     fs.readFile(canvasPath, 'utf8').then(data => {
-      res.json(data)
+      res.send(data)
     })
   })
   .catch(err => res.status(500).json(err))
