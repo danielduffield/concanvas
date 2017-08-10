@@ -1,16 +1,31 @@
 import React from 'react'
+import styled from 'styled-components'
 
 const paletteColors = []
 const rows = 3
 const columns = 6
 
+const defaultColors = [
+  ['black', 'brown', 'orange', 'red', 'pink', 'purple'],
+  ['white', 'grey', 'yellow', 'green', 'aqua', 'blue'],
+  ['whitesmoke', 'whitesmoke', 'whitesmoke', 'whitesmoke', 'whitesmoke', 'whitesmoke']
+]
+
 for (let i = 0; i < rows; i++) {
   for (let j = 0; j < columns; j++) {
-    paletteColors.push([i, j])
+    const colorInfo = {}
+    colorInfo.index = [i, j]
+    colorInfo.color = defaultColors[i][j]
+    paletteColors.push(colorInfo)
   }
 }
 
 export default class PaintToolbar extends React.Component {
+  constructor(props) {
+    super(props)
+    this.lineWidth = 0
+    this.currentColor = null
+  }
   render() {
     return (
       <div id="paint-tools">
@@ -19,9 +34,12 @@ export default class PaintToolbar extends React.Component {
         <div id="current-color-tool" className="toolbar-module"></div>
         <div id="palette-container">
           {paletteColors.map((colorModule, index) => {
+            const ColorDiv = styled.div`
+              background-color: ${colorModule.color};
+            `
             return (
-              <div id={'color-' + colorModule[0] + '-' + colorModule[1]}
-                className="color-module" key={index}></div>
+              <ColorDiv id={'color-' + colorModule.index[0] + '-' + colorModule.index[1]}
+                className="color-module" colorValue={colorModule.color} key={index}></ColorDiv>
             )
           })}
         </div>
