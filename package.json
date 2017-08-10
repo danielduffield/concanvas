@@ -2,6 +2,9 @@
   "name": "concanvas",
   "version": "1.0.0",
   "description": "An app for web users who want to draw on a collective, real-time updating canvas.",
+  "engines": {
+    "node": "8.2.1"
+  },
   "main": "index.js",
   "scripts": {
     "lint": "run-p lint:*",
@@ -39,6 +42,7 @@
     "eslint-plugin-react": "7.0.1",
     "eslint-plugin-standard": "3.0.1",
     "express": "^4.15.4",
+    "fs-extra": "^4.0.1",
     "htmlhint": "0.9.13",
     "husky": "0.13.4",
     "npm-run-all": "4.0.2",

@@ -6,27 +6,66 @@ const socket = io.connect()
 export default class Canvas extends React.Component {
   constructor(props) {
     super(props)
+    this.saveTimer = null
     this.clickTimer = null
     this.canvas = null
     this.ctx = null
 
+    this.lastSaved = null
     this.previousX = 0
     this.previousY = 0
     this.clientX = 0
     this.clientY = 0
     this.painting = false
+    this.socketId = null
+    this.unsavedData = []
 
     this.updateCoordinates = this.updateCoordinates.bind(this)
     this.handleMouseDown = this.handleMouseDown.bind(this)
     this.handleMouseUp = this.handleMouseUp.bind(this)
     this.paintEvent = this.paintEvent.bind(this)
+    this.loadCanvas = this.loadCanvas.bind(this)
   }
   componentDidMount() {
     socket.on('mouse', data => this.paintEvent(data.x, data.y, data.prevX, data.prevY))
+    socket.on('connectionId', id => {
+      this.socketId = id
+    })
+    socket.on('unsavedData', data => {
+      this.unsavedData = data
+      this.loadCanvas()
+    })
+
+    this.saveTimer = setInterval(async () => {
+      const saved = this.canvas.toDataURL()
+
+      if (this.lastSaved !== saved) {
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ saved, socketId: this.socketId })
+        })
+        console.log(response)
+      }
+      this.lastSaved = saved
+    }, 10000)
   }
-  paintEvent(mouseX, mouseY, previousX, previousY) {
+  async loadCanvas() {
     this.ctx = this.canvas.getContext('2d')
     this.ctx.fillStyle = '#000000'
+    const img = new Image()
+    img.onload = () => {
+      this.ctx.drawImage(img, 0, 0)
+    }
+    const response = await fetch('/saved-canvas')
+    const canvasData = await response.json()
+    img.src = canvasData.saved
+    this.lastSaved = canvasData.saved
+
+    this.unsavedData.forEach(mark => this.paintEvent(mark.x, mark.y, mark.prevX, mark.prevY))
+    this.unsavedData = []
+  }
+  paintEvent(mouseX, mouseY, previousX, previousY) {
 
     let x1 = mouseX
     let x2 = previousX
