@@ -33,8 +33,8 @@ export default class Canvas extends React.Component {
     })
     socket.on('unsavedData', data => {
       this.unsavedData = data
+      this.loadCanvas()
     })
-    this.loadCanvas()
 
     this.saveTimer = setInterval(async () => {
       const saved = this.canvas.toDataURL()
