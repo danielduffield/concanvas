@@ -26,23 +26,29 @@ export default class PaintToolbar extends React.Component {
     this.width = 2
     this.color = '#000000'
     this.state = {
-      color: this.color
+      color: this.color,
+      erasing: false
     }
-
     this.selectColor = this.selectColor.bind(this)
+    this.toggleEraser = this.toggleEraser.bind(this)
+  }
+  toggleEraser() {
+    if (this.state.erasing) this.setState({ color: this.color, erasing: false })
+    else this.setState({ color: '#FFFFFF', erasing: true })
   }
   selectColor(event) {
     this.color = event.target.dataset.color
-    this.props.updatePaintStyle(this.width, this.color)
-    this.setState({ color: this.color })
+    this.setState({ color: this.color, erasing: false })
+    this.props.updatePaintStyle(this.width, this.state.color)
   }
   render() {
+    this.props.updatePaintStyle(this.width, this.state.color)
     const CurrentColor = styled.div`
-      background-color: ${this.state.color}
+      background-color: ${this.color}
     `
     return (
       <div id="paint-tools">
-        <div id="eraser-tool" className="toolbar-module"></div>
+        <div id="eraser-tool" className="toolbar-module" onClick={this.toggleEraser}></div>
         <div id="line-width-tool" className="toolbar-module"></div>
         <CurrentColor id="current-color-tool" className="toolbar-module"></CurrentColor>
         <div id="palette-container">
