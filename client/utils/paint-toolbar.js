@@ -26,7 +26,7 @@ export default class PaintToolbar extends React.Component {
           })}
         </div>
         <div id="eraser-label" className="toolbar-label">Eraser</div>
-        <div id="line-width-label" className="toolbar-label">Brush Size</div>
+        <div id="line-width-label" className="toolbar-label">Size</div>
         <div id="current-color-label" className="toolbar-label">Current</div>
       </div>
     )
