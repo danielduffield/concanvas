@@ -32,12 +32,6 @@ app.get('/saved-canvas', (req, res) => {
   .catch(err => res.status(500).json(err))
 })
 
-app.get('/test-stroke', (req, res) => {
-  readFileAsync('canvas-state/test-stroke.json').then(data => {
-    res.send(data)
-  })
-})
-
 app.post('/', (req, res) => {
   readdirAsync('canvas-state/instances').then(data => {
     console.log(data.length)
