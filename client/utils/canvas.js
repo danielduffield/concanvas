@@ -146,7 +146,7 @@ export default class Canvas extends React.Component {
       }
       socket.emit('mouse', paintData)
 
-      this.paintEvent(this.clientX, this.clientY, this.previousX, this.previousY, 2, this.currentColor)
+      this.paintEvent(this.clientX, this.clientY, this.previousX, this.previousY, this.lineWidth, this.currentColor)
     }
   }
   handleMouseDown(event) {
