@@ -26,10 +26,10 @@ export default class PaintToolbar extends React.Component {
     this.width = 2
     this.color = null
 
-    this.colorSelect.bind(this)
+    this.selectColor = this.selectColor.bind(this)
   }
   selectColor(event) {
-    this.color = event.target.colorValue
+    this.color = event.target.dataset.color
     this.props.updatePaintStyle(this.width, this.color)
   }
   render() {
@@ -45,7 +45,7 @@ export default class PaintToolbar extends React.Component {
             `
             return (
               <ColorDiv id={'color-' + colorModule.index[0] + '-' + colorModule.index[1]}
-                className="color-module" colorValue={colorModule.color} onClick={this.selectColor}
+                className="color-module" data-color={colorModule.color} onClick={this.selectColor}
                 key={index}></ColorDiv>
             )
           })}
