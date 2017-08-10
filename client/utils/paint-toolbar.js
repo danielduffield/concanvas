@@ -23,8 +23,14 @@ for (let i = 0; i < rows; i++) {
 export default class PaintToolbar extends React.Component {
   constructor(props) {
     super(props)
-    this.lineWidth = 0
-    this.currentColor = null
+    this.width = 2
+    this.color = null
+
+    this.colorSelect.bind(this)
+  }
+  selectColor(event) {
+    this.color = event.target.colorValue
+    this.props.updatePaintStyle(this.width, this.color)
   }
   render() {
     return (
@@ -39,7 +45,8 @@ export default class PaintToolbar extends React.Component {
             `
             return (
               <ColorDiv id={'color-' + colorModule.index[0] + '-' + colorModule.index[1]}
-                className="color-module" colorValue={colorModule.color} key={index}></ColorDiv>
+                className="color-module" colorValue={colorModule.color} onClick={this.selectColor}
+                key={index}></ColorDiv>
             )
           })}
         </div>
