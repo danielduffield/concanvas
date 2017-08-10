@@ -1,5 +1,7 @@
 import React from 'react'
 
+import PaintToolbar from './paint-toolbar'
+
 import io from 'socket.io-client'
 const socket = io.connect()
 
@@ -153,6 +155,7 @@ export default class Canvas extends React.Component {
             this.canvas = canvas
           }}>
         </canvas>
+        <PaintToolbar/>
       </div>
     )
   }
