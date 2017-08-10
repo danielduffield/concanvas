@@ -11,8 +11,6 @@ const jsonParser = bodyParser.json()
 
 let unsavedData = []
 
-const { readFileAsync, writeFileAsync, readdirAsync, unlinkAsync } = require('./utils/fsAsyncFunctions')
-
 server.listen(process.env.PORT, () => console.log('Listening on PORT...'))
 
 app.use(jsonParser)
@@ -23,13 +21,13 @@ app.get('/', (req, res) => res.send('Hello World!'))
 app.get('/saved-canvas', (req, res) => {
   let canvasPath = 'canvas-state/blank.json'
   fs.ensureDir('canvas-state/instances').then(() => {
-    return readdirAsync('canvas-state/instances')
+    return fs.readdir('canvas-state/instances')
   })
   .then(data => {
     if (data.length) {
       canvasPath = 'canvas-state/instances/' + data[data.length - 1]
     }
-    readFileAsync(canvasPath).then(data => {
+    fs.readFile(canvasPath, 'utf8').then(data => {
       res.json(data)
     })
   })
@@ -37,17 +35,17 @@ app.get('/saved-canvas', (req, res) => {
 })
 
 app.post('/', (req, res) => {
-  readdirAsync('canvas-state/instances').then(instances => {
+  fs.readdir('canvas-state/instances').then(instances => {
     console.log(instances.length)
     if (instances.length > 10) {
       const toDelete = instances.shift()
-      unlinkAsync('canvas-state/instances/' + toDelete).then(() => {
+      fs.unlink('canvas-state/instances/' + toDelete).then(() => {
         console.log('Oldest instance deleted')
       })
     }
   })
   const fileId = Date.now() + '-' + req.body.socketId
-  writeFileAsync('canvas-state/instances/canvas-' + fileId + '.json', JSON.stringify(req.body))
+  fs.writeFile('canvas-state/instances/canvas-' + fileId + '.json', JSON.stringify(req.body))
     .then(() => {
       console.log('Canvas Saved')
       unsavedData = []
