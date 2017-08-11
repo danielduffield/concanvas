@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 
 export default class SizeSelector extends React.Component {
   constructor(props) {
@@ -28,7 +29,7 @@ export default class SizeSelector extends React.Component {
     return (
       <div className="line-width-module toolbar-module">
         <div className="size-counter-container">
-          <div id="size-counter" className="size-tool">{this.state.size}</div>
+          <SizeCounter id="size-counter" className="size-tool">{this.state.size}</SizeCounter>
         </div>
         <div className="size-button-container">
           <button id="increment-btn" className="size-button" onClick={this.nextBiggerSize}>+</button>
@@ -38,3 +39,8 @@ export default class SizeSelector extends React.Component {
     )
   }
 }
+
+const SizeCounter = styled.div`
+  position: relative;
+  top: 15px;
+`

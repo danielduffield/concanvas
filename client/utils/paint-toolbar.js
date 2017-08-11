@@ -50,22 +50,6 @@ export default class PaintToolbar extends React.Component {
     const EraserIcon = styled.div`
       background-color: ${this.state.erasing ? 'deeppink' : 'pink'};
     `
-    const PaintTools = styled.div`
-      margin: 0 auto;
-      border: 2px solid black;
-      width: 604px;
-      height: 135px;
-      background-color: palegoldenrod;
-      text-align: left;
-    `
-    const PaletteContainer = styled.div`
-      border: 2px solid black;
-      width: 290px;
-      height: 110px;
-      background-color: gainsboro;
-      float: left;
-      margin: 10px 10px 10px 25px;
-    `
     return (
       <PaintTools id="paint-tools">
         <EraserIcon id="eraser-tool" className="toolbar-module" onClick={this.toggleEraser}></EraserIcon>
@@ -90,3 +74,20 @@ export default class PaintToolbar extends React.Component {
     )
   }
 }
+
+const PaintTools = styled.div`
+  margin: 0 auto;
+  border: 2px solid black;
+  width: 604px;
+  height: 135px;
+  background-color: palegoldenrod;
+  text-align: left;
+`
+const PaletteContainer = styled.div`
+  border: 2px solid black;
+  width: 290px;
+  height: 110px;
+  background-color: gainsboro;
+  float: left;
+  margin: 10px 10px 10px 25px;
+`
