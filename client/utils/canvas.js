@@ -17,7 +17,7 @@ export default class Canvas extends React.Component {
     this.previousY = 0
     this.clientX = 0
     this.clientY = 0
-    this.lineWidth = 0
+    this.lineWidth = 2
     this.currentColor = null
 
     this.lastSaved = null
@@ -30,10 +30,9 @@ export default class Canvas extends React.Component {
     this.handleMouseUp = this.handleMouseUp.bind(this)
     this.paintEvent = this.paintEvent.bind(this)
     this.loadCanvas = this.loadCanvas.bind(this)
-    this.updatePaintStyle = this.updatePaintStyle.bind(this)
+    this.updateColor = this.updateColor.bind(this)
   }
-  updatePaintStyle(width, color) {
-    this.lineWidth = width
+  updateColor(color) {
     this.currentColor = color
   }
   componentDidMount() {
@@ -165,7 +164,7 @@ export default class Canvas extends React.Component {
             this.canvas = canvas
           }}>
         </canvas>
-        <PaintToolbar updatePaintStyle={this.updatePaintStyle}/>
+        <PaintToolbar updateColor={this.updateColor}/>
       </div>
     )
   }
