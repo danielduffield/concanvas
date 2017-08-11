@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import SizeSelector from './size-selector'
+
 const paletteColors = []
 const rows = 3
 const columns = 6
@@ -26,33 +28,33 @@ export default class PaintToolbar extends React.Component {
     this.color = '#000000'
     this.state = {
       color: this.color,
-      erasing: false,
-      size: 2
+      erasing: false
     }
     this.selectColor = this.selectColor.bind(this)
     this.toggleEraser = this.toggleEraser.bind(this)
   }
   toggleEraser() {
     if (this.state.erasing) this.setState({ color: this.color, erasing: false })
-    else this.setState({ color: '#FFFFFF', erasing: true, size: 20 })
+    else this.setState({ color: '#FFFFFF', erasing: true })
   }
   selectColor(event) {
     this.color = event.target.dataset.color
-    this.setState({ color: this.color, erasing: false, size: 2 })
-    this.props.updatePaintStyle(this.state.size, this.state.color)
+    this.setState({ color: this.color, erasing: false })
+    this.props.updateColor(this.state.color)
   }
   render() {
-    this.props.updatePaintStyle(this.state.size, this.state.color)
+    this.props.updateColor(this.state.color)
     const CurrentColor = styled.div`
       background-color: ${this.color}
     `
     const EraserIcon = styled.div`
       background-color: ${this.state.erasing ? 'deeppink' : 'pink'}
     `
+    console.log(this.state)
     return (
       <div id="paint-tools">
         <EraserIcon id="eraser-tool" className="toolbar-module" onClick={this.toggleEraser}></EraserIcon>
-        <div id="line-width-tool" className="toolbar-module"></div>
+        <SizeSelector/>
         <CurrentColor id="current-color-tool" className="toolbar-module"></CurrentColor>
         <div id="palette-container">
           {paletteColors.map((colorModule, index) => {
@@ -73,3 +75,4 @@ export default class PaintToolbar extends React.Component {
     )
   }
 }
+// <div id="line-width-tool" className="toolbar-module"></div>
