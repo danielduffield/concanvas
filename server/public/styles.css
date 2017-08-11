@@ -85,3 +85,36 @@
   margin: 7px 0 0 19px;
   background-color: lightblue;
 }
+
+.size-tool {
+  display: inline-block;
+  font-size: 2em;
+}
+
+.size-button {
+  width: 32px;
+  display: block;
+  height: 36px;
+}
+
+.size-button-container {
+  float: right;
+}
+
+.line-width-module {
+  width: 76px;
+  height: 76px;
+  background-color: grey;
+}
+
+#size-counter {
+  position: relative;
+  top: 15px;
+}
+
+.size-counter-container {
+  height: 72px;
+  width: 40px;
+  text-align: center;
+  float: left;
+}
