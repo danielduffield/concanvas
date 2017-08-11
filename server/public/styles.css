@@ -18,6 +18,70 @@
 }
 
 #my-canvas {
-  border: 2px solid dimgrey;
+  border: 2px solid black;
   background-color: white;
+}
+
+.container {
+  text-align: center;
+}
+
+.toolbar-module {
+  border: 2px solid black;
+  position: relative;
+  background-color: lightpink;
+  float: left;
+  width: 76px;
+  height: 76px;
+  margin: 10px 0 10px 15px;
+}
+
+.toolbar-label {
+  position: relative;
+  height: 30px;
+  width: 76px;
+  float: left;
+  margin: 0 0 0 15px;
+  bottom: 40px;
+  line-height: 30px;
+  text-align: center;
+  background-color: palegoldenrod;
+  font-size: 1.25em;
+}
+
+.color-module {
+  border: 2px solid black;
+  float: left;
+  height: 26px;
+  width: 26px;
+  margin: 7px 0 0 19px;
+  background-color: lightblue;
+}
+
+.size-tool {
+  display: inline-block;
+  font-size: 2em;
+}
+
+.size-button {
+  width: 32px;
+  display: block;
+  height: 36px;
+}
+
+.size-button-container {
+  float: right;
+}
+
+.line-width-module {
+  width: 76px;
+  height: 76px;
+  background-color: grey;
+}
+
+.size-counter-container {
+  height: 72px;
+  width: 40px;
+  text-align: center;
+  float: left;
 }

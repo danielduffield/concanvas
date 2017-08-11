@@ -1,5 +1,7 @@
 import React from 'react'
 
+import PaintToolbar from './paint-toolbar'
+
 import io from 'socket.io-client'
 const socket = io.connect()
 
@@ -11,11 +13,14 @@ export default class Canvas extends React.Component {
     this.canvas = null
     this.ctx = null
 
-    this.lastSaved = null
     this.previousX = 0
     this.previousY = 0
     this.clientX = 0
     this.clientY = 0
+    this.lineWidth = 2
+    this.currentColor = null
+
+    this.lastSaved = null
     this.painting = false
     this.socketId = null
     this.unsavedData = []
@@ -25,9 +30,17 @@ export default class Canvas extends React.Component {
     this.handleMouseUp = this.handleMouseUp.bind(this)
     this.paintEvent = this.paintEvent.bind(this)
     this.loadCanvas = this.loadCanvas.bind(this)
+    this.updateColor = this.updateColor.bind(this)
+    this.updateBrushSize = this.updateBrushSize.bind(this)
+  }
+  updateColor(color) {
+    this.currentColor = color
+  }
+  updateBrushSize(size) {
+    this.lineWidth = size
   }
   componentDidMount() {
-    socket.on('mouse', data => this.paintEvent(data.x, data.y, data.prevX, data.prevY))
+    socket.on('mouse', data => this.paintEvent(data.x, data.y, data.prevX, data.prevY, data.size, data.color))
     socket.on('connectionId', id => {
       this.socketId = id
     })
@@ -61,11 +74,12 @@ export default class Canvas extends React.Component {
     const canvasData = await response.json()
     img.src = canvasData.saved
     this.lastSaved = canvasData.saved
-
-    this.unsavedData.forEach(mark => this.paintEvent(mark.x, mark.y, mark.prevX, mark.prevY))
+    this.unsavedData.forEach(mark => this.paintEvent(mark.x, mark.y, mark.prevX, mark.prevY, mark.size, mark.color))
     this.unsavedData = []
   }
-  paintEvent(mouseX, mouseY, previousX, previousY) {
+  paintEvent(mouseX, mouseY, previousX, previousY, width, color) {
+
+    this.ctx.fillStyle = color
 
     let x1 = mouseX
     let x2 = previousX
@@ -103,12 +117,10 @@ export default class Canvas extends React.Component {
       yStep = 1
     }
 
-    const lineThickness = 2
-
     for (let x = x1; x < x2; x++) {
       steep
-      ? this.ctx.fillRect(y, x, lineThickness, lineThickness)
-      : this.ctx.fillRect(x, y, lineThickness, lineThickness)
+      ? this.ctx.fillRect(y, x, width, width)
+      : this.ctx.fillRect(x, y, width, width)
 
       error += slope
       if (error >= 0.5) {
@@ -130,11 +142,13 @@ export default class Canvas extends React.Component {
         x: this.clientX,
         y: this.clientY,
         prevX: this.previousX,
-        prevY: this.previousY
+        prevY: this.previousY,
+        size: this.lineWidth,
+        color: this.currentColor
       }
       socket.emit('mouse', paintData)
 
-      this.paintEvent(this.clientX, this.clientY, this.previousX, this.previousY)
+      this.paintEvent(this.clientX, this.clientY, this.previousX, this.previousY, this.lineWidth, this.currentColor)
     }
   }
   handleMouseDown(event) {
@@ -153,6 +167,7 @@ export default class Canvas extends React.Component {
             this.canvas = canvas
           }}>
         </canvas>
+        <PaintToolbar updateColor={this.updateColor} updateBrushSize={this.updateBrushSize}/>
       </div>
     )
   }
