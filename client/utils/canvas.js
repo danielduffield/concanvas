@@ -144,7 +144,7 @@ export default class Canvas extends React.Component {
         y: this.clientY,
         prevX: this.previousX,
         prevY: this.previousY,
-        size: 2,
+        size: this.lineWidth,
         color: this.currentColor
       }
       socket.emit('mouse', paintData)
