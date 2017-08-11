@@ -98,16 +98,6 @@
   right: 0;
 }
 
-.chat-id-module {
-  height: 40px;
-  position: fixed;
-  bottom: 173px;
-  line-height: 25px;
-  text-align: center;
-  font-size: 0.9em;
-  background-color: gainsboro;
-}
-
 .text-centered {
   text-align: center;
 }

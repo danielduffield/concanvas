@@ -12,9 +12,9 @@ export default class ChatSidebar extends React.Component {
     return (
       <SidebarContainer id="chat-sidebar-container" className="sidebar">
         <div id="chat-log"></div>
-        <div id="chat-id-container" className="sidebar chat-id-module">Connected as:
+        <ChatIdModule id="chat-id-module" className="sidebar">Connected as:
           <IdInput id="chat-id-field" type="text"/>
-        </div>
+        </ChatIdModule>
         <ChatBox id="chat-box" className="sidebar text-centered">
           <ChatField name="chat-field" id="chat-field" cols="27" rows="4"></ChatField>
           <button id="send-button" className="chat-button float-right">Chat</button>
@@ -24,6 +24,16 @@ export default class ChatSidebar extends React.Component {
     )
   }
 }
+
+const ChatIdModule = styled.div`
+  height: 40px;
+  position: fixed;
+  bottom: 173px;
+  line-height: 25px;
+  text-align: center;
+  font-size: 0.9em;
+  background-color: gainsboro;
+`
 
 const SidebarContainer = styled.div`
   height: 100%;
