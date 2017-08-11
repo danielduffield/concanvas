@@ -30,15 +30,6 @@
   border: 2px solid black;
 }
 
-#paint-tools {
-  margin: 0 auto;
-  border: 2px solid black;
-  width: 604px;
-  height: 135px;
-  background-color: palegoldenrod;
-  text-align: left;
-}
-
 .toolbar-module {
   border: 2px solid black;
   position: relative;
