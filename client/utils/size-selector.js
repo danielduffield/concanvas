@@ -4,7 +4,7 @@ export default class SizeSelector extends React.Component {
   constructor(props) {
     super(props)
     this.currentIndex = 0
-    this.validSizes = ['2', '5', '10', '15']
+    this.validSizes = [2, 5, 10, 15]
     this.state = {
       size: 2
     }
@@ -24,6 +24,7 @@ export default class SizeSelector extends React.Component {
     }
   }
   render() {
+    this.props.updateBrushSize(this.state.size)
     return (
       <div className="line-width-module toolbar-module">
         <div className="size-counter-container">

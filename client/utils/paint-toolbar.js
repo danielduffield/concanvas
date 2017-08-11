@@ -54,7 +54,7 @@ export default class PaintToolbar extends React.Component {
     return (
       <div id="paint-tools">
         <EraserIcon id="eraser-tool" className="toolbar-module" onClick={this.toggleEraser}></EraserIcon>
-        <SizeSelector/>
+        <SizeSelector updateBrushSize={this.props.updateBrushSize}/>
         <CurrentColor id="current-color-tool" className="toolbar-module"></CurrentColor>
         <div id="palette-container">
           {paletteColors.map((colorModule, index) => {

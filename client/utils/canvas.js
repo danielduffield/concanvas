@@ -31,9 +31,13 @@ export default class Canvas extends React.Component {
     this.paintEvent = this.paintEvent.bind(this)
     this.loadCanvas = this.loadCanvas.bind(this)
     this.updateColor = this.updateColor.bind(this)
+    this.updateBrushSize = this.updateBrushSize.bind(this)
   }
   updateColor(color) {
     this.currentColor = color
+  }
+  updateBrushSize(size) {
+    this.lineWidth = size
   }
   componentDidMount() {
     socket.on('mouse', data => this.paintEvent(data.x, data.y, data.prevX, data.prevY, data.size, data.color))
@@ -164,7 +168,7 @@ export default class Canvas extends React.Component {
             this.canvas = canvas
           }}>
         </canvas>
-        <PaintToolbar updateColor={this.updateColor}/>
+        <PaintToolbar updateColor={this.updateColor} updateBrushSize={this.updateBrushSize}/>
       </div>
     )
   }
