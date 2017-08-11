@@ -2,14 +2,17 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Bubblegum Sans', cursive;
+  font-family: 'Raleway', sans-serif;
   background-color: whitesmoke;
 }
 
 #main-title {
-  margin: 30px 0;
+  left: 0;
+  right: 0;
   font-size: 4em;
   text-align: center;
+  position: absolute;
+  font-family: 'Bubblegum Sans', cursive;
 }
 
 #root {
@@ -18,6 +21,7 @@
 }
 
 #my-canvas {
+  margin: 80px 0 0;
   border: 2px solid black;
   background-color: white;
 }
@@ -37,6 +41,7 @@
 }
 
 .toolbar-label {
+  font-family: 'Bubblegum Sans', cursive;
   position: relative;
   height: 30px;
   width: 76px;
@@ -83,5 +88,49 @@
   height: 72px;
   width: 40px;
   text-align: center;
+  float: left;
+}
+
+.sidebar {
+  border: 2px solid dimgrey;
+  width: 300px;
+  position: fixed;
+  right: 0;
+}
+
+.chat-id-module {
+  height: 40px;
+  position: fixed;
+  bottom: 173px;
+  line-height: 25px;
+  text-align: center;
+  font-size: 0.9em;
+  background-color: gainsboro;
+}
+
+.text-centered {
+  text-align: center;
+}
+
+.chat-button {
+  width: 60px;
+  height: 30px;
+  font-size: 1em;
+  border-radius: 5px;
+}
+
+.chat-message {
+  margin: 0 0 10px;
+}
+
+.username {
+  margin: 0 10px 0 5px;
+}
+
+.float-right {
+  float: right;
+}
+
+.float-left {
   float: left;
 }
