@@ -53,15 +53,6 @@
   font-size: 1.25em;
 }
 
-#palette-container {
-  border: 2px solid black;
-  width: 290px;
-  height: 110px;
-  background-color: gainsboro;
-  float: left;
-  margin: 10px 10px 10px 25px;
-}
-
 #palette-label {
   width: 300px;
   float: left;

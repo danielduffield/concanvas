@@ -45,10 +45,10 @@ export default class PaintToolbar extends React.Component {
   render() {
     this.props.updateColor(this.state.color)
     const CurrentColor = styled.div`
-      background-color: ${this.color}
+      background-color: ${this.color};
     `
     const EraserIcon = styled.div`
-      background-color: ${this.state.erasing ? 'deeppink' : 'pink'}
+      background-color: ${this.state.erasing ? 'deeppink' : 'pink'};
     `
     const PaintTools = styled.div`
       margin: 0 auto;
@@ -58,12 +58,20 @@ export default class PaintToolbar extends React.Component {
       background-color: palegoldenrod;
       text-align: left;
     `
+    const PaletteContainer = styled.div`
+      border: 2px solid black;
+      width: 290px;
+      height: 110px;
+      background-color: gainsboro;
+      float: left;
+      margin: 10px 10px 10px 25px;
+    `
     return (
       <PaintTools id="paint-tools">
         <EraserIcon id="eraser-tool" className="toolbar-module" onClick={this.toggleEraser}></EraserIcon>
         <SizeSelector updateBrushSize={this.props.updateBrushSize}/>
         <CurrentColor id="current-color-tool" className="toolbar-module"></CurrentColor>
-        <div id="palette-container">
+        <PaletteContainer id="palette-container">
           {paletteColors.map((colorModule, index) => {
             const ColorDiv = styled.div`
               background-color: ${colorModule.color};
@@ -74,7 +82,7 @@ export default class PaintToolbar extends React.Component {
                 key={index}></ColorDiv>
             )
           })}
-        </div>
+        </PaletteContainer>
         <div id="eraser-label" className="toolbar-label">Eraser</div>
         <div id="line-width-label" className="toolbar-label">Size</div>
         <div id="current-color-label" className="toolbar-label">Current</div>
