@@ -75,4 +75,3 @@ export default class PaintToolbar extends React.Component {
     )
   }
 }
-// <div id="line-width-tool" className="toolbar-module"></div>

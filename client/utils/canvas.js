@@ -74,7 +74,6 @@ export default class Canvas extends React.Component {
     const canvasData = await response.json()
     img.src = canvasData.saved
     this.lastSaved = canvasData.saved
-    console.log(this.unsavedData)
     this.unsavedData.forEach(mark => this.paintEvent(mark.x, mark.y, mark.prevX, mark.prevY, mark.size, mark.color))
     this.unsavedData = []
   }
