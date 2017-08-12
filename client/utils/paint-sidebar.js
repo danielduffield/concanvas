@@ -80,6 +80,7 @@ export default class PaintSidebar extends React.Component {
 const PaintTools = styled.div`
   float: left;
   border: 2px solid black;
+  border-left: none;
   height: 604px;
   width: 135px;
   margin-top: 100px;
