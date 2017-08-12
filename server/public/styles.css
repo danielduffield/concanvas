@@ -103,3 +103,8 @@
 .hidden {
   display: none;
 }
+
+#message-form {
+  height: 25%;
+  background-color: grey;
+}
