@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 
 import PaintSidebar from './paint-sidebar'
 
@@ -159,16 +160,21 @@ export default class Canvas extends React.Component {
   }
   render() {
     return (
-      <div id="container">
-        <canvas id="my-canvas" onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp}
-          onMouseMove={this.updateCoordinates} onMouseOut={this.handleMouseUp}
-          width="600" height="600"
-          ref={canvas => {
-            this.canvas = canvas
-          }}>
-        </canvas>
-        <PaintSidebar updateColor={this.updateColor} updateBrushSize={this.updateBrushSize}/>
-      </div>
+      <Container id="container">
+        <SecondWrapper>
+          <Wrapper id="wrapper">
+            <MainTitle id="main-title">ConCanvas</MainTitle>
+            <canvas id="my-canvas" onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp}
+              onMouseMove={this.updateCoordinates} onMouseOut={this.handleMouseUp}
+              width="600" height="600"
+              ref={canvas => {
+                this.canvas = canvas
+              }}>
+            </canvas>
+            <PaintSidebar updateColor={this.updateColor} updateBrushSize={this.updateBrushSize}/>
+          </Wrapper>
+        </SecondWrapper>
+      </Container>
     )
   }
 }
@@ -180,3 +186,35 @@ function getCoordinates(canvas, event) {
     y: event.clientY - rect.top
   }
 }
+
+const MainTitle = styled.h1`
+  width: 300px;
+  top: 10px;
+  font-size: 4em;
+  font-family: 'Bubblegum Sans', cursive;
+  left: 0;
+  right: 0;
+  position: absolute;
+  margin: 0 auto;
+  background-color: whitesmoke;
+  z-index: 10;
+`
+
+const SecondWrapper = styled.div`
+    position: relative;
+    height: 100%;
+    width: 80%;
+    margin: 0 auto;
+`
+
+const Wrapper = styled.div`
+  min-width: 740px;
+  position: absolute;
+`
+
+const Container = styled.div`
+  height: 100%;
+  position: absolute;
+  left: 34%;
+  width: 66%;
+`

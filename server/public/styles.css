@@ -17,12 +17,6 @@
   background-color: white;
 }
 
-#container {
-  position: absolute;
-  left: 34%;
-  width: 66%;
-}
-
 .toolbar-module {
   border: 2px solid black;
   position: relative;
