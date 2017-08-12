@@ -6,15 +6,6 @@
   background-color: whitesmoke;
 }
 
-#main-title {
-  left: 10px;
-  top: 10px;
-  font-size: 4em;
-  font-family: 'Bubblegum Sans', cursive;
-  position: fixed;
-  z-index: 1;
-}
-
 #root {
   text-align: center;
 }
@@ -106,4 +97,8 @@
 
 .float-right {
   float: right;
+}
+
+.hidden {
+  display: none;
 }
