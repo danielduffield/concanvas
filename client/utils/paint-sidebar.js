@@ -2,13 +2,16 @@ import React from 'react'
 import styled from 'styled-components'
 
 const paletteColors = []
-const rows = 3
-const columns = 6
+const rows = 6
+const columns = 3
 
 const defaultColors = [
-  ['black', 'brown', 'orange', 'red', 'pink', 'purple'],
-  ['white', 'grey', 'yellow', 'green', 'aqua', 'blue'],
-  ['whitesmoke', 'whitesmoke', 'whitesmoke', 'whitesmoke', 'whitesmoke', 'whitesmoke']
+  ['white', 'black', 'grey'],
+  ['yellow', 'orange', 'brown'],
+  ['pink', 'red', 'purple'],
+  ['green', 'aqua', 'blue'],
+  ['whitesmoke', 'whitesmoke', 'whitesmoke'],
+  ['whitesmoke', 'whitesmoke', 'whitesmoke']
 ]
 
 for (let i = 0; i < rows; i++) {
