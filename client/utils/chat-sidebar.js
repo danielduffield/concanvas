@@ -18,21 +18,30 @@ export default class ChatSidebar extends React.Component {
     this.setState({ isHidden: false, messageList: this.state.messageList })
   }
   render() {
+    const ChatWindow = styled.div`
+      height: 100%;
+      background-color: ${this.state.isHidden ? 'whitesmoke' : 'grey'};
+      border-right: ${this.state.isHidden ? 'none' : '2px solid dimgrey'};
+    `
     return (
       <ChatColumn id="chat-column">
-        <SidebarContainer id="sidebar-container"
-          className={this.state.isHidden ? 'sidebar hidden' : 'sidebar'}>
+        <SidebarContainer id="sidebar-container">
           <MainTitle id="main-title">ConCanvas</MainTitle>
-          <ChatFeed id="chat-feed"></ChatFeed>
-          <ChatIdModule id="chat-id-box" className="sidebar">Nickname:
-            <IdInput id="chat-id-field" type="text"/>
-          </ChatIdModule>
-          <ChatBox id="chat-box" className="sidebar text-centered">
-            <ChatField name="chat-field" id="chat-field" cols="27" rows="4"></ChatField>
-            <button id="chat-send" className="chat-button float-right">Chat</button>
-            <button id="chat-hide" className="chat-button float-left"
-              onClick={this.hideChat}>Hide</button>
-          </ChatBox>
+          <ChatFeed id="chat-feed" className={this.state.isHidden ? 'hidden' : ''}>
+          </ChatFeed>
+          <ChatWindow>
+            <ChatIdModule id="chat-id-box"
+              className={this.state.isHidden ? 'hidden' : ''}>
+              Nickname: <IdInput id="chat-id-field" type="text"/>
+            </ChatIdModule>
+            <ChatBox id="chat-box"
+              className={this.state.isHidden ? 'hidden' : ''}>
+              <ChatField name="chat-field" id="chat-field" cols="27" rows="4"></ChatField>
+              <button id="chat-send" className="chat-button float-right">Chat</button>
+              <button id="chat-hide" className="chat-button float-left"
+                onClick={this.hideChat}>Hide</button>
+            </ChatBox>
+          </ChatWindow>
         </SidebarContainer>
         <UnhideButton id="unhide-button"
           className={this.state.isHidden ? 'chat-button' : 'chat-button hidden'}
@@ -69,7 +78,7 @@ const SidebarContainer = styled.div`
   position: absolute;
   width: 34%;
   height: 100%;
-  background-color: grey;
+  background-color: whitesmoke;
 `
 
 const IdInput = styled.input`
@@ -106,6 +115,6 @@ const UnhideButton = styled.button`
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 30%;
+  width: 34%;
   height: 50px;
 `
