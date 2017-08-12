@@ -28,6 +28,7 @@ export default class ChatSidebar extends React.Component {
         <SidebarContainer id="sidebar-container">
           <MainTitle id="main-title">ConCanvas</MainTitle>
           <ChatFeed id="chat-feed" className={this.state.isHidden ? 'hidden' : ''}>
+            <MessageList></MessageList>
           </ChatFeed>
           <ChatWindow>
             <ChatIdModule id="chat-id-box"
@@ -52,6 +53,7 @@ export default class ChatSidebar extends React.Component {
 }
 
 const MainTitle = styled.h1`
+  top: 10px;
   font-size: 4em;
   font-family: 'Bubblegum Sans', cursive;
   left: 0;
@@ -95,10 +97,18 @@ const ChatBox = styled.div`
 `
 
 const ChatFeed = styled.div`
+  padding-top: 100px;
   height: 75%;
   bottom: 0;
   background-color: whitesmoke;
   border-bottom: 2px solid dimgrey;
+`
+
+const MessageList = styled.div`
+  height: 100%;
+  border: 2px solid dimgrey;
+  width: 100%;
+  border-radius: 5px;
 `
 
 const ChatField = styled.textarea`
