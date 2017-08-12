@@ -10,6 +10,10 @@ export default class ChatSidebar extends React.Component {
     }
     this.hideChat = this.hideChat.bind(this)
     this.revealChat = this.revealChat.bind(this)
+    this.submitMessage = this.submitMessage.bind(this)
+  }
+  submitMessage() {
+
   }
   hideChat() {
     this.setState({ isHidden: true, messageList: this.state.messageList })
@@ -19,7 +23,7 @@ export default class ChatSidebar extends React.Component {
   }
   render() {
     const ChatWindow = styled.div`
-      height: 25%;
+      height: 100%;
       background-color: ${this.state.isHidden ? 'whitesmoke' : 'grey'};
       border-right: ${this.state.isHidden ? 'none' : '2px solid dimgrey'};
     `
@@ -30,19 +34,22 @@ export default class ChatSidebar extends React.Component {
           <ChatFeed id="chat-feed" className={this.state.isHidden ? 'hidden' : ''}>
             <MessageList></MessageList>
           </ChatFeed>
-          <ChatWindow>
-            <ChatIdModule id="chat-id-box"
-              className={this.state.isHidden ? 'hidden' : ''}>
-              Nickname: <IdInput id="chat-id-field" type="text"/>
-            </ChatIdModule>
-            <ChatBox id="chat-box"
-              className={this.state.isHidden ? 'hidden' : ''}>
-              <ChatField name="chat-field" id="chat-field" cols="27" rows="4"></ChatField>
-              <button id="chat-send" className="chat-button float-right">Chat</button>
-              <button id="chat-hide" className="chat-button float-left"
-                onClick={this.hideChat}>Hide</button>
-            </ChatBox>
-          </ChatWindow>
+          <MessageForm>
+            <ChatWindow>
+              <ChatIdModule id="chat-id-box"
+                className={this.state.isHidden ? 'hidden' : ''}>
+                Nickname: <IdInput id="chat-id-field" type="text"/>
+              </ChatIdModule>
+              <ChatBox id="chat-box"
+                className={this.state.isHidden ? 'hidden' : ''}>
+                <ChatField name="chat-field" id="chat-field" cols="27" rows="4"></ChatField>
+                <button id="chat-send" className="chat-button float-right"
+                  onClick={this.submitMessage}>Chat</button>
+                <button id="chat-hide" className="chat-button float-left"
+                  onClick={this.hideChat}>Hide</button>
+              </ChatBox>
+            </ChatWindow>
+          </MessageForm>
         </SidebarContainer>
         <UnhideButton id="unhide-button"
           className={this.state.isHidden ? 'chat-button' : 'chat-button hidden'}
@@ -51,6 +58,11 @@ export default class ChatSidebar extends React.Component {
     )
   }
 }
+
+const MessageForm = styled.form`
+  height: 25%;
+  background-color: grey;
+`
 
 const MainTitle = styled.h1`
   top: 10px;
