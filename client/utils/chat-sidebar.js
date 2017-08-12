@@ -123,8 +123,6 @@ const ChatFeed = styled.div`
 const MessageList = styled.div`
   position: relative;
   height: 100%;
-  border: 2px solid dimgrey;
-  border-top: none;
   width: 100%;
 `
 
