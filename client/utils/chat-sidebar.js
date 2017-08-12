@@ -19,7 +19,7 @@ export default class ChatSidebar extends React.Component {
   }
   render() {
     const ChatWindow = styled.div`
-      height: 100%;
+      height: 25%;
       background-color: ${this.state.isHidden ? 'whitesmoke' : 'grey'};
       border-right: ${this.state.isHidden ? 'none' : '2px solid dimgrey'};
     `
@@ -70,7 +70,7 @@ const ChatIdModule = styled.div`
   text-align: left;
   position: relative;
   top: 8px;
-  height: 4%;
+  height: 20%;
   background-color: grey;
 `
 
@@ -90,7 +90,7 @@ const IdInput = styled.input`
 
 const ChatBox = styled.div`
   text-align: center;
-  height: 20%;
+  height: 75%;
   background-color: grey;
 `
 
