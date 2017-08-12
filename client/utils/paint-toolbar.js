@@ -81,7 +81,6 @@ const PaintTools = styled.div`
   width: 604px;
   height: 135px;
   background-color: palegoldenrod;
-  text-align: left;
 `
 const PaletteContainer = styled.div`
   border: 2px solid black;
