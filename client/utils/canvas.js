@@ -1,6 +1,6 @@
 import React from 'react'
 
-import PaintToolbar from './paint-toolbar'
+import PaintSidebar from './paint-sidebar'
 
 import io from 'socket.io-client'
 const socket = io.connect()
@@ -167,7 +167,7 @@ export default class Canvas extends React.Component {
             this.canvas = canvas
           }}>
         </canvas>
-        <PaintToolbar updateColor={this.updateColor} updateBrushSize={this.updateBrushSize}/>
+        <PaintSidebar updateColor={this.updateColor} updateBrushSize={this.updateBrushSize}/>
       </div>
     )
   }
