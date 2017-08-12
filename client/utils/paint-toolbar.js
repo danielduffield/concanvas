@@ -76,6 +76,7 @@ export default class PaintToolbar extends React.Component {
 }
 
 const PaintTools = styled.div`
+  display: none;
   margin: 0 auto;
   border: 2px solid black;
   width: 604px;
