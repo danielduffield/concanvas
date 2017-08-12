@@ -39,7 +39,6 @@ export default class ChatSidebar extends React.Component {
     return (
       <ChatColumn id="chat-column">
         <SidebarContainer id="sidebar-container">
-          <MainTitle id="main-title">ConCanvas</MainTitle>
           <ChatFeed id="chat-feed" className={this.state.isHidden ? 'hidden' : ''}>
             <MessageList>
               <ChatBlob id="chat-blob">
@@ -80,16 +79,6 @@ export default class ChatSidebar extends React.Component {
   }
 }
 
-const MainTitle = styled.h1`
-  top: 10px;
-  font-size: 4em;
-  font-family: 'Bubblegum Sans', cursive;
-  left: 0;
-  right: 0;
-  position: absolute;
-  background-color: whitesmoke;
-`
-
 const ChatColumn = styled.div`
   float: left;
   width: 34%;
@@ -125,7 +114,6 @@ const ChatBox = styled.div`
 `
 
 const ChatFeed = styled.div`
-  padding-top: 100px;
   height: 75%;
   bottom: 0;
   background-color: whitesmoke;
@@ -136,8 +124,8 @@ const MessageList = styled.div`
   position: relative;
   height: 100%;
   border: 2px solid dimgrey;
+  border-top: none;
   width: 100%;
-  border-radius: 5px;
 `
 
 const ChatBlob = styled.div`

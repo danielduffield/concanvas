@@ -11,7 +11,8 @@
 }
 
 #my-canvas {
-  margin: 20px 0 0;
+  float: left;
+  margin: 100px 0 0;
   border: 2px solid black;
   background-color: white;
 }
@@ -32,6 +33,13 @@
   margin: 10px 0 10px 15px;
 }
 
+.toolbar-module-sidebar {
+  width: 86px;
+  height: 66px;
+  border: 2px solid black;
+  margin: 10px auto 0;
+}
+
 .toolbar-label {
   font-family: 'Bubblegum Sans', cursive;
   position: relative;
@@ -45,12 +53,31 @@
   font-size: 1.25em;
 }
 
+.toolbar-label-sidebar {
+  font-family: 'Bubblegum Sans', cursive;
+  background-color: gainsboro;
+  margin: 0 auto;
+  width: 86px;
+  height: 20px;
+  border: 2px solid black;
+  border-top: none;
+}
+
 .color-module {
   border: 2px solid black;
   float: left;
   height: 26px;
   width: 26px;
   margin: 7px 0 0 19px;
+  background-color: lightblue;
+}
+
+.color-module-sidebar {
+  border: 2px solid black;
+  float: left;
+  height: 26px;
+  width: 26px;
+  margin: 14px 4px 5px;
   background-color: lightblue;
 }
 
