@@ -30,7 +30,6 @@ export default class ChatSidebar extends React.Component {
     this.setState({ isHidden: false, chatMessages: this.state.chatMessages })
   }
   render() {
-    console.log(this.state)
     const ChatWindow = styled.div`
       height: 100%;
       background-color: ${this.state.isHidden ? 'whitesmoke' : 'grey'};
