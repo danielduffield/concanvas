@@ -6,7 +6,7 @@ export default class ChatSidebar extends React.Component {
     super(props)
     this.state = {
       isHidden: false,
-      messageList: []
+      chatMessages: []
     }
     this.hideChat = this.hideChat.bind(this)
     this.revealChat = this.revealChat.bind(this)
@@ -21,15 +21,16 @@ export default class ChatSidebar extends React.Component {
       nickname: messageFormData.get('id-field'),
       content: messageFormData.get('chat-field')
     }
-    console.log(message)
+    this.setState({ isHidden: this.state.isHidden, chatMessages: [...this.state.chatMessages, message] })
   }
   hideChat() {
-    this.setState({ isHidden: true, messageList: this.state.messageList })
+    this.setState({ isHidden: true, chatMessages: this.state.chatMessages })
   }
   revealChat() {
-    this.setState({ isHidden: false, messageList: this.state.messageList })
+    this.setState({ isHidden: false, chatMessages: this.state.chatMessages })
   }
   render() {
+    console.log(this.state)
     const ChatWindow = styled.div`
       height: 100%;
       background-color: ${this.state.isHidden ? 'whitesmoke' : 'grey'};
@@ -40,7 +41,15 @@ export default class ChatSidebar extends React.Component {
         <SidebarContainer id="sidebar-container">
           <MainTitle id="main-title">ConCanvas</MainTitle>
           <ChatFeed id="chat-feed" className={this.state.isHidden ? 'hidden' : ''}>
-            <MessageList></MessageList>
+            <MessageList>
+              <ChatBlob id="chat-blob">
+                {this.state.chatMessages.map((message, index) => {
+                  return (
+                    <div className="chat-message" key={index}>{message.nickname + ': ' + message.content}</div>
+                  )
+                })}
+              </ChatBlob>
+            </MessageList>
           </ChatFeed>
           <form id="message-form" onSubmit={this.submitMessage}
             ref={form => {
@@ -49,7 +58,8 @@ export default class ChatSidebar extends React.Component {
             <ChatWindow>
               <ChatIdModule id="chat-id-box"
                 className={this.state.isHidden ? 'hidden' : ''}>
-                Nickname: <IdInput id="chat-id-field" name="id-field" type="text"/>
+                Nickname:
+                <IdInput id="chat-id-field" name="id-field" type="text"/>
               </ChatIdModule>
               <ChatBox id="chat-box"
                 className={this.state.isHidden ? 'hidden' : ''}>
@@ -123,10 +133,17 @@ const ChatFeed = styled.div`
 `
 
 const MessageList = styled.div`
+  position: relative;
   height: 100%;
   border: 2px solid dimgrey;
   width: 100%;
   border-radius: 5px;
+`
+
+const ChatBlob = styled.div`
+  width: 100%;
+  position: absolute;
+  bottom: 0;
 `
 
 const ChatField = styled.textarea`

@@ -104,6 +104,11 @@
   display: none;
 }
 
+.chat-message {
+  text-align: left;
+  margin: 10px 10px 0;
+}
+
 #message-form {
   height: 25%;
   background-color: grey;
