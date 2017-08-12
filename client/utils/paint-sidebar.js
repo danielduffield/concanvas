@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import SizeSelector from './size-selector'
+
 const paletteColors = []
 const rows = 6
 const columns = 3
@@ -56,7 +58,7 @@ export default class PaintSidebar extends React.Component {
         <EraserIcon className="toolbar-module-sidebar"
           onClick={this.toggleEraser}></EraserIcon>
         <div className="toolbar-label-sidebar">Eraser</div>
-        <div className="toolbar-module-sidebar"></div>
+        <SizeSelector updateBrushSize={this.props.updateBrushSize}/>
         <div className="toolbar-label-sidebar">Size</div>
         <CurrentColor className="toolbar-module-sidebar"></CurrentColor>
         <div className="toolbar-label-sidebar">Current</div>

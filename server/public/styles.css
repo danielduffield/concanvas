@@ -83,7 +83,7 @@
 .size-button {
   width: 32px;
   display: block;
-  height: 36px;
+  height: 31px;
 }
 
 .size-button-container {
@@ -91,13 +91,13 @@
 }
 
 .line-width-module {
-  width: 76px;
-  height: 76px;
-  background-color: grey;
+  width: 86px;
+  height: 66px;
 }
 
 .size-counter-container {
-  height: 72px;
+  padding-left: 5px;
+  height: 62px;
   width: 40px;
   text-align: center;
   float: left;

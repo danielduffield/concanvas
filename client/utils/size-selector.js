@@ -27,7 +27,7 @@ export default class SizeSelector extends React.Component {
   render() {
     this.props.updateBrushSize(this.state.size)
     return (
-      <div className="line-width-module toolbar-module">
+      <div className="line-width-module toolbar-module-sidebar">
         <div className="size-counter-container">
           <SizeCounter id="size-counter" className="size-tool">{this.state.size}</SizeCounter>
         </div>
