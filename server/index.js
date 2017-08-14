@@ -60,10 +60,15 @@ function newConnection(socket) {
   socket.emit('connectionId', socket.id)
   socket.emit('unsavedData', unsavedData)
   socket.on('mouse', getPaintData)
+  socket.on('chat', broadcastChat)
 
   function getPaintData(data) {
     socket.broadcast.emit('mouse', data)
     console.log(data)
     unsavedData.push(data)
+  }
+
+  function broadcastChat(data) {
+    socket.broadcast.emit('chat', data)
   }
 }

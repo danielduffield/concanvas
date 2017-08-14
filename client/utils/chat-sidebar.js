@@ -1,6 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import io from 'socket.io-client'
+const socket = io.connect()
+
 export default class ChatSidebar extends React.Component {
   constructor(props) {
     super(props)
@@ -13,6 +16,7 @@ export default class ChatSidebar extends React.Component {
     this.revealChat = this.revealChat.bind(this)
     this.submitMessage = this.submitMessage.bind(this)
     this.enterSubmit = this.enterSubmit.bind(this)
+    this.updateChatFeed = this.updateChatFeed.bind(this)
 
     this.messageForm = null
   }
@@ -23,6 +27,10 @@ export default class ChatSidebar extends React.Component {
       nickname: messageFormData.get('id-field'),
       content: messageFormData.get('chat-field')
     }
+    this.setState({ isHidden: this.state.isHidden, chatMessages: [...this.state.chatMessages, message], id: message.nickname })
+    socket.emit('chat', message)
+  }
+  updateChatFeed(message) {
     this.setState({ isHidden: this.state.isHidden, chatMessages: [...this.state.chatMessages, message], id: message.nickname })
   }
   hideChat() {
@@ -35,6 +43,9 @@ export default class ChatSidebar extends React.Component {
     if (event.key === 'Enter') {
       this.submitMessage(event)
     }
+  }
+  componentDidMount() {
+    socket.on('chat', this.updateChatFeed)
   }
   render() {
     const ChatWindow = styled.div`
