@@ -17,6 +17,7 @@ export default class ChatSidebar extends React.Component {
     this.submitMessage = this.submitMessage.bind(this)
     this.enterSubmit = this.enterSubmit.bind(this)
     this.updateChatFeed = this.updateChatFeed.bind(this)
+    this.sendCookie = this.sendCookie.bind(this)
 
     this.messageForm = null
   }
@@ -56,7 +57,10 @@ export default class ChatSidebar extends React.Component {
     }
   }
   sendCookie(event) {
-    if (event.target.value === 'GUEST') return
+    if (event.target.value.includes('GUEST') && event.target.value.includes(this.socket.substr(0, 4))) {
+      return false
+    }
+    console.log('COOKIE SENT')
     const date = new Date()
     const daysTilExpiration = 3
     const expiration = date.setTime(date.getTime() + (daysTilExpiration * 24 * 60 * 60 * 1000))
@@ -66,6 +70,7 @@ export default class ChatSidebar extends React.Component {
     socket.on('chat', this.updateChatFeed)
   }
   render() {
+    this.socket = this.props.socketId
     const ChatWindow = styled.div`
       height: 100%;
       border-radius: 10px;
@@ -104,7 +109,7 @@ export default class ChatSidebar extends React.Component {
                   defaultValue={
                     this.state.id
                     ? this.state.id
-                    : 'GUEST'}
+                    : 'GUEST (' + (this.socket ? this.socket.substr(0, 4) : '') + ')'}
                   onBlur={this.sendCookie}/>
               </ChatIdModule>
               <ChatBox id="chat-box"

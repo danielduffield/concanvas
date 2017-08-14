@@ -44,6 +44,7 @@ export default class Canvas extends React.Component {
     socket.on('mouse', data => this.paintEvent(data.x, data.y, data.prevX, data.prevY, data.size, data.color))
     socket.on('connectionId', id => {
       this.socketId = id
+      this.props.updateSocketId(this.socketId)
     })
     socket.on('unsavedData', data => {
       this.unsavedData = data
@@ -178,7 +179,6 @@ export default class Canvas extends React.Component {
       left: ${this.isChatHidden ? 0 : '34%'};
       width: ${this.isChatHidden ? '100%' : '66%'};
     `
-
     return (
       <Container id="container">
         <SecondWrapper>
