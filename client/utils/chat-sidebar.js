@@ -92,13 +92,9 @@ export default class ChatSidebar extends React.Component {
             <MessageList>
               <ChatBlob id="chat-blob">
                 {this.state.chatMessages.map((message, index) => {
-                  const StyledNickname = styled.span`
-                    color: ${message.locallySubmitted ? 'red' : 'blue'};
-                  `
-
                   return (
                     <div className="chat-message" key={index}>
-                      <StyledNickname>{message.nickname}</StyledNickname>{': ' + message.content}
+                      <StyledNickname locallySubmitted={message.locallySubmitted}>{message.nickname}</StyledNickname>{': ' + message.content}
                     </div>
                   )
                 })}
@@ -140,6 +136,10 @@ export default class ChatSidebar extends React.Component {
     )
   }
 }
+
+const StyledNickname = styled.span`
+  color: ${props => props.locallySubmitted ? 'red' : 'blue'};
+`
 
 const ChatWindow = styled.div`
   height: 100%;

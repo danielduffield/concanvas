@@ -47,29 +47,22 @@ export default class PaintSidebar extends React.Component {
   }
   render() {
     this.props.updateColor(this.state.color)
-    const CurrentColor = styled.div`
-      background-color: ${this.color};
-    `
-    const EraserIcon = styled.div`
-      background-color: ${this.state.erasing ? 'deeppink' : 'pink'};
-    `
     return (
       <PaintTools>
         <EraserIcon className="toolbar-module-sidebar"
-          onClick={this.toggleEraser}></EraserIcon>
+          onClick={this.toggleEraser}
+          isActive={this.state.erasing}></EraserIcon>
         <div className="toolbar-label-sidebar">Eraser</div>
         <SizeSelector updateBrushSize={this.props.updateBrushSize}/>
         <div className="toolbar-label-sidebar">Size</div>
-        <CurrentColor className="toolbar-module-sidebar"></CurrentColor>
+        <CurrentColor className="toolbar-module-sidebar" color={this.color}></CurrentColor>
         <div className="toolbar-label-sidebar">Current</div>
         <Palette id="sidebar-palette">
           {paletteColors.map((colorModule, index) => {
-            const ColorDiv = styled.div`
-              background-color: ${colorModule.color};
-            `
             return (
               <ColorDiv id={'color-' + colorModule.index[0] + '-' + colorModule.index[1]}
                 className="color-module-sidebar" data-color={colorModule.color} onClick={this.selectColor}
+                color={colorModule.color}
                 key={index}></ColorDiv>
             )
           })}
@@ -78,6 +71,17 @@ export default class PaintSidebar extends React.Component {
     )
   }
 }
+
+const ColorDiv = styled.div`
+  background-color: ${props => props.color};
+`
+
+const CurrentColor = styled.div`
+  background-color: ${props => props.color};
+`
+const EraserIcon = styled.div`
+  background-color: ${props => props.isActive ? 'deeppink' : 'pink'};
+`
 
 const PaintTools = styled.div`
   float: left;

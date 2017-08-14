@@ -161,22 +161,10 @@ export default class Canvas extends React.Component {
   }
   render() {
     this.isChatHidden = this.props.isChatHidden
-    const SecondWrapper = styled.div`
-        position: relative;
-        height: 100%;
-        width: ${this.isChatHidden ? '704px' : '80%'};
-        margin: 0 auto;
-    `
 
-    const Container = styled.div`
-      height: 100%;
-      position: absolute;
-      left: ${this.isChatHidden ? 0 : '34%'};
-      width: ${this.isChatHidden ? '100%' : '66%'};
-    `
     return (
-      <Container id="container">
-        <SecondWrapper>
+      <Container id="container" isHidden={this.isChatHidden}>
+        <SecondWrapper isHidden={this.isChatHidden}>
           <Wrapper id="wrapper">
             <MainTitle id="main-title">ConCanvas</MainTitle>
             <canvas id="my-canvas" onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp}
@@ -201,6 +189,20 @@ function getCoordinates(canvas, event) {
     y: event.clientY - rect.top
   }
 }
+
+const SecondWrapper = styled.div`
+    position: relative;
+    height: 100%;
+    width: ${props => props.isHidden ? '704px' : '80%'};
+    margin: 0 auto;
+`
+
+const Container = styled.div`
+  height: 100%;
+  position: absolute;
+  left: ${props => props.isHidden ? 0 : '34%'};
+  width: ${props => props.isHidden ? '100%' : '66%'};
+`
 
 const MainTitle = styled.h1`
   width: 300px;
