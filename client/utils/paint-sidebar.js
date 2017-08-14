@@ -85,7 +85,7 @@ const PaintTools = styled.div`
   border-left: none;
   height: 604px;
   width: 135px;
-  margin-top: 100px;
+  margin-top: 125px;
   background-color: palegoldenrod;
 `
 const Palette = styled.div`
