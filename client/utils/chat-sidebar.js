@@ -6,7 +6,8 @@ export default class ChatSidebar extends React.Component {
     super(props)
     this.state = {
       isHidden: false,
-      chatMessages: []
+      chatMessages: [],
+      id: null
     }
     this.hideChat = this.hideChat.bind(this)
     this.revealChat = this.revealChat.bind(this)
@@ -21,7 +22,7 @@ export default class ChatSidebar extends React.Component {
       nickname: messageFormData.get('id-field'),
       content: messageFormData.get('chat-field')
     }
-    this.setState({ isHidden: this.state.isHidden, chatMessages: [...this.state.chatMessages, message] })
+    this.setState({ isHidden: this.state.isHidden, chatMessages: [...this.state.chatMessages, message], id: message.nickname })
   }
   hideChat() {
     this.setState({ isHidden: true, chatMessages: this.state.chatMessages })
@@ -57,7 +58,8 @@ export default class ChatSidebar extends React.Component {
               <ChatIdModule id="chat-id-box"
                 className={this.state.isHidden ? 'hidden' : ''}>
                 Nickname:
-                <IdInput id="chat-id-field" name="id-field" type="text"/>
+                <IdInput id="chat-id-field" name="id-field" type="text"
+                  defaultValue={this.state.id ? this.state.id : 'GUEST'}/>
               </ChatIdModule>
               <ChatBox id="chat-box"
                 className={this.state.isHidden ? 'hidden' : ''}>
