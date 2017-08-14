@@ -68,8 +68,9 @@ export default class ChatSidebar extends React.Component {
   render() {
     const ChatWindow = styled.div`
       height: 100%;
-      background-color: ${this.state.isHidden ? 'whitesmoke' : 'grey'};
-      border-right: ${this.state.isHidden ? 'none' : '2px solid dimgrey'};
+      border-radius: 10px;
+      border: ${this.state.isHidden ? 'none' : '2px solid steelblue'};
+      background-color: ${this.state.isHidden ? 'whitesmoke' : 'lightblue'};
     `
     return (
       <ChatColumn id="chat-column">
@@ -136,7 +137,9 @@ const ChatIdModule = styled.div`
   position: relative;
   top: 8px;
   height: 15%;
-  background-color: grey;
+  background-color: lightblue;
+  font-family: 'Bubblegum Sans', cursive;
+  font-size: 1.25em;
 `
 
 const SidebarContainer = styled.div`
@@ -150,20 +153,19 @@ const SidebarContainer = styled.div`
 const IdInput = styled.input`
   width: 55%;
   margin: 0 0 0 10px;
-  font-size: 1em;
+  font-size: 0.85em;
   line-height: 2%;`
 
 const ChatBox = styled.div`
   text-align: center;
   height: 75%;
-  background-color: grey;
+  background-color: lightblue;
 `
 
 const ChatFeed = styled.div`
   height: 80%;
   bottom: 0;
   background-color: whitesmoke;
-  border-bottom: 2px solid dimgrey;
 `
 
 const MessageList = styled.div`
