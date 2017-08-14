@@ -8,7 +8,7 @@ export default class ChatSidebar extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isHidden: false,
+      isHidden: true,
       chatMessages: [],
       id: getNicknameFromCookies()
     }
@@ -135,7 +135,7 @@ const ChatIdModule = styled.div`
   text-align: left;
   position: relative;
   top: 8px;
-  height: 20%;
+  height: 15%;
   background-color: grey;
 `
 
@@ -151,8 +151,7 @@ const IdInput = styled.input`
   width: 55%;
   margin: 0 0 0 10px;
   font-size: 1em;
-  line-height: 20px;
-`
+  line-height: 2%;`
 
 const ChatBox = styled.div`
   text-align: center;
@@ -161,7 +160,7 @@ const ChatBox = styled.div`
 `
 
 const ChatFeed = styled.div`
-  height: 75%;
+  height: 80%;
   bottom: 0;
   background-color: whitesmoke;
   border-bottom: 2px solid dimgrey;
@@ -184,7 +183,7 @@ const ChatField = styled.textarea`
   font-size: 1em;
   margin: 2% 0 0;
   width: 90%;
-  height: 60%;
+  height: 70%;
   resize: none;
 `
 

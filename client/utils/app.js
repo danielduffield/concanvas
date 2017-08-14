@@ -9,7 +9,7 @@ export default class App extends React.Component {
 
     this.updateChatStatus = this.updateChatStatus.bind(this)
     this.state = {
-      isChatHidden: false
+      isChatHidden: true
     }
   }
   updateChatStatus(status) {
