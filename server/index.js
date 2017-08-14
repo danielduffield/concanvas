@@ -69,6 +69,7 @@ function newConnection(socket) {
   }
 
   function broadcastChat(data) {
+    data.locallySubmitted = false
     socket.broadcast.emit('chat', data)
   }
 }

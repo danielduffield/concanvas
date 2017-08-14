@@ -25,7 +25,8 @@ export default class ChatSidebar extends React.Component {
     const messageFormData = new FormData(this.messageForm)
     const message = {
       nickname: messageFormData.get('id-field'),
-      content: messageFormData.get('chat-field')
+      content: messageFormData.get('chat-field'),
+      locallySubmitted: true
     }
     if (message.content === '') return
     this.setState(
@@ -77,8 +78,14 @@ export default class ChatSidebar extends React.Component {
             <MessageList>
               <ChatBlob id="chat-blob">
                 {this.state.chatMessages.map((message, index) => {
+                  const StyledNickname = styled.span`
+                    color: ${message.locallySubmitted ? 'red' : 'blue'};
+                  `
+
                   return (
-                    <div className="chat-message" key={index}>{message.nickname + ': ' + message.content}</div>
+                    <div className="chat-message" key={index}>
+                      <StyledNickname>{message.nickname}</StyledNickname>{': ' + message.content}
+                    </div>
                   )
                 })}
               </ChatBlob>
