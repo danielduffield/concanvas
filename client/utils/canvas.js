@@ -168,11 +168,6 @@ export default class Canvas extends React.Component {
         margin: 0 auto;
     `
 
-    const Wrapper = styled.div`
-      min-width: 740px;
-      position: absolute;
-    `
-
     const Container = styled.div`
       height: 100%;
       position: absolute;
@@ -217,4 +212,9 @@ const MainTitle = styled.h1`
   position: absolute;
   margin: 0 auto;
   background-color: whitesmoke;
+`
+
+const Wrapper = styled.div`
+  min-width: 740px;
+  position: absolute;
 `
