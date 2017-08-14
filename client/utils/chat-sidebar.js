@@ -11,7 +11,7 @@ export default class ChatSidebar extends React.Component {
       isHidden: true,
       chatMessages: [],
       nickname: getNicknameFromCookies(),
-      messageContent: null,
+      messageContent: '',
       socketId: null
     }
     this.hideChat = this.hideChat.bind(this)
@@ -21,6 +21,7 @@ export default class ChatSidebar extends React.Component {
     this.updateChatFeed = this.updateChatFeed.bind(this)
     this.sendCookie = this.sendCookie.bind(this)
     this.updateNickname = this.updateNickname.bind(this)
+    this.updateMessageContent = this.updateMessageContent.bind(this)
 
     this.messageForm = null
   }
@@ -37,7 +38,8 @@ export default class ChatSidebar extends React.Component {
       {
         chatMessages: this.state.chatMessages.length < 23
           ? [...this.state.chatMessages, message]
-          : [...this.state.chatMessages.slice(1, this.state.chatMessages.length), message]
+          : [...this.state.chatMessages.slice(1, this.state.chatMessages.length), message],
+        messageContent: ''
       })
     socket.emit('chat', message)
   }
@@ -72,6 +74,9 @@ export default class ChatSidebar extends React.Component {
     this.setState({
       nickname: event.target.value
     })
+  }
+  updateMessageContent(event) {
+    this.setState({ messageContent: event.target.value })
   }
   componentDidMount() {
     socket.on('chat', this.updateChatFeed)
@@ -118,7 +123,8 @@ export default class ChatSidebar extends React.Component {
               <ChatBox id="chat-box"
                 className={this.state.isHidden ? 'hidden' : ''}>
                 <ChatField name="chat-field" id="chat-field" cols="27" rows="4"
-                  maxLength="250" onKeyPress={this.enterSubmit}></ChatField>
+                  maxLength="250" onKeyPress={this.enterSubmit}
+                  value={this.state.messageContent} onChange={this.updateMessageContent}></ChatField>
                 <button id="chat-send" className="chat-button float-right"
                   onClick={this.submitMessage} type="submit">Chat</button>
                 <button id="chat-hide" className="chat-button float-left"
