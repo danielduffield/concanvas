@@ -10,7 +10,9 @@ export default class ChatSidebar extends React.Component {
     this.state = {
       isHidden: true,
       chatMessages: [],
-      id: getNicknameFromCookies()
+      nickname: getNicknameFromCookies(),
+      messageContent: null,
+      socketId: null
     }
     this.hideChat = this.hideChat.bind(this)
     this.revealChat = this.revealChat.bind(this)
@@ -18,6 +20,7 @@ export default class ChatSidebar extends React.Component {
     this.enterSubmit = this.enterSubmit.bind(this)
     this.updateChatFeed = this.updateChatFeed.bind(this)
     this.sendCookie = this.sendCookie.bind(this)
+    this.updateNickname = this.updateNickname.bind(this)
 
     this.messageForm = null
   }
@@ -32,23 +35,21 @@ export default class ChatSidebar extends React.Component {
     if (message.content === '') return
     this.setState(
       {
-        isHidden: this.state.isHidden,
         chatMessages: this.state.chatMessages.length < 23
           ? [...this.state.chatMessages, message]
-          : [...this.state.chatMessages.slice(1, this.state.chatMessages.length), message],
-        id: message.nickname
+          : [...this.state.chatMessages.slice(1, this.state.chatMessages.length), message]
       })
     socket.emit('chat', message)
   }
   updateChatFeed(message) {
-    this.setState({ isHidden: this.state.isHidden, chatMessages: [...this.state.chatMessages, message], id: this.state.id })
+    this.setState({ chatMessages: [...this.state.chatMessages, message] })
   }
   hideChat() {
-    this.setState({ isHidden: true, chatMessages: this.state.chatMessages })
+    this.setState({ isHidden: true })
     this.props.updateChatStatus(true)
   }
   revealChat() {
-    this.setState({ isHidden: false, chatMessages: this.state.chatMessages })
+    this.setState({ isHidden: false })
     this.props.updateChatStatus(false)
   }
   enterSubmit(event) {
@@ -57,7 +58,7 @@ export default class ChatSidebar extends React.Component {
     }
   }
   sendCookie(event) {
-    if (event.target.value.includes('GUEST') && event.target.value.includes(this.socket.substr(0, 4))) {
+    if (event.target.value.includes('GUEST') && event.target.value.includes(this.state.socketId.substr(0, 4))) {
       return false
     }
     console.log('COOKIE SENT')
@@ -66,17 +67,19 @@ export default class ChatSidebar extends React.Component {
     const expiration = date.setTime(date.getTime() + (daysTilExpiration * 24 * 60 * 60 * 1000))
     document.cookie = 'concanvas_nickname=' + event.target.value + '; expires=' + expiration
   }
+  updateNickname(event) {
+    console.log(event.target.value)
+    this.setState({
+      nickname: event.target.value
+    })
+  }
   componentDidMount() {
     socket.on('chat', this.updateChatFeed)
+    socket.on('connectionId', id => {
+      this.setState({ socketId: id })
+    })
   }
   render() {
-    this.socket = this.props.socketId
-    const ChatWindow = styled.div`
-      height: 100%;
-      border-radius: 10px;
-      border: ${this.state.isHidden ? 'none' : '2px solid steelblue'};
-      background-color: ${this.state.isHidden ? 'whitesmoke' : 'lightblue'};
-    `
     return (
       <ChatColumn id="chat-column">
         <SidebarContainer id="sidebar-container">
@@ -101,21 +104,21 @@ export default class ChatSidebar extends React.Component {
             ref={form => {
               this.messageForm = form
             }}>
-            <ChatWindow>
+            <ChatWindow isHidden={this.state.isHidden}>
               <ChatIdModule id="chat-id-box"
                 className={this.state.isHidden ? 'hidden' : ''}>
                 Nickname:
                 <IdInput id="chat-id-field" name="id-field" type="text"
-                  defaultValue={
-                    this.state.id
-                    ? this.state.id
-                    : 'GUEST (' + (this.socket ? this.socket.substr(0, 4) : '') + ')'}
+                  value={this.state.nickname
+                    ? this.state.nickname
+                    : 'GUEST (' + (this.state.socketId ? this.state.socketId.substr(0, 4) : '') + ')'}
+                  onChange={this.updateNickname}
                   onBlur={this.sendCookie}/>
               </ChatIdModule>
               <ChatBox id="chat-box"
                 className={this.state.isHidden ? 'hidden' : ''}>
                 <ChatField name="chat-field" id="chat-field" cols="27" rows="4"
-                  maxLength="250" autoFocus onKeyPress={this.enterSubmit}></ChatField>
+                  maxLength="250" onKeyPress={this.enterSubmit}></ChatField>
                 <button id="chat-send" className="chat-button float-right"
                   onClick={this.submitMessage} type="submit">Chat</button>
                 <button id="chat-hide" className="chat-button float-left"
@@ -131,6 +134,13 @@ export default class ChatSidebar extends React.Component {
     )
   }
 }
+
+const ChatWindow = styled.div`
+  height: 100%;
+  border-radius: 10px;
+  border: ${props => props.isHidden ? 'none' : '2px solid steelblue'};
+  background-color: ${props => props.isHidden ? 'whitesmoke' : 'lightblue'};
+`
 
 const ChatColumn = styled.div`
   float: left;
