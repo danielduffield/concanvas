@@ -127,7 +127,8 @@
 
 .chat-message {
   text-align: left;
-  margin: 10px 10px 0;
+  margin: 10px;
+  word-wrap: break-word;
 }
 
 #message-form {
