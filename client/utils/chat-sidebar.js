@@ -42,9 +42,11 @@ export default class ChatSidebar extends React.Component {
   }
   hideChat() {
     this.setState({ isHidden: true, chatMessages: this.state.chatMessages })
+    this.props.updateChatStatus(true)
   }
   revealChat() {
     this.setState({ isHidden: false, chatMessages: this.state.chatMessages })
+    this.props.updateChatStatus(false)
   }
   enterSubmit(event) {
     if (event.key === 'Enter') {
@@ -172,6 +174,7 @@ const UnhideButton = styled.button`
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 34%;
+  width: 200px;
   height: 50px;
+  z-index: 10;
 `

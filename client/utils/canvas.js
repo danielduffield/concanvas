@@ -159,6 +159,26 @@ export default class Canvas extends React.Component {
     this.painting = false
   }
   render() {
+    this.isChatHidden = this.props.isChatHidden
+    const SecondWrapper = styled.div`
+        position: relative;
+        height: 100%;
+        width: ${this.isChatHidden ? '704px' : '80%'};
+        margin: 0 auto;
+    `
+
+    const Wrapper = styled.div`
+      min-width: 740px;
+      position: absolute;
+    `
+
+    const Container = styled.div`
+      height: 100%;
+      position: absolute;
+      left: ${this.isChatHidden ? 0 : '34%'};
+      width: ${this.isChatHidden ? '100%' : '66%'};
+    `
+
     return (
       <Container id="container">
         <SecondWrapper>
@@ -197,24 +217,4 @@ const MainTitle = styled.h1`
   position: absolute;
   margin: 0 auto;
   background-color: whitesmoke;
-  z-index: 10;
-`
-
-const SecondWrapper = styled.div`
-    position: relative;
-    height: 100%;
-    width: 80%;
-    margin: 0 auto;
-`
-
-const Wrapper = styled.div`
-  min-width: 740px;
-  position: absolute;
-`
-
-const Container = styled.div`
-  height: 100%;
-  position: absolute;
-  left: 34%;
-  width: 66%;
 `
