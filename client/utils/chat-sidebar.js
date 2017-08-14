@@ -12,6 +12,7 @@ export default class ChatSidebar extends React.Component {
     this.hideChat = this.hideChat.bind(this)
     this.revealChat = this.revealChat.bind(this)
     this.submitMessage = this.submitMessage.bind(this)
+    this.enterSubmit = this.enterSubmit.bind(this)
 
     this.messageForm = null
   }
@@ -29,6 +30,11 @@ export default class ChatSidebar extends React.Component {
   }
   revealChat() {
     this.setState({ isHidden: false, chatMessages: this.state.chatMessages })
+  }
+  enterSubmit(event) {
+    if (event.key === 'Enter') {
+      this.submitMessage(event)
+    }
   }
   render() {
     const ChatWindow = styled.div`
@@ -63,7 +69,8 @@ export default class ChatSidebar extends React.Component {
               </ChatIdModule>
               <ChatBox id="chat-box"
                 className={this.state.isHidden ? 'hidden' : ''}>
-                <ChatField name="chat-field" id="chat-field" cols="27" rows="4"></ChatField>
+                <ChatField name="chat-field" id="chat-field" cols="27" rows="4"
+                  autoFocus onKeyPress={this.enterSubmit}></ChatField>
                 <button id="chat-send" className="chat-button float-right"
                   onClick={this.submitMessage} type="submit">Chat</button>
                 <button id="chat-hide" className="chat-button float-left"
