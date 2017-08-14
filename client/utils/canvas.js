@@ -209,7 +209,7 @@ function getCoordinates(canvas, event) {
 
 const MainTitle = styled.h1`
   width: 300px;
-  top: 10px;
+  top: 25px;
   font-size: 4em;
   font-family: 'Bubblegum Sans', cursive;
   left: 0;
