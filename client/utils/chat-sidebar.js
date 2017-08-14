@@ -27,7 +27,14 @@ export default class ChatSidebar extends React.Component {
       nickname: messageFormData.get('id-field'),
       content: messageFormData.get('chat-field')
     }
-    this.setState({ isHidden: this.state.isHidden, chatMessages: [...this.state.chatMessages, message], id: message.nickname })
+    this.setState(
+      {
+        isHidden: this.state.isHidden,
+        chatMessages: this.state.chatMessages.length < 23
+          ? [...this.state.chatMessages, message]
+          : [...this.state.chatMessages.slice(1, this.state.chatMessages.length), message],
+        id: message.nickname
+      })
     socket.emit('chat', message)
   }
   updateChatFeed(message) {
@@ -81,7 +88,7 @@ export default class ChatSidebar extends React.Component {
               <ChatBox id="chat-box"
                 className={this.state.isHidden ? 'hidden' : ''}>
                 <ChatField name="chat-field" id="chat-field" cols="27" rows="4"
-                  autoFocus onKeyPress={this.enterSubmit}></ChatField>
+                  maxLength="250" autoFocus onKeyPress={this.enterSubmit}></ChatField>
                 <button id="chat-send" className="chat-button float-right"
                   onClick={this.submitMessage} type="submit">Chat</button>
                 <button id="chat-hide" className="chat-button float-left"
@@ -100,7 +107,6 @@ export default class ChatSidebar extends React.Component {
 
 const ChatColumn = styled.div`
   float: left;
-  width: 34%;
 `
 
 const ChatIdModule = styled.div`
@@ -116,6 +122,7 @@ const SidebarContainer = styled.div`
   position: absolute;
   width: 34%;
   height: 100%;
+  max-width: 500px;
   background-color: whitesmoke;
 `
 
