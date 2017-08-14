@@ -10,7 +10,7 @@ export default class ChatSidebar extends React.Component {
     this.state = {
       isHidden: false,
       chatMessages: [],
-      id: null
+      id: getNicknameFromCookies()
     }
     this.hideChat = this.hideChat.bind(this)
     this.revealChat = this.revealChat.bind(this)
@@ -27,6 +27,7 @@ export default class ChatSidebar extends React.Component {
       nickname: messageFormData.get('id-field'),
       content: messageFormData.get('chat-field')
     }
+    if (message.content === '') return
     this.setState(
       {
         isHidden: this.state.isHidden,
@@ -38,7 +39,7 @@ export default class ChatSidebar extends React.Component {
     socket.emit('chat', message)
   }
   updateChatFeed(message) {
-    this.setState({ isHidden: this.state.isHidden, chatMessages: [...this.state.chatMessages, message], id: message.nickname })
+    this.setState({ isHidden: this.state.isHidden, chatMessages: [...this.state.chatMessages, message], id: this.state.id })
   }
   hideChat() {
     this.setState({ isHidden: true, chatMessages: this.state.chatMessages })
@@ -52,6 +53,13 @@ export default class ChatSidebar extends React.Component {
     if (event.key === 'Enter') {
       this.submitMessage(event)
     }
+  }
+  sendCookie(event) {
+    if (event.target.value === 'GUEST') return
+    const date = new Date()
+    const daysTilExpiration = 3
+    const expiration = date.setTime(date.getTime() + (daysTilExpiration * 24 * 60 * 60 * 1000))
+    document.cookie = 'concanvas_nickname=' + event.target.value + '; expires=' + expiration
   }
   componentDidMount() {
     socket.on('chat', this.updateChatFeed)
@@ -85,7 +93,11 @@ export default class ChatSidebar extends React.Component {
                 className={this.state.isHidden ? 'hidden' : ''}>
                 Nickname:
                 <IdInput id="chat-id-field" name="id-field" type="text"
-                  defaultValue={this.state.id ? this.state.id : 'GUEST'}/>
+                  defaultValue={
+                    this.state.id
+                    ? this.state.id
+                    : 'GUEST'}
+                  onBlur={this.sendCookie}/>
               </ChatIdModule>
               <ChatBox id="chat-box"
                 className={this.state.isHidden ? 'hidden' : ''}>
@@ -178,3 +190,12 @@ const UnhideButton = styled.button`
   height: 50px;
   z-index: 10;
 `
+
+function getNicknameFromCookies() {
+  const cookieList = document.cookie
+  const cookies = cookieList.split('; ').map(cookiePair => cookiePair.split('='))
+  const index = cookies.findIndex(cookie => {
+    return cookie[0] === 'concanvas_nickname'
+  })
+  return index !== -1 ? cookies[index][1] : null
+}

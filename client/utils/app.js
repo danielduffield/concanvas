@@ -16,7 +16,6 @@ export default class App extends React.Component {
     this.setState({ isChatHidden: status })
   }
   render() {
-    console.log('main state ', this.state.isChatHidden)
     return (
       <div>
         <ChatSidebar updateChatStatus={this.updateChatStatus}/>
