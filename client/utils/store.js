@@ -1,20 +1,22 @@
 import { createStore, combineReducers } from 'redux'
 
 const reducer = combineReducers({
-  paintReducer: paintReducer,
-  chatReducer: chatReducer
+  paint: paintReducer,
+  chat: chatReducer
 })
 
 function paintReducer(state = {
   color: '#000000',
-  isErasing: false,
-  socketId: null
+  size: 2,
+  isErasing: false
 }, action) {
   switch (action.type) {
     case 'SELECTED_COLOR':
-      return Object.assign({}, state, { color: action.payload.color })
+      return Object.assign({}, state, { color: action.payload.text, isErasing: false })
+    case 'SELECTED_SIZE':
+      return Object.assign({}, state, { size: action.payload.text })
     case 'TOGGLED_ERASER':
-      return Object.assign({}, state, { isErasing: !state.isErasing })
+      return Object.assign({}, state, { isErasing: !state.isErasing, color: !state.isErasing ? '#FFFFFF' : state.color })
     default:
       return state
   }
@@ -24,7 +26,8 @@ function chatReducer(state = {
   isChatHidden: true,
   chatFeed: [],
   nickname: null,
-  messageContent: ''
+  messageContent: '',
+  socketId: null
 }, action) {
   switch (action.type) {
     case 'SOCKET_ESTABLISHED':
@@ -32,9 +35,13 @@ function chatReducer(state = {
     case 'TOGGLED_CHAT':
       return Object.assign({}, state, { isChatHidden: !state.isChatHidden })
     case 'MESSAGE_UPDATED':
-      return Object.assign({}, state, { messageContent: state.messageContent.concat(action.payload.text) })
+      return Object.assign({}, state, { messageContent: action.payload.text })
     case 'MESSAGE_SENT':
-      return Object.assign({}, state, { chatFeed: state.chatFeed.concat(action.payload.text) })
+      return state.chatFeed.length < 23
+          ? Object.assign({}, state, { chatFeed: state.chatFeed.concat(action.payload.message), messageContent: '' })
+          : Object.assign({}, state, {
+            chatFeed: [...state.chatFeed.slice(1, state.chatFeed.length), action.payload.message],
+            messageContent: '' })
     case 'NICKNAME_SAVED':
       return Object.assign({}, state, { nickname: action.payload.text })
     default:
