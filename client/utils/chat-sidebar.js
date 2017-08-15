@@ -38,7 +38,7 @@ class ChatSidebar extends React.Component {
   updateChatFeed(message) {
     store.dispatch({
       type: 'MESSAGE_SENT',
-      payload: { text: message }
+      payload: { message: message }
     })
   }
   toggleChat() {
@@ -92,6 +92,7 @@ class ChatSidebar extends React.Component {
             <MessageList>
               <ChatBlob id="chat-blob">
                 {this.props.chatFeed.map((message, index) => {
+                  console.log(message)
                   return (
                     <div className="chat-message" key={index}>
                       <StyledNickname locallySubmitted={message.locallySubmitted}>{message.nickname}</StyledNickname>{': ' + message.content}
