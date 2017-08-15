@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
+import socket from './socket-connection'
 
 class UserList extends React.Component {
   constructor(props) {
@@ -11,6 +12,14 @@ class UserList extends React.Component {
   toggleUserList() {
     this.props.dispatch({
       type: 'TOGGLED_USER_LIST'
+    })
+  }
+  componentDidMount() {
+    socket.on('userlist', users => {
+      this.props.dispatch({
+        type: 'UPDATED_USER_LIST',
+        payload: { users }
+      })
     })
   }
   render() {
@@ -25,11 +34,9 @@ class UserList extends React.Component {
             <UserCount>Online: </UserCount>
           </UsersTopBar>
           <Users>
-            <OnlineUser>User #</OnlineUser>
-            <OnlineUser>User #</OnlineUser>
-            <OnlineUser>User #</OnlineUser>
-            <OnlineUser>User #</OnlineUser>
-            <OnlineUser>User #</OnlineUser>
+            {this.props.onlineUsers.map((user, index) => {
+              return <OnlineUser key={index}>{user.nickname}</OnlineUser>
+            })}
           </Users>
         </UsersContainer>
       </div>
@@ -95,7 +102,8 @@ const Users = styled.div`
 
 function mapStateToProps(state) {
   return {
-    isUserListHidden: state.chat.isUserListHidden
+    isUserListHidden: state.chat.isUserListHidden,
+    onlineUsers: state.chat.onlineUsers
   }
 }
 
