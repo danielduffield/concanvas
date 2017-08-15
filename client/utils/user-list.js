@@ -24,12 +24,22 @@ class UserList extends React.Component {
               onClick={this.toggleUserList}>Hide Users</HideUsers>
             <UserCount>Online: </UserCount>
           </UsersTopBar>
-          <Users></Users>
+          <Users>
+            <OnlineUser>User #</OnlineUser>
+            <OnlineUser>User #</OnlineUser>
+            <OnlineUser>User #</OnlineUser>
+            <OnlineUser>User #</OnlineUser>
+            <OnlineUser>User #</OnlineUser>
+          </Users>
         </UsersContainer>
       </div>
     )
   }
 }
+
+const OnlineUser = styled.div`
+  margin: 5px;
+`
 
 const UnhideUsers = styled.button`
   margin: 0;
@@ -68,6 +78,7 @@ const UsersContainer = styled.div`
 
 const UsersTopBar = styled.div`
   position: absolute;
+  min-height: 30px;
   height: 7%;
   width: 100%;
   background-color: grey;
@@ -78,6 +89,7 @@ const Users = styled.div`
   height: 90%;
   width: 90%;
   margin: 5%;
+  padding-top: 3%;
   overflow-y: scroll;
 `
 
