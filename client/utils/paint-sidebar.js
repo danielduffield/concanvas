@@ -37,7 +37,10 @@ export default class PaintSidebar extends React.Component {
     this.toggleEraser = this.toggleEraser.bind(this)
   }
   toggleEraser() {
-    if (this.state.erasing) this.setState({ color: this.color, erasing: false })
+    if (this.state.erasing) {
+      this.setState({ color: this.color, erasing: false })
+      this.props.updateColor(this.color)
+    }
     else {
       this.setState({ color: '#FFFFFF', erasing: true })
       this.props.updateColor('#FFFFFF')
