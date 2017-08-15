@@ -69,16 +69,15 @@ function newConnection(socket) {
     let nickname
     if (data === 'GUEST') nickname = data + '(' + socket.id.substr(0, 4) + ')'
     else nickname = data
-    const user = {
-      socketId: socket.id,
-      nickname: nickname
-    }
+
+    const user = { socketId: socket.id, nickname: nickname }
     const userIndex = currentlyOnline.findIndex(user => user.socketId === socket.id)
+
     if (userIndex === -1) currentlyOnline.push(user)
-    else {
-      currentlyOnline[userIndex].nickname = data
-    }
+    else currentlyOnline[userIndex].nickname = data
+
     console.log('Currently Online: ', currentlyOnline)
+    io.sockets.emit('userlist', currentlyOnline)
   }
 
   function handleUserDisconnect() {
@@ -88,6 +87,7 @@ function newConnection(socket) {
       currentlyOnline.splice(userIndex, 1)
     }
     console.log('Currently Online: ', currentlyOnline)
+    io.sockets.emit('userlist', currentlyOnline)
   }
 
   function getPaintData(data) {
