@@ -1,12 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
 
+import store from './store'
 import PaintSidebar from './paint-sidebar'
 
 import io from 'socket.io-client'
 const socket = io.connect()
 
-export default class Canvas extends React.Component {
+class Canvas extends React.Component {
   constructor(props) {
     super(props)
     this.saveTimer = null
@@ -18,34 +20,24 @@ export default class Canvas extends React.Component {
     this.previousY = 0
     this.clientX = 0
     this.clientY = 0
-    this.lineWidth = 2
-    this.currentColor = null
 
     this.lastSaved = null
     this.painting = false
-    this.socketId = null
     this.unsavedData = []
-    this.isChatHidden = true
 
     this.updateCoordinates = this.updateCoordinates.bind(this)
     this.handleMouseDown = this.handleMouseDown.bind(this)
     this.handleMouseUp = this.handleMouseUp.bind(this)
     this.paintEvent = this.paintEvent.bind(this)
     this.loadCanvas = this.loadCanvas.bind(this)
-    this.updateColor = this.updateColor.bind(this)
-    this.updateBrushSize = this.updateBrushSize.bind(this)
-  }
-  updateColor(color) {
-    this.currentColor = color
-  }
-  updateBrushSize(size) {
-    this.lineWidth = size
   }
   componentDidMount() {
     socket.on('mouse', data => this.paintEvent(data.x, data.y, data.prevX, data.prevY, data.size, data.color))
     socket.on('connectionId', id => {
-      this.socketId = id
-      this.props.updateSocketId(this.socketId)
+      store.dispatch({
+        type: 'SOCKET_ESTABLISHED',
+        payload: { text: id }
+      })
     })
     socket.on('unsavedData', data => {
       this.unsavedData = data
@@ -59,7 +51,7 @@ export default class Canvas extends React.Component {
         const response = await fetch('/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ saved, socketId: this.socketId })
+          body: JSON.stringify({ saved, socketId: this.props.socketId })
         })
         console.log(response)
       }
@@ -147,12 +139,12 @@ export default class Canvas extends React.Component {
         y: this.clientY,
         prevX: this.previousX,
         prevY: this.previousY,
-        size: this.lineWidth,
-        color: this.currentColor
+        size: this.props.size,
+        color: this.props.color
       }
       socket.emit('mouse', paintData)
 
-      this.paintEvent(this.clientX, this.clientY, this.previousX, this.previousY, this.lineWidth, this.currentColor)
+      this.paintEvent(this.clientX, this.clientY, this.previousX, this.previousY, this.props.size, this.props.color)
     }
   }
   handleMouseDown(event) {
@@ -161,16 +153,11 @@ export default class Canvas extends React.Component {
   handleMouseUp(event) {
     this.painting = false
   }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.isChatHidden !== this.isChatHidden) {
-      this.isChatHidden = nextProps.isChatHidden
-    }
-  }
   render() {
 
     return (
-      <Container id="container" isHidden={this.isChatHidden}>
-        <SecondWrapper isHidden={this.isChatHidden}>
+      <Container id="container" isHidden={this.props.isChatHidden}>
+        <SecondWrapper isHidden={this.props.isChatHidden}>
           <Wrapper id="wrapper">
             <MainTitle id="main-title">ConCanvas</MainTitle>
             <canvas id="my-canvas" onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp}
@@ -180,7 +167,7 @@ export default class Canvas extends React.Component {
                 this.canvas = canvas
               }}>
             </canvas>
-            <PaintSidebar updateColor={this.updateColor} updateBrushSize={this.updateBrushSize}/>
+            <PaintSidebar />
           </Wrapper>
         </SecondWrapper>
       </Container>
@@ -226,3 +213,16 @@ const Wrapper = styled.div`
   min-width: 740px;
   position: absolute;
 `
+
+function mapStateToProps(state) {
+  return {
+    color: state.paint.color,
+    size: state.paint.size,
+    isErasing: state.paint.isErasing,
+    isChatHidden: state.chat.isChatHidden,
+    socketId: state.chat.socketId
+  }
+}
+
+const Connected = connect(mapStateToProps)(Canvas)
+export default Connected

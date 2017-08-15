@@ -1,21 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
+
+import store from './store'
 
 import io from 'socket.io-client'
 const socket = io.connect()
 
-export default class ChatSidebar extends React.Component {
+class ChatSidebar extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      isHidden: true,
-      chatMessages: [],
-      nickname: getNicknameFromCookies(),
-      messageContent: '',
-      socketId: null
-    }
-    this.hideChat = this.hideChat.bind(this)
-    this.revealChat = this.revealChat.bind(this)
+
     this.submitMessage = this.submitMessage.bind(this)
     this.enterSubmit = this.enterSubmit.bind(this)
     this.updateChatFeed = this.updateChatFeed.bind(this)
@@ -34,25 +29,20 @@ export default class ChatSidebar extends React.Component {
       locallySubmitted: true
     }
     if (message.content === '') return
-    this.setState(
-      {
-        chatMessages: this.state.chatMessages.length < 23
-          ? [...this.state.chatMessages, message]
-          : [...this.state.chatMessages.slice(1, this.state.chatMessages.length), message],
-        messageContent: ''
-      })
+    store.dispatch({
+      type: 'MESSAGE_SENT',
+      payload: { message: message }
+    })
     socket.emit('chat', message)
   }
   updateChatFeed(message) {
-    this.setState({ chatMessages: [...this.state.chatMessages, message] })
+    store.dispatch({
+      type: 'MESSAGE_SENT',
+      payload: { text: message }
+    })
   }
-  hideChat() {
-    this.setState({ isHidden: true })
-    this.props.updateChatStatus(true)
-  }
-  revealChat() {
-    this.setState({ isHidden: false })
-    this.props.updateChatStatus(false)
+  toggleChat() {
+    store.dispatch({ type: 'TOGGLED_CHAT' })
   }
   enterSubmit(event) {
     if (event.key === 'Enter') {
@@ -60,7 +50,7 @@ export default class ChatSidebar extends React.Component {
     }
   }
   sendCookie(event) {
-    if (event.target.value.includes('GUEST') && event.target.value.includes(this.state.socketId.substr(0, 4))) {
+    if (event.target.value.includes('GUEST') && event.target.value.includes(this.props.socketId.substr(0, 4))) {
       return false
     }
     console.log('COOKIE SENT')
@@ -71,27 +61,37 @@ export default class ChatSidebar extends React.Component {
   }
   updateNickname(event) {
     console.log(event.target.value)
-    this.setState({
-      nickname: event.target.value
+    store.dispatch({
+      type: 'NICKNAME_SAVED',
+      payload: { text: event.target.value }
     })
   }
   updateMessageContent(event) {
-    this.setState({ messageContent: event.target.value })
+    store.dispatch({
+      type: 'MESSAGE_UPDATED',
+      payload: { text: event.target.value }
+    })
   }
   componentDidMount() {
     socket.on('chat', this.updateChatFeed)
-    socket.on('connectionId', id => {
-      this.setState({ socketId: id })
-    })
+
+    const nickname = getNicknameFromCookies()
+    if (nickname) {
+      store.dispatch({
+        type: 'NICKNAME_SAVED',
+        payload: { text: nickname }
+      })
+    }
   }
   render() {
+    console.log(store.getState())
     return (
       <ChatColumn id="chat-column">
         <SidebarContainer id="sidebar-container">
-          <ChatFeed id="chat-feed" className={this.state.isHidden ? 'hidden' : ''}>
+          <ChatFeed id="chat-feed" className={this.props.isChatHidden ? 'hidden' : ''}>
             <MessageList>
               <ChatBlob id="chat-blob">
-                {this.state.chatMessages.map((message, index) => {
+                {this.props.chatFeed.map((message, index) => {
                   return (
                     <div className="chat-message" key={index}>
                       <StyledNickname locallySubmitted={message.locallySubmitted}>{message.nickname}</StyledNickname>{': ' + message.content}
@@ -105,33 +105,33 @@ export default class ChatSidebar extends React.Component {
             ref={form => {
               this.messageForm = form
             }}>
-            <ChatWindow isHidden={this.state.isHidden}>
+            <ChatWindow isHidden={this.props.isChatHidden}>
               <ChatIdModule id="chat-id-box"
-                className={this.state.isHidden ? 'hidden' : ''}>
+                className={this.props.isChatHidden ? 'hidden' : ''}>
                 Nickname:
                 <IdInput id="chat-id-field" name="id-field" type="text"
-                  value={this.state.nickname
-                    ? this.state.nickname
-                    : 'GUEST (' + (this.state.socketId ? this.state.socketId.substr(0, 4) : '') + ')'}
+                  value={this.props.nickname
+                    ? this.props.nickname
+                    : 'GUEST (' + (this.props.socketId ? this.props.socketId.substr(0, 4) : '') + ')'}
                   onChange={this.updateNickname}
                   onBlur={this.sendCookie}/>
               </ChatIdModule>
               <ChatBox id="chat-box"
-                className={this.state.isHidden ? 'hidden' : ''}>
+                className={this.props.isChatHidden ? 'hidden' : ''}>
                 <ChatField name="chat-field" id="chat-field" cols="27" rows="4"
                   maxLength="250" onKeyPress={this.enterSubmit}
-                  value={this.state.messageContent} onChange={this.updateMessageContent}></ChatField>
+                  value={this.props.messageContent} onChange={this.updateMessageContent}></ChatField>
                 <button id="chat-send" className="chat-button float-right"
                   onClick={this.submitMessage} type="submit">Chat</button>
                 <button id="chat-hide" className="chat-button float-left"
-                  onClick={this.hideChat}>Hide</button>
+                  onClick={this.toggleChat}>Hide</button>
               </ChatBox>
             </ChatWindow>
           </form>
         </SidebarContainer>
         <UnhideButton id="unhide-button"
-          className={this.state.isHidden ? 'chat-button' : 'chat-button hidden'}
-          onClick={this.revealChat}>Display Chat</UnhideButton>
+          className={this.props.isChatHidden ? 'chat-button' : 'chat-button hidden'}
+          onClick={this.toggleChat}>Display Chat</UnhideButton>
       </ChatColumn>
     )
   }
@@ -228,3 +228,16 @@ function getNicknameFromCookies() {
   })
   return index !== -1 ? cookies[index][1] : null
 }
+
+function mapStateToProps(state) {
+  return {
+    isChatHidden: state.chat.isChatHidden,
+    chatFeed: state.chat.chatFeed,
+    messageContent: state.chat.messageContent,
+    socketId: state.chat.socketId,
+    nickname: state.chat.nickname
+  }
+}
+
+const Connected = connect(mapStateToProps)(ChatSidebar)
+export default Connected

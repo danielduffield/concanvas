@@ -1,7 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
 
 import SizeSelector from './size-selector'
+
+import store from './store'
 
 const paletteColors = []
 const rows = 6
@@ -25,40 +28,37 @@ for (let i = 0; i < rows; i++) {
   }
 }
 
-export default class PaintSidebar extends React.Component {
+class PaintSidebar extends React.Component {
   constructor(props) {
     super(props)
-    this.color = '#000000'
-    this.state = {
-      color: this.color,
-      erasing: false
-    }
+    this.color = this.props.color
+    this.isErasing = this.props.isErasing
+
     this.selectColor = this.selectColor.bind(this)
     this.toggleEraser = this.toggleEraser.bind(this)
   }
   toggleEraser() {
-    if (this.state.erasing) {
-      this.setState({ color: this.color, erasing: false })
-      this.props.updateColor(this.color)
-    }
-    else {
-      this.setState({ color: '#FFFFFF', erasing: true })
-      this.props.updateColor('#FFFFFF')
-    }
+    this.isErasing = !this.isErasing
+    store.dispatch({
+      type: 'TOGGLED_ERASER'
+    })
   }
   selectColor(event) {
     this.color = event.target.dataset.color
-    this.setState({ color: this.color, erasing: false })
-    this.props.updateColor(this.color)
+    if (this.isErasing) this.isErasing = !this.isErasing
+    store.dispatch({
+      type: 'SELECTED_COLOR',
+      payload: { text: event.target.dataset.color }
+    })
   }
   render() {
     return (
       <PaintTools>
         <EraserIcon className="toolbar-module-sidebar"
           onClick={this.toggleEraser}
-          isActive={this.state.erasing}></EraserIcon>
+          isActive={this.props.isErasing}></EraserIcon>
         <div className="toolbar-label-sidebar">Eraser</div>
-        <SizeSelector updateBrushSize={this.props.updateBrushSize}/>
+        <SizeSelector />
         <div className="toolbar-label-sidebar">Size</div>
         <CurrentColor className="toolbar-module-sidebar" color={this.color}></CurrentColor>
         <div className="toolbar-label-sidebar">Current</div>
@@ -105,3 +105,14 @@ const Palette = styled.div`
   background-color: gainsboro;
   border: 2px solid black;
 `
+
+function mapStateToProps(state) {
+  return {
+    isErasing: state.paint.isErasing,
+    color: state.paint.color
+  }
+}
+
+const Connected = connect(mapStateToProps)(PaintSidebar)
+
+export default Connected
