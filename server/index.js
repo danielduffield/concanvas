@@ -36,12 +36,9 @@ app.get('/saved-canvas', (req, res) => {
 
 app.post('/', (req, res) => {
   fs.readdir('canvas-state/instances').then(instances => {
-    console.log(instances.length)
     if (instances.length > 10) {
       const toDelete = instances.shift()
-      fs.unlink('canvas-state/instances/' + toDelete).then(() => {
-        console.log('Oldest instance deleted')
-      })
+      fs.unlink('canvas-state/instances/' + toDelete).catch(err => console.log(err))
     }
   })
   const fileId = Date.now() + '-' + req.body.socketId

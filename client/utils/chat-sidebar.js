@@ -53,14 +53,12 @@ class ChatSidebar extends React.Component {
     if (event.target.value.includes('GUEST') && event.target.value.includes(this.props.socketId.substr(0, 4))) {
       return false
     }
-    console.log('COOKIE SENT')
     const date = new Date()
     const daysTilExpiration = 3
     const expiration = date.setTime(date.getTime() + (daysTilExpiration * 24 * 60 * 60 * 1000))
     document.cookie = 'concanvas_nickname=' + event.target.value + '; expires=' + expiration
   }
   updateNickname(event) {
-    console.log(event.target.value)
     store.dispatch({
       type: 'NICKNAME_SAVED',
       payload: { text: event.target.value }
@@ -84,7 +82,6 @@ class ChatSidebar extends React.Component {
     }
   }
   render() {
-    console.log(store.getState())
     return (
       <ChatColumn id="chat-column">
         <SidebarContainer id="sidebar-container">
@@ -92,7 +89,6 @@ class ChatSidebar extends React.Component {
             <MessageList>
               <ChatBlob id="chat-blob">
                 {this.props.chatFeed.map((message, index) => {
-                  console.log(message)
                   return (
                     <div className="chat-message" key={index}>
                       <StyledNickname locallySubmitted={message.locallySubmitted}>{message.nickname}</StyledNickname>{': ' + message.content}
