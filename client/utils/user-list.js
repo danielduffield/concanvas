@@ -31,7 +31,7 @@ class UserList extends React.Component {
           <UsersTopBar>
             <HideUsers id="chat-hide" className="float-left"
               onClick={this.toggleUserList}>Hide Users</HideUsers>
-            <UserCount>Online: </UserCount>
+            <UserCount>Online: {this.props.onlineUsers.length}</UserCount>
           </UsersTopBar>
           <Users>
             {this.props.onlineUsers.map((user, index) => {
@@ -65,38 +65,38 @@ const HideUsers = styled.button`
   border-radius: 5px;
   min-width: 90px;
   font-size: 1em;
+  min-height: 35px;
 `
 
 const UserCount = styled.div`
-  float: left;
-  height: 100%;
   line-height: 200%;
-  margin-left: 5%;
-  background-color: grey;
+  float: right;
+  height: 100%;
+  margin-right: 5%;
+  font-family: 'Bubblegum Sans', cursive;
+  font-size: 1.25em;
 `
 
 const UsersContainer = styled.div`
   position: absolute;
   width: 100%;
   height: 40%;
-  background-color: grey;
   z-index: 5;
 `
 
 const UsersTopBar = styled.div`
   position: absolute;
-  min-height: 30px;
-  height: 7%;
+  height: 5%;
   width: 100%;
-  background-color: grey;
 `
 
 const Users = styled.div`
-  background-color: lightgrey;
-  height: 90%;
+  background-color: lightblue;
+  border: 2px solid steelblue;
+  height: 85%;
   width: 90%;
-  margin: 5%;
-  padding-top: 3%;
+  margin: 8% 5% 5%;
+  border-radius: 10px;
   overflow-y: scroll;
 `
 
