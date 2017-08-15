@@ -63,6 +63,7 @@ class ChatSidebar extends React.Component {
       type: 'NICKNAME_SAVED',
       payload: { text: event.target.value }
     })
+    socket.emit('nickname', event.target.value)
   }
   updateMessageContent(event) {
     this.props.dispatch({
@@ -79,6 +80,10 @@ class ChatSidebar extends React.Component {
         type: 'NICKNAME_SAVED',
         payload: { text: nickname }
       })
+      socket.emit('nickname', nickname)
+    }
+    else {
+      socket.emit('nickname', 'GUEST')
     }
   }
   render() {

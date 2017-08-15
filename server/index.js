@@ -11,6 +11,8 @@ const jsonParser = bodyParser.json()
 
 let unsavedData = []
 
+const currentlyOnline = []
+
 server.listen(process.env.PORT, () => console.log('Listening on PORT...'))
 
 app.use(jsonParser)
@@ -54,10 +56,39 @@ app.post('/', (req, res) => {
 io.sockets.on('connection', newConnection)
 
 function newConnection(socket) {
+  console.log('User ' + socket.id + ' connected')
   socket.emit('connectionId', socket.id)
+  socket.on('nickname', updateUserList)
+
   socket.emit('unsavedData', unsavedData)
   socket.on('mouse', getPaintData)
   socket.on('chat', broadcastChat)
+  socket.on('disconnect', handleUserDisconnect)
+
+  function updateUserList(data) {
+    let nickname
+    if (data === 'GUEST') nickname = data + '(' + socket.id.substr(0, 4) + ')'
+    else nickname = data
+    const user = {
+      socketId: socket.id,
+      nickname: nickname
+    }
+    const userIndex = currentlyOnline.findIndex(user => user.socketId === socket.id)
+    if (userIndex === -1) currentlyOnline.push(user)
+    else {
+      currentlyOnline[userIndex].nickname = data
+    }
+    console.log('Currently Online: ', currentlyOnline)
+  }
+
+  function handleUserDisconnect() {
+    console.log('User ' + socket.id + ' disconnected')
+    const userIndex = currentlyOnline.findIndex(user => user.socketId === socket.id)
+    if (userIndex !== -1) {
+      currentlyOnline.splice(userIndex, 1)
+    }
+    console.log('Currently Online: ', currentlyOnline)
+  }
 
   function getPaintData(data) {
     socket.broadcast.emit('mouse', data)
