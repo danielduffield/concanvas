@@ -15,10 +15,10 @@ export default class App extends React.Component {
     }
   }
   updateChatStatus(status) {
-    this.setState({ isChatHidden: status, socketId: this.state.socketId })
+    this.setState({ isChatHidden: status })
   }
   updateSocketId(id) {
-    this.setState({ isChatHidden: this.state.isChatHidden, socketId: id })
+    this.setState({ socketId: id })
   }
   render() {
     return (
