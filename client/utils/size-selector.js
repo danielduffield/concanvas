@@ -2,8 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
-import store from './store'
-
 class SizeSelector extends React.Component {
   constructor(props) {
     super(props)
@@ -14,7 +12,7 @@ class SizeSelector extends React.Component {
   }
   nextBiggerSize() {
     if (this.validSizes[this.currentIndex + 1]) {
-      store.dispatch({
+      this.props.dispatch({
         type: 'SELECTED_SIZE',
         payload: { text: this.validSizes[this.currentIndex + 1] }
       })
@@ -23,7 +21,7 @@ class SizeSelector extends React.Component {
   }
   nextSmallerSize() {
     if (this.validSizes[this.currentIndex - 1]) {
-      store.dispatch({
+      this.props.dispatch({
         type: 'SELECTED_SIZE',
         payload: { text: this.validSizes[this.currentIndex - 1] }
       })

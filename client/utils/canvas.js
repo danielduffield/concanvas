@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
-import store from './store'
 import PaintSidebar from './paint-sidebar'
 
 import io from 'socket.io-client'
@@ -34,7 +33,7 @@ class Canvas extends React.Component {
   componentDidMount() {
     socket.on('mouse', data => this.paintEvent(data.x, data.y, data.prevX, data.prevY, data.size, data.color))
     socket.on('connectionId', id => {
-      store.dispatch({
+      this.props.dispatch({
         type: 'SOCKET_ESTABLISHED',
         payload: { text: id }
       })

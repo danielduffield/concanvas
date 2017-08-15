@@ -2,8 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
-import store from './store'
-
 import io from 'socket.io-client'
 const socket = io.connect()
 
@@ -17,6 +15,7 @@ class ChatSidebar extends React.Component {
     this.sendCookie = this.sendCookie.bind(this)
     this.updateNickname = this.updateNickname.bind(this)
     this.updateMessageContent = this.updateMessageContent.bind(this)
+    this.toggleChat = this.toggleChat.bind(this)
 
     this.messageForm = null
   }
@@ -29,20 +28,20 @@ class ChatSidebar extends React.Component {
       locallySubmitted: true
     }
     if (message.content === '') return
-    store.dispatch({
+    this.props.dispatch({
       type: 'MESSAGE_SENT',
       payload: { message: message }
     })
     socket.emit('chat', message)
   }
   updateChatFeed(message) {
-    store.dispatch({
+    this.props.dispatch({
       type: 'MESSAGE_SENT',
       payload: { message: message }
     })
   }
   toggleChat() {
-    store.dispatch({ type: 'TOGGLED_CHAT' })
+    this.props.dispatch({ type: 'TOGGLED_CHAT' })
   }
   enterSubmit(event) {
     if (event.key === 'Enter') {
@@ -59,13 +58,13 @@ class ChatSidebar extends React.Component {
     document.cookie = 'concanvas_nickname=' + event.target.value + '; expires=' + expiration
   }
   updateNickname(event) {
-    store.dispatch({
+    this.props.dispatch({
       type: 'NICKNAME_SAVED',
       payload: { text: event.target.value }
     })
   }
   updateMessageContent(event) {
-    store.dispatch({
+    this.props.dispatch({
       type: 'MESSAGE_UPDATED',
       payload: { text: event.target.value }
     })
@@ -75,7 +74,7 @@ class ChatSidebar extends React.Component {
 
     const nickname = getNicknameFromCookies()
     if (nickname) {
-      store.dispatch({
+      this.props.dispatch({
         type: 'NICKNAME_SAVED',
         payload: { text: nickname }
       })

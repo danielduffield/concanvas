@@ -4,8 +4,6 @@ import { connect } from 'react-redux'
 
 import SizeSelector from './size-selector'
 
-import store from './store'
-
 const paletteColors = []
 const rows = 6
 const columns = 3
@@ -39,14 +37,14 @@ class PaintSidebar extends React.Component {
   }
   toggleEraser() {
     this.isErasing = !this.isErasing
-    store.dispatch({
+    this.props.dispatch({
       type: 'TOGGLED_ERASER'
     })
   }
   selectColor(event) {
     this.color = event.target.dataset.color
     if (this.isErasing) this.isErasing = !this.isErasing
-    store.dispatch({
+    this.props.dispatch({
       type: 'SELECTED_COLOR',
       payload: { text: event.target.dataset.color }
     })
