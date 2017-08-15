@@ -38,15 +38,17 @@ export default class PaintSidebar extends React.Component {
   }
   toggleEraser() {
     if (this.state.erasing) this.setState({ color: this.color, erasing: false })
-    else this.setState({ color: '#FFFFFF', erasing: true })
+    else {
+      this.setState({ color: '#FFFFFF', erasing: true })
+      this.props.updateColor('#FFFFFF')
+    }
   }
   selectColor(event) {
     this.color = event.target.dataset.color
     this.setState({ color: this.color, erasing: false })
-    this.props.updateColor(this.state.color)
+    this.props.updateColor(this.color)
   }
   render() {
-    this.props.updateColor(this.state.color)
     return (
       <PaintTools>
         <EraserIcon className="toolbar-module-sidebar"
