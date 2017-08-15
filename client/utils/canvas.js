@@ -25,6 +25,7 @@ export default class Canvas extends React.Component {
     this.painting = false
     this.socketId = null
     this.unsavedData = []
+    this.isChatHidden = true
 
     this.updateCoordinates = this.updateCoordinates.bind(this)
     this.handleMouseDown = this.handleMouseDown.bind(this)
@@ -139,6 +140,7 @@ export default class Canvas extends React.Component {
 
     this.clientX = coordinates.x
     this.clientY = coordinates.y
+
     if (this.painting) {
       const paintData = {
         x: this.clientX,
@@ -159,8 +161,12 @@ export default class Canvas extends React.Component {
   handleMouseUp(event) {
     this.painting = false
   }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isChatHidden !== this.isChatHidden) {
+      this.isChatHidden = nextProps.isChatHidden
+    }
+  }
   render() {
-    this.isChatHidden = this.props.isChatHidden
 
     return (
       <Container id="container" isHidden={this.isChatHidden}>
