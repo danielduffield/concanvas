@@ -1,11 +1,13 @@
 import React from 'react'
+import styled from 'styled-components'
+import { connect } from 'react-redux'
 
-import PaintToolbar from './paint-toolbar'
+import PaintSidebar from './paint-sidebar'
 
 import io from 'socket.io-client'
 const socket = io.connect()
 
-export default class Canvas extends React.Component {
+class Canvas extends React.Component {
   constructor(props) {
     super(props)
     this.saveTimer = null
@@ -17,12 +19,9 @@ export default class Canvas extends React.Component {
     this.previousY = 0
     this.clientX = 0
     this.clientY = 0
-    this.lineWidth = 2
-    this.currentColor = null
 
     this.lastSaved = null
     this.painting = false
-    this.socketId = null
     this.unsavedData = []
 
     this.updateCoordinates = this.updateCoordinates.bind(this)
@@ -30,19 +29,14 @@ export default class Canvas extends React.Component {
     this.handleMouseUp = this.handleMouseUp.bind(this)
     this.paintEvent = this.paintEvent.bind(this)
     this.loadCanvas = this.loadCanvas.bind(this)
-    this.updateColor = this.updateColor.bind(this)
-    this.updateBrushSize = this.updateBrushSize.bind(this)
-  }
-  updateColor(color) {
-    this.currentColor = color
-  }
-  updateBrushSize(size) {
-    this.lineWidth = size
   }
   componentDidMount() {
     socket.on('mouse', data => this.paintEvent(data.x, data.y, data.prevX, data.prevY, data.size, data.color))
     socket.on('connectionId', id => {
-      this.socketId = id
+      this.props.dispatch({
+        type: 'SOCKET_ESTABLISHED',
+        payload: { text: id }
+      })
     })
     socket.on('unsavedData', data => {
       this.unsavedData = data
@@ -56,7 +50,7 @@ export default class Canvas extends React.Component {
         const response = await fetch('/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ saved, socketId: this.socketId })
+          body: JSON.stringify({ saved, socketId: this.props.socketId })
         })
         console.log(response)
       }
@@ -137,18 +131,19 @@ export default class Canvas extends React.Component {
 
     this.clientX = coordinates.x
     this.clientY = coordinates.y
+
     if (this.painting) {
       const paintData = {
         x: this.clientX,
         y: this.clientY,
         prevX: this.previousX,
         prevY: this.previousY,
-        size: this.lineWidth,
-        color: this.currentColor
+        size: this.props.size,
+        color: this.props.color
       }
       socket.emit('mouse', paintData)
 
-      this.paintEvent(this.clientX, this.clientY, this.previousX, this.previousY, this.lineWidth, this.currentColor)
+      this.paintEvent(this.clientX, this.clientY, this.previousX, this.previousY, this.props.size, this.props.color)
     }
   }
   handleMouseDown(event) {
@@ -158,17 +153,23 @@ export default class Canvas extends React.Component {
     this.painting = false
   }
   render() {
+
     return (
-      <div id="container">
-        <canvas id="my-canvas" onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp}
-          onMouseMove={this.updateCoordinates} onMouseOut={this.handleMouseUp}
-          width="600" height="600"
-          ref={canvas => {
-            this.canvas = canvas
-          }}>
-        </canvas>
-        <PaintToolbar updateColor={this.updateColor} updateBrushSize={this.updateBrushSize}/>
-      </div>
+      <Container id="container" isHidden={this.props.isChatHidden}>
+        <SecondWrapper isHidden={this.props.isChatHidden}>
+          <Wrapper id="wrapper">
+            <MainTitle id="main-title">ConCanvas</MainTitle>
+            <canvas id="my-canvas" onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp}
+              onMouseMove={this.updateCoordinates} onMouseOut={this.handleMouseUp}
+              width="600" height="600"
+              ref={canvas => {
+                this.canvas = canvas
+              }}>
+            </canvas>
+            <PaintSidebar />
+          </Wrapper>
+        </SecondWrapper>
+      </Container>
     )
   }
 }
@@ -180,3 +181,47 @@ function getCoordinates(canvas, event) {
     y: event.clientY - rect.top
   }
 }
+
+const SecondWrapper = styled.div`
+    position: relative;
+    height: 100%;
+    width: ${props => props.isHidden ? '704px' : '80%'};
+    margin: 0 auto;
+`
+
+const Container = styled.div`
+  height: 100%;
+  position: absolute;
+  left: ${props => props.isHidden ? 0 : '34%'};
+  width: ${props => props.isHidden ? '100%' : '66%'};
+`
+
+const MainTitle = styled.h1`
+  width: 300px;
+  top: 25px;
+  font-size: 4em;
+  font-family: 'Bubblegum Sans', cursive;
+  left: 0;
+  right: 0;
+  position: absolute;
+  margin: 0 auto;
+  background-color: whitesmoke;
+`
+
+const Wrapper = styled.div`
+  min-width: 740px;
+  position: absolute;
+`
+
+function mapStateToProps(state) {
+  return {
+    color: state.paint.color,
+    size: state.paint.size,
+    isErasing: state.paint.isErasing,
+    isChatHidden: state.chat.isChatHidden,
+    socketId: state.chat.socketId
+  }
+}
+
+const Connected = connect(mapStateToProps)(Canvas)
+export default Connected

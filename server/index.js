@@ -36,12 +36,9 @@ app.get('/saved-canvas', (req, res) => {
 
 app.post('/', (req, res) => {
   fs.readdir('canvas-state/instances').then(instances => {
-    console.log(instances.length)
     if (instances.length > 10) {
       const toDelete = instances.shift()
-      fs.unlink('canvas-state/instances/' + toDelete).then(() => {
-        console.log('Oldest instance deleted')
-      })
+      fs.unlink('canvas-state/instances/' + toDelete).catch(err => console.log(err))
     }
   })
   const fileId = Date.now() + '-' + req.body.socketId
@@ -60,10 +57,16 @@ function newConnection(socket) {
   socket.emit('connectionId', socket.id)
   socket.emit('unsavedData', unsavedData)
   socket.on('mouse', getPaintData)
+  socket.on('chat', broadcastChat)
 
   function getPaintData(data) {
     socket.broadcast.emit('mouse', data)
     console.log(data)
     unsavedData.push(data)
+  }
+
+  function broadcastChat(data) {
+    data.locallySubmitted = false
+    socket.broadcast.emit('chat', data)
   }
 }
