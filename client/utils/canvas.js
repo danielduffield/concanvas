@@ -4,8 +4,7 @@ import { connect } from 'react-redux'
 
 import PaintSidebar from './paint-sidebar'
 
-import io from 'socket.io-client'
-const socket = io.connect()
+import socket from './socket-connection'
 
 class Canvas extends React.Component {
   constructor(props) {

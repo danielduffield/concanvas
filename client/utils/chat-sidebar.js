@@ -4,8 +4,7 @@ import { connect } from 'react-redux'
 
 import UserList from './user-list'
 
-import io from 'socket.io-client'
-const socket = io.connect()
+import socket from './socket-connection'
 
 class ChatSidebar extends React.Component {
   constructor(props) {
