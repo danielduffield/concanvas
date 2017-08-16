@@ -60,11 +60,11 @@ class PaintSidebar extends React.Component {
   }
   selectCustomColor(event) {
     console.log('custom selection')
-    console.log(event.target)
     this.props.dispatch({
       type: 'REVEALED_COLOR_PICKER',
-      payload: { index: event.target.dataset.index }
+      payload: { index: parseInt(event.target.dataset.index, 10) }
     })
+    console.log(event.target.dataset.index)
   }
   render() {
     return (

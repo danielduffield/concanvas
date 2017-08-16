@@ -17,10 +17,11 @@ function paintReducer(state = {
     case 'SELECTED_COLOR':
       return Object.assign({}, state, { isColorPickerHidden: true, customSelected: null, color: action.payload.text, isErasing: false })
     case 'SELECTED_CUSTOM_COLOR':
+      console.log(state.customColors)
       return Object.assign({}, state, {
         isColorPickerHidden: true,
         customSelected: null,
-        color: action.payload.text,
+        color: action.payload.color,
         customColors: [
           ...state.customColors.slice(0, action.payload.index),
           action.payload.color,
@@ -28,6 +29,7 @@ function paintReducer(state = {
         ]
       })
     case 'REVEALED_COLOR_PICKER':
+      console.log(state)
       return Object.assign({}, state, { customSelected: action.payload.index, isColorPickerHidden: false, isErasing: false })
     case 'SELECTED_SIZE':
       return Object.assign({}, state, { isColorPickerHidden: true, size: action.payload.text })
