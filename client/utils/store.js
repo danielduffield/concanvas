@@ -14,6 +14,8 @@ function paintReducer(state = {
   customSelected: null
 }, action) {
   switch (action.type) {
+    case 'LOADED_CUSTOM_COLORS':
+      return Object.assign({}, state, { customColors: action.payload.colors })
     case 'SELECTED_COLOR':
       return Object.assign({}, state, { isColorPickerHidden: true, customSelected: null, color: action.payload.text, isErasing: false })
     case 'SELECTED_CUSTOM_SLOT':
