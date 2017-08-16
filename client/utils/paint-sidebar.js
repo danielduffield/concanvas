@@ -74,6 +74,15 @@ class PaintSidebar extends React.Component {
       })
     }
   }
+  componentDidMount() {
+    const loadedColors = getColorsFromCookies()
+    if (loadedColors) {
+      this.props.dispatch({
+        type: 'LOADED_CUSTOM_COLORS',
+        payload: { colors: loadedColors }
+      })
+    }
+  }
   render() {
     return (
       <PaintTools>
@@ -136,6 +145,15 @@ const Palette = styled.div`
   background-color: gainsboro;
   border: 2px solid black;
 `
+
+function getColorsFromCookies() {
+  const cookieList = document.cookie
+  const cookies = cookieList.split('; ').map(cookiePair => cookiePair.split('='))
+  const index = cookies.findIndex(cookie => {
+    return cookie[0] === 'concanvas_colors'
+  })
+  return index !== -1 ? cookies[index][1].split(',') : null
+}
 
 function mapStateToProps(state) {
   return {
