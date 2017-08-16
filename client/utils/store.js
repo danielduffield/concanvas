@@ -8,11 +8,14 @@ const reducer = combineReducers({
 function paintReducer(state = {
   color: '#000000',
   size: 2,
-  isErasing: false
+  isErasing: false,
+  isColorPickerHidden: true
 }, action) {
   switch (action.type) {
     case 'SELECTED_COLOR':
-      return Object.assign({}, state, { color: action.payload.text, isErasing: false })
+      return Object.assign({}, state, { isColorPickerHidden: true, color: action.payload.text, isErasing: false })
+    case 'REVEALED_COLOR_PICKER':
+      return Object.assign({}, state, { isColorPickerHidden: false, isErasing: false })
     case 'SELECTED_SIZE':
       return Object.assign({}, state, { size: action.payload.text })
     case 'TOGGLED_ERASER':
