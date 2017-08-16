@@ -28,7 +28,8 @@ class Component extends React.Component {
   render() {
     return (
       <CustomColor isColorPickerHidden={this.props.isColorPickerHidden} onDoubleClick={this.handleCustomSelection}>
-        <SketchPicker disableAlpha={true} onChange={this.saveColor} />
+        <SketchPicker disableAlpha={true} onChange={this.saveColor}
+          color={this.props.customColors[this.props.customSelected]} />
       </CustomColor>
     )
   }
