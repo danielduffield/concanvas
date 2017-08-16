@@ -73,7 +73,11 @@ function newConnection(socket) {
     const user = { socketId: socket.id, nickname: nickname }
     const userIndex = currentlyOnline.findIndex(user => user.socketId === socket.id)
 
-    if (userIndex === -1) currentlyOnline.push(user)
+    if (userIndex === -1) {
+      currentlyOnline.push(user)
+      const chatEvent = { type: 'connected', user }
+      io.sockets.emit('chatEvent', chatEvent)
+    }
     else currentlyOnline[userIndex].nickname = data
 
     console.log('Currently Online: ', currentlyOnline)
@@ -83,10 +87,12 @@ function newConnection(socket) {
   function handleUserDisconnect() {
     console.log('User ' + socket.id + ' disconnected')
     const userIndex = currentlyOnline.findIndex(user => user.socketId === socket.id)
+    let chatEvent = { type: 'disconnected' }
     if (userIndex !== -1) {
-      currentlyOnline.splice(userIndex, 1)
+      chatEvent.user = currentlyOnline.splice(userIndex, 1)
     }
     console.log('Currently Online: ', currentlyOnline)
+    io.sockets.emit('chatEvent', chatEvent)
     io.sockets.emit('userlist', currentlyOnline)
   }
 

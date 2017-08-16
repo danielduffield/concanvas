@@ -17,6 +17,7 @@ class ChatSidebar extends React.Component {
     this.updateNickname = this.updateNickname.bind(this)
     this.updateMessageContent = this.updateMessageContent.bind(this)
     this.toggleChat = this.toggleChat.bind(this)
+    this.handleChatEvent = this.handleChatEvent.bind(this)
 
     this.messageForm = null
   }
@@ -71,6 +72,14 @@ class ChatSidebar extends React.Component {
       payload: { text: event.target.value }
     })
   }
+  handleChatEvent(chatEvent) {
+    const eventMessage = {
+      nickname: '',
+      content: 'User ' + chatEvent.user.nickname + ' has ' + chatEvent.type + '.',
+      locallySubmitted: false
+    }
+    this.updateChatFeed(eventMessage)
+  }
   componentDidMount() {
     socket.on('chat', this.updateChatFeed)
 
@@ -85,6 +94,8 @@ class ChatSidebar extends React.Component {
     else {
       socket.emit('nickname', 'GUEST')
     }
+
+    socket.on('chatEvent', this.handleChatEvent)
   }
   render() {
     return (
@@ -97,7 +108,9 @@ class ChatSidebar extends React.Component {
                 {this.props.chatFeed.map((message, index) => {
                   return (
                     <div className="chat-message" key={index}>
-                      <StyledNickname locallySubmitted={message.locallySubmitted}>{message.nickname}</StyledNickname>{': ' + message.content}
+                      <StyledNickname locallySubmitted={message.locallySubmitted}>
+                        {message.nickname}
+                      </StyledNickname>{(message.nickname ? ': ' : '') + message.content}
                     </div>
                   )
                 })}
