@@ -32,7 +32,7 @@ function paintReducer(state = {
     case 'SELECTED_SIZE':
       return Object.assign({}, state, { isColorPickerHidden: true, size: action.payload.text })
     case 'TOGGLED_ERASER':
-      return Object.assign({}, state, { isColorPickerHidden: true, isErasing: !state.isErasing, color: !state.isErasing ? '#FFFFFF' : state.color })
+      return Object.assign({}, state, { isColorPickerHidden: true, isErasing: !state.isErasing, color: '#FFFFFF' })
     default:
       return state
   }
