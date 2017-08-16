@@ -203,7 +203,7 @@ const MainTitle = styled.h1`
   font-size: 4em;
   font-family: 'Bubblegum Sans', cursive;
   left: 0;
-  right: 0;
+  right: 25%;
   position: absolute;
   margin: 0 auto;
   background-color: whitesmoke;
