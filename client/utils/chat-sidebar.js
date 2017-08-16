@@ -75,7 +75,7 @@ class ChatSidebar extends React.Component {
   handleChatEvent(chatEvent) {
     const eventMessage = {
       nickname: '',
-      content: 'User ' + chatEvent.user.nickname + ' has ' + chatEvent.type + '.',
+      content: 'User [' + chatEvent.user.nickname + '] has ' + chatEvent.type + '.',
       locallySubmitted: false
     }
     this.updateChatFeed(eventMessage)
