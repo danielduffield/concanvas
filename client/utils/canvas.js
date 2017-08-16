@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 
 import PaintSidebar from './paint-sidebar'
+import ColorPicker from './color-picker'
 
 import socket from './socket-connection'
 
@@ -166,6 +167,7 @@ class Canvas extends React.Component {
               }}>
             </canvas>
             <PaintSidebar />
+            <ColorPicker/>
           </Wrapper>
         </SecondWrapper>
       </Container>
@@ -208,7 +210,7 @@ const MainTitle = styled.h1`
 `
 
 const Wrapper = styled.div`
-  min-width: 740px;
+  min-width: 960px;
   position: absolute;
 `
 
