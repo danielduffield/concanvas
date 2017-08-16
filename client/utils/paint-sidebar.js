@@ -8,19 +8,11 @@ const paletteColors = []
 const rows = 4
 const columns = 3
 
-const customColors = []
-const customRows = 2
-
 const defaultColors = [
   ['white', 'black', 'grey'],
   ['yellow', 'orange', 'brown'],
   ['pink', 'red', 'purple'],
   ['green', 'aqua', 'blue']
-]
-
-const customDefaults = [
-  ['whitesmoke', 'whitesmoke', 'whitesmoke'],
-  ['whitesmoke', 'whitesmoke', 'whitesmoke']
 ]
 
 for (let i = 0; i < rows; i++) {
@@ -29,15 +21,6 @@ for (let i = 0; i < rows; i++) {
     colorInfo.index = [i, j]
     colorInfo.color = defaultColors[i][j]
     paletteColors.push(colorInfo)
-  }
-}
-
-for (let i = 0; i < customRows; i++) {
-  for (let j = 0; j < columns; j++) {
-    const colorInfo = {}
-    colorInfo.index = [i, j]
-    colorInfo.color = customDefaults[i][j]
-    customColors.push(colorInfo)
   }
 }
 
@@ -50,6 +33,8 @@ class PaintSidebar extends React.Component {
     this.selectColor = this.selectColor.bind(this)
     this.selectCustomColor = this.selectCustomColor.bind(this)
     this.toggleEraser = this.toggleEraser.bind(this)
+
+    this.customSelected = null
   }
   toggleEraser() {
     this.isErasing = !this.isErasing
@@ -69,7 +54,8 @@ class PaintSidebar extends React.Component {
     console.log('custom selection')
     console.log(event.target)
     this.props.dispatch({
-      type: 'REVEALED_COLOR_PICKER'
+      type: 'REVEALED_COLOR_PICKER',
+      payload: { index: event.target.dataset.index }
     })
   }
   render() {
@@ -92,11 +78,11 @@ class PaintSidebar extends React.Component {
                 key={index}></ColorDiv>
             )
           })}
-          {customColors.map((colorModule, index) => {
+          {this.props.customColors.map((colorModule, index) => {
             return (
-              <ColorDiv id={'custom-color-' + colorModule.index[0] + '-' + colorModule.index[1]}
-                className="color-module-sidebar" data-color={colorModule.color} onClick={this.selectCustomColor}
-                color={colorModule.color}
+              <ColorDiv id={'custom-color-' + index}
+                className="color-module-sidebar" data-color={colorModule} onClick={this.selectCustomColor}
+                color={colorModule} data-index={index}
                 key={index}></ColorDiv>
             )
           })}
@@ -138,7 +124,9 @@ const Palette = styled.div`
 function mapStateToProps(state) {
   return {
     isErasing: state.paint.isErasing,
-    color: state.paint.color
+    color: state.paint.color,
+    customColors: state.paint.customColors,
+    customSelected: state.paint.customSelected
   }
 }
 
