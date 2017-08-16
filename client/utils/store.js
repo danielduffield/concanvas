@@ -8,15 +8,33 @@ const reducer = combineReducers({
 function paintReducer(state = {
   color: '#000000',
   size: 2,
-  isErasing: false
+  isErasing: false,
+  isColorPickerHidden: true,
+  customColors: ['whitesmoke', 'whitesmoke', 'whitesmoke', 'whitesmoke', 'whitesmoke', 'whitesmoke'],
+  customSelected: null
 }, action) {
   switch (action.type) {
+    case 'LOADED_CUSTOM_COLORS':
+      return Object.assign({}, state, { customColors: action.payload.colors })
     case 'SELECTED_COLOR':
-      return Object.assign({}, state, { color: action.payload.text, isErasing: false })
+      return Object.assign({}, state, { isColorPickerHidden: true, customSelected: null, color: action.payload.text, isErasing: false })
+    case 'SELECTED_CUSTOM_SLOT':
+      return Object.assign({}, state, { isColorPickerHidden: false, customSelected: action.payload.index, isErasing: false })
+    case 'SELECTED_CUSTOM_COLOR':
+      return Object.assign({}, state, {
+        color: action.payload.color,
+        customColors: [
+          ...state.customColors.slice(0, action.payload.index),
+          action.payload.color,
+          ...state.customColors.slice(action.payload.index + 1, state.customColors.length)
+        ]
+      })
+    case 'TOGGLED_COLOR_PICKER':
+      return Object.assign({}, state, { isColorPickerHidden: !state.isColorPickerHidden, customSelected: null, isErasing: false, color: action.payload.color })
     case 'SELECTED_SIZE':
-      return Object.assign({}, state, { size: action.payload.text })
+      return Object.assign({}, state, { isColorPickerHidden: true, size: action.payload.text })
     case 'TOGGLED_ERASER':
-      return Object.assign({}, state, { isErasing: !state.isErasing, color: !state.isErasing ? '#FFFFFF' : state.color })
+      return Object.assign({}, state, { isColorPickerHidden: true, isErasing: !state.isErasing, color: '#FFFFFF' })
     default:
       return state
   }
