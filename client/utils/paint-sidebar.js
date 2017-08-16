@@ -59,18 +59,18 @@ class PaintSidebar extends React.Component {
     })
   }
   selectCustomColor(event) {
-    console.log(event.target.dataset.index)
-    if (this.props.customSelected !== parseInt(event.target.dataset.index, 10)) {
-      console.log('selecting slot')
+    const selectedIndex = parseInt(event.target.dataset.index, 10)
+    if (this.props.customSelected !== selectedIndex) {
       this.props.dispatch({
         type: 'SELECTED_CUSTOM_SLOT',
         payload: { index: parseInt(event.target.dataset.index, 10) }
       })
-      console.log(this.props.customSelected)
     }
     else {
+      const color = this.props.customColors[selectedIndex]
       this.props.dispatch({
-        type: 'TOGGLED_COLOR_PICKER'
+        type: 'TOGGLED_COLOR_PICKER',
+        payload: { color }
       })
     }
   }

@@ -11,13 +11,14 @@ class Component extends React.Component {
     this.handleCustomSelection = this.handleCustomSelection.bind(this)
   }
   toggleColorPicker() {
+    const color = this.props.customColors[this.props.customSelected]
     this.props.dispatch({
-      type: 'TOGGLE_COLOR_PICKER'
+      type: 'TOGGLED_COLOR_PICKER',
+      payload: { color }
     })
   }
   handleCustomSelection(color, event) {
     const index = this.props.customSelected
-    console.log(index)
     this.props.dispatch({
       type: 'SELECTED_CUSTOM_COLOR',
       payload: { color: color.hex, index }

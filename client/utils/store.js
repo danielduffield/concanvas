@@ -19,7 +19,6 @@ function paintReducer(state = {
     case 'SELECTED_CUSTOM_SLOT':
       return Object.assign({}, state, { isColorPickerHidden: false, customSelected: action.payload.index, isErasing: false })
     case 'SELECTED_CUSTOM_COLOR':
-      console.log(action.payload.index)
       return Object.assign({}, state, {
         color: action.payload.color,
         customColors: [
@@ -29,7 +28,7 @@ function paintReducer(state = {
         ]
       })
     case 'TOGGLED_COLOR_PICKER':
-      return Object.assign({}, state, { isColorPickerHidden: !state.isColorPickerHidden, customSelected: null, isErasing: false })
+      return Object.assign({}, state, { isColorPickerHidden: !state.isColorPickerHidden, customSelected: null, isErasing: false, color: action.payload.color })
     case 'SELECTED_SIZE':
       return Object.assign({}, state, { isColorPickerHidden: true, size: action.payload.text })
     case 'TOGGLED_ERASER':
