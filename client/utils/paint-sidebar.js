@@ -72,7 +72,15 @@ class PaintSidebar extends React.Component {
         type: 'TOGGLED_COLOR_PICKER',
         payload: { color }
       })
+      document.cookie = 'concanvas_colors=' + this.getColorString()
     }
+  }
+  getColorString() {
+    let colorString = ''
+    this.props.customColors.forEach((color, index) => {
+      index === 0 ? colorString += color : colorString += ',' + color
+    })
+    return colorString
   }
   componentDidMount() {
     const loadedColors = getColorsFromCookies()

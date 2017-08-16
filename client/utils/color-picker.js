@@ -7,10 +7,19 @@ class Component extends React.Component {
   constructor(props) {
     super(props)
 
+    this.getColorString = this.getColorString.bind(this)
     this.toggleColorPicker = this.toggleColorPicker.bind(this)
     this.handleCustomSelection = this.handleCustomSelection.bind(this)
   }
+  getColorString() {
+    let colorString = ''
+    this.props.customColors.forEach((color, index) => {
+      index === 0 ? colorString += color : colorString += ',' + color
+    })
+    return colorString
+  }
   toggleColorPicker() {
+    console.log(this.props.customColors)
     const color = this.props.customColors[this.props.customSelected]
     this.props.dispatch({
       type: 'TOGGLED_COLOR_PICKER',
@@ -23,11 +32,7 @@ class Component extends React.Component {
       type: 'SELECTED_CUSTOM_COLOR',
       payload: { color: color.hex, index }
     })
-    let colorString = ''
-    this.props.customColors.forEach((color, index) => {
-      index === 0 ? colorString += color : colorString += ',' + color
-    })
-    document.cookie = 'concanvas_colors=' + colorString
+    document.cookie = 'concanvas_colors=' + this.getColorString()
   }
   render() {
     return (
