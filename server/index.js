@@ -11,6 +11,8 @@ const jsonParser = bodyParser.json()
 
 let unsavedData = []
 
+const currentlyOnline = []
+
 server.listen(process.env.PORT, () => console.log('Listening on PORT...'))
 
 app.use(jsonParser)
@@ -54,10 +56,48 @@ app.post('/', (req, res) => {
 io.sockets.on('connection', newConnection)
 
 function newConnection(socket) {
+  console.log('User ' + socket.id + ' connected')
   socket.emit('connectionId', socket.id)
+  socket.on('nickname', updateUserList)
+
   socket.emit('unsavedData', unsavedData)
   socket.on('mouse', getPaintData)
   socket.on('chat', broadcastChat)
+  socket.on('disconnect', handleUserDisconnect)
+
+  function updateUserList(data) {
+    let nickname
+    if (data === 'GUEST') nickname = data + '(' + socket.id.substr(0, 4) + ')'
+    else nickname = data
+
+    const user = { socketId: socket.id, nickname: nickname }
+    const userIndex = currentlyOnline.findIndex(user => user.socketId === socket.id)
+
+    if (userIndex === -1) {
+      currentlyOnline.push(user)
+      const chatEvent = { type: 'connected', user }
+      io.sockets.emit('chatEvent', chatEvent)
+    }
+    else currentlyOnline[userIndex].nickname = data
+
+    console.log('Currently Online: ', currentlyOnline)
+    io.sockets.emit('userlist', currentlyOnline)
+  }
+
+  function handleUserDisconnect() {
+    console.log('User ' + socket.id + ' disconnected')
+    const userIndex = currentlyOnline.findIndex(user => user.socketId === socket.id)
+    console.log(userIndex)
+    let chatEvent = { type: 'disconnected' }
+    if (userIndex !== -1) {
+      console.log('disconnected user found: ', userIndex, currentlyOnline[userIndex])
+      const disconnecting = currentlyOnline.splice(userIndex, 1)
+      chatEvent.user = disconnecting[0]
+    }
+    console.log('Currently Online: ', currentlyOnline)
+    io.sockets.emit('chatEvent', chatEvent)
+    io.sockets.emit('userlist', currentlyOnline)
+  }
 
   function getPaintData(data) {
     socket.broadcast.emit('mouse', data)

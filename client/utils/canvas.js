@@ -4,8 +4,7 @@ import { connect } from 'react-redux'
 
 import PaintSidebar from './paint-sidebar'
 
-import io from 'socket.io-client'
-const socket = io.connect()
+import socket from './socket-connection'
 
 class Canvas extends React.Component {
   constructor(props) {
@@ -155,8 +154,8 @@ class Canvas extends React.Component {
   render() {
 
     return (
-      <Container id="container" isHidden={this.props.isChatHidden}>
-        <SecondWrapper isHidden={this.props.isChatHidden}>
+      <Container id="container" isHidden={this.props.isChatHidden && this.props.isUserListHidden}>
+        <SecondWrapper isHidden={this.props.isChatHidden && this.props.isUserListHidden}>
           <Wrapper id="wrapper">
             <MainTitle id="main-title">ConCanvas</MainTitle>
             <canvas id="my-canvas" onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp}
@@ -219,6 +218,7 @@ function mapStateToProps(state) {
     size: state.paint.size,
     isErasing: state.paint.isErasing,
     isChatHidden: state.chat.isChatHidden,
+    isUserListHidden: state.chat.isUserListHidden,
     socketId: state.chat.socketId
   }
 }

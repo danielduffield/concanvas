@@ -2,8 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
-import io from 'socket.io-client'
-const socket = io.connect()
+import UserList from './user-list'
+
+import socket from './socket-connection'
 
 class ChatSidebar extends React.Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class ChatSidebar extends React.Component {
     this.updateNickname = this.updateNickname.bind(this)
     this.updateMessageContent = this.updateMessageContent.bind(this)
     this.toggleChat = this.toggleChat.bind(this)
+    this.handleChatEvent = this.handleChatEvent.bind(this)
 
     this.messageForm = null
   }
@@ -62,12 +64,21 @@ class ChatSidebar extends React.Component {
       type: 'NICKNAME_SAVED',
       payload: { text: event.target.value }
     })
+    socket.emit('nickname', event.target.value)
   }
   updateMessageContent(event) {
     this.props.dispatch({
       type: 'MESSAGE_UPDATED',
       payload: { text: event.target.value }
     })
+  }
+  handleChatEvent(chatEvent) {
+    const eventMessage = {
+      nickname: '',
+      content: 'User [' + chatEvent.user.nickname + '] has ' + chatEvent.type + '.',
+      locallySubmitted: false
+    }
+    this.updateChatFeed(eventMessage)
   }
   componentDidMount() {
     socket.on('chat', this.updateChatFeed)
@@ -78,19 +89,28 @@ class ChatSidebar extends React.Component {
         type: 'NICKNAME_SAVED',
         payload: { text: nickname }
       })
+      socket.emit('nickname', nickname)
     }
+    else {
+      socket.emit('nickname', 'GUEST')
+    }
+
+    socket.on('chatEvent', this.handleChatEvent)
   }
   render() {
     return (
       <ChatColumn id="chat-column">
         <SidebarContainer id="sidebar-container">
+          <UserList />
           <ChatFeed id="chat-feed" className={this.props.isChatHidden ? 'hidden' : ''}>
             <MessageList>
               <ChatBlob id="chat-blob">
                 {this.props.chatFeed.map((message, index) => {
                   return (
                     <div className="chat-message" key={index}>
-                      <StyledNickname locallySubmitted={message.locallySubmitted}>{message.nickname}</StyledNickname>{': ' + message.content}
+                      <StyledNickname locallySubmitted={message.locallySubmitted}>
+                        {message.nickname}
+                      </StyledNickname>{(message.nickname ? ': ' : '') + message.content}
                     </div>
                   )
                 })}
