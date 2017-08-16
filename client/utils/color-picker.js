@@ -7,22 +7,28 @@ class Component extends React.Component {
   constructor(props) {
     super(props)
 
+    this.savedColor = null
+
+    this.saveColor = this.saveColor.bind(this)
     this.handleCustomSelection = this.handleCustomSelection.bind(this)
   }
-  handleCustomSelection(color, event) {
+  saveColor(color, event) {
+    console.log('color saved: ', color.hex)
+    this.savedColor = color.hex
+  }
+  handleCustomSelection(event) {
+    console.log('UPDATING WITH ', this.savedColor)
     const index = this.props.customSelected
-    console.log('index ', index)
     this.props.dispatch({
       type: 'SELECTED_CUSTOM_COLOR',
-      payload: { color: color.hex, index }
+      payload: { color: this.savedColor, index }
     })
     console.log('custom colors: ', this.props.customColors)
-    console.log('color hex: ', color.hex)
   }
   render() {
     return (
-      <CustomColor isColorPickerHidden={this.props.isColorPickerHidden}>
-        <SketchPicker disableAlpha={true} onChangeComplete={this.handleCustomSelection}/>
+      <CustomColor isColorPickerHidden={this.props.isColorPickerHidden} onDoubleClick={this.handleCustomSelection}>
+        <SketchPicker disableAlpha={true} onChange={this.saveColor} />
       </CustomColor>
     )
   }
