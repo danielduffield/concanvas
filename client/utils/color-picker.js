@@ -23,6 +23,11 @@ class Component extends React.Component {
       type: 'SELECTED_CUSTOM_COLOR',
       payload: { color: color.hex, index }
     })
+    let colorString = ''
+    this.props.customColors.forEach((color, index) => {
+      index === 0 ? colorString += color : colorString += ',' + color
+    })
+    document.cookie = 'concanvas_colors=' + colorString
   }
   render() {
     return (
