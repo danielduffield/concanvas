@@ -5,14 +5,20 @@ import { connect } from 'react-redux'
 import SizeSelector from './size-selector'
 
 const paletteColors = []
-const rows = 6
+const rows = 4
 const columns = 3
+
+const customColors = []
+const customRows = 2
 
 const defaultColors = [
   ['white', 'black', 'grey'],
   ['yellow', 'orange', 'brown'],
   ['pink', 'red', 'purple'],
-  ['green', 'aqua', 'blue'],
+  ['green', 'aqua', 'blue']
+]
+
+const customDefaults = [
   ['whitesmoke', 'whitesmoke', 'whitesmoke'],
   ['whitesmoke', 'whitesmoke', 'whitesmoke']
 ]
@@ -26,6 +32,15 @@ for (let i = 0; i < rows; i++) {
   }
 }
 
+for (let i = 0; i < customRows; i++) {
+  for (let j = 0; j < columns; j++) {
+    const colorInfo = {}
+    colorInfo.index = [i, j]
+    colorInfo.color = customDefaults[i][j]
+    customColors.push(colorInfo)
+  }
+}
+
 class PaintSidebar extends React.Component {
   constructor(props) {
     super(props)
@@ -33,6 +48,7 @@ class PaintSidebar extends React.Component {
     this.isErasing = this.props.isErasing
 
     this.selectColor = this.selectColor.bind(this)
+    this.selectCustomColor = this.selectCustomColor.bind(this)
     this.toggleEraser = this.toggleEraser.bind(this)
   }
   toggleEraser() {
@@ -48,6 +64,9 @@ class PaintSidebar extends React.Component {
       type: 'SELECTED_COLOR',
       payload: { text: event.target.dataset.color }
     })
+  }
+  selectCustomColor(event) {
+    console.log('custom selection')
   }
   render() {
     return (
@@ -65,6 +84,14 @@ class PaintSidebar extends React.Component {
             return (
               <ColorDiv id={'color-' + colorModule.index[0] + '-' + colorModule.index[1]}
                 className="color-module-sidebar" data-color={colorModule.color} onClick={this.selectColor}
+                color={colorModule.color}
+                key={index}></ColorDiv>
+            )
+          })}
+          {customColors.map((colorModule, index) => {
+            return (
+              <ColorDiv id={'custom-color-' + colorModule.index[0] + '-' + colorModule.index[1]}
+                className="color-module-sidebar" data-color={colorModule.color} onClick={this.selectCustomColor}
                 color={colorModule.color}
                 key={index}></ColorDiv>
             )
