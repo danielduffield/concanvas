@@ -89,7 +89,7 @@ function newConnection(socket) {
     const userIndex = currentlyOnline.findIndex(user => user.socketId === socket.id)
     let chatEvent = { type: 'disconnected' }
     if (userIndex !== -1) {
-      chatEvent.user = currentlyOnline.splice(userIndex, 1)
+      chatEvent.nickname = currentlyOnline.splice(userIndex, 1)
     }
     console.log('Currently Online: ', currentlyOnline)
     io.sockets.emit('chatEvent', chatEvent)
