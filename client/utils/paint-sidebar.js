@@ -38,9 +38,17 @@ class PaintSidebar extends React.Component {
   }
   toggleEraser() {
     this.isErasing = !this.isErasing
-    this.props.dispatch({
-      type: 'TOGGLED_ERASER'
-    })
+    if (this.isErasing) {
+      this.props.dispatch({
+        type: 'TOGGLED_ERASER'
+      })
+    }
+    else {
+      this.props.dispatch({
+        type: 'SELECTED_COLOR',
+        payload: { text: this.color }
+      })
+    }
   }
   selectColor(event) {
     this.color = event.target.dataset.color
