@@ -27,7 +27,6 @@ for (let i = 0; i < rows; i++) {
 class PaintSidebar extends React.Component {
   constructor(props) {
     super(props)
-    this.color = this.props.color
     this.isErasing = this.props.isErasing
 
     this.selectColor = this.selectColor.bind(this)
@@ -46,12 +45,11 @@ class PaintSidebar extends React.Component {
     else {
       this.props.dispatch({
         type: 'SELECTED_COLOR',
-        payload: { text: this.color }
+        payload: { text: this.props.currentColor }
       })
     }
   }
   selectColor(event) {
-    this.color = event.target.dataset.color
     if (this.isErasing) this.isErasing = !this.isErasing
     this.props.dispatch({
       type: 'SELECTED_COLOR',
@@ -100,7 +98,7 @@ class PaintSidebar extends React.Component {
         <div className="toolbar-label-sidebar">Eraser</div>
         <SizeSelector />
         <div className="toolbar-label-sidebar">Size</div>
-        <CurrentColor className="toolbar-module-sidebar" color={this.color}></CurrentColor>
+        <CurrentColor className="toolbar-module-sidebar" color={this.props.currentColor}></CurrentColor>
         <div className="toolbar-label-sidebar">Current</div>
         <Palette id="sidebar-palette">
           {paletteColors.map((colorModule, index) => {
@@ -167,6 +165,7 @@ function mapStateToProps(state) {
   return {
     isErasing: state.paint.isErasing,
     color: state.paint.color,
+    currentColor: state.paint.currentColor,
     customColors: state.paint.customColors,
     customSelected: state.paint.customSelected
   }

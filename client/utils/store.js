@@ -11,24 +11,33 @@ function paintReducer(state = {
   isErasing: false,
   isColorPickerHidden: true,
   customColors: ['whitesmoke', 'whitesmoke', 'whitesmoke', 'whitesmoke', 'whitesmoke', 'whitesmoke'],
-  customSelected: null
+  customSelected: null,
+  currentColor: '#000000'
 }, action) {
   switch (action.type) {
     case 'LOADED_CUSTOM_COLORS':
       return Object.assign({}, state, { customColors: action.payload.colors })
     case 'SELECTED_COLOR':
-      return Object.assign({}, state, { isColorPickerHidden: true, customSelected: null, color: action.payload.text, isErasing: false })
+      return Object.assign({}, state, { isColorPickerHidden: true, customSelected: null, color: action.payload.text, currentColor: action.payload.text, isErasing: false })
     case 'SELECTED_CUSTOM_SLOT':
-      return Object.assign({}, state, { isColorPickerHidden: false, customSelected: action.payload.index, isErasing: false })
+      return Object.assign({}, state, {
+        isColorPickerHidden: false,
+        customSelected: action.payload.index,
+        isErasing: false,
+        color: state.customColors[action.payload.index],
+        currentColor: state.customColors[action.payload.index] })
     case 'SELECTED_CUSTOM_COLOR':
       return Object.assign({}, state, {
         color: action.payload.color,
+        currentColor: action.payload.color,
         customColors: [
           ...state.customColors.slice(0, action.payload.index),
           action.payload.color,
           ...state.customColors.slice(action.payload.index + 1, state.customColors.length)
         ]
       })
+    case 'UPDATED_CURRENT_COLOR':
+      return Object.assign({}, state, { currentColor: action.payload.text })
     case 'TOGGLED_COLOR_PICKER':
       return Object.assign({}, state, { isColorPickerHidden: !state.isColorPickerHidden, customSelected: null, isErasing: false, color: action.payload.color })
     case 'SELECTED_SIZE':
