@@ -67,10 +67,13 @@ function chatReducer(state = {
       return Object.assign({}, state, { messageContent: action.payload.text })
     case 'MESSAGE_SENT':
       return state.chatFeed.length < 23
-          ? Object.assign({}, state, { chatFeed: state.chatFeed.concat(action.payload.message), messageContent: '' })
+          ? Object.assign({}, state, {
+            chatFeed: state.chatFeed.concat(action.payload.message),
+            messageContent: action.payload.message.locallySubmitted ? '' : state.messageContent
+          })
           : Object.assign({}, state, {
             chatFeed: [...state.chatFeed.slice(1, state.chatFeed.length), action.payload.message],
-            messageContent: '' })
+            messageContent: action.payload.message.locallySubmitted ? '' : state.messageContent })
     case 'NICKNAME_SAVED':
       return Object.assign({}, state, { nickname: action.payload.text })
     case 'TOGGLED_USER_LIST':
@@ -83,19 +86,3 @@ function chatReducer(state = {
 }
 
 export default createStore(reducer)
-
-// Canvas
-  // Socket Id
-  // Chat status
-  // color
-
-// Paint
-  // color            SELECTED_COLOR
-  // Eraser           TOGGLED_ERASER
-
-// Chat
-  // isChatHidden     TOGGLED_CHAT
-  // chatMessages     MESSAGE_RECEIVED
-  // nickname         NICKNAME_SAVED
-  // socketId         SOCKET_ESTABLISHED
-  // messageContent   MESSAGE_UPDATED
