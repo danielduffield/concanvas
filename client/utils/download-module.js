@@ -7,19 +7,28 @@ export default class DownloadModule extends React.Component {
 
     this.handleDownloadRequest = this.handleDownloadRequest.bind(this)
   }
-  handleDownloadRequest() {
-    const canvas = document.getElementById('my-canvas')
-    console.log(canvas)
-    canvas.toBlob(blob => {
-      console.log('blobbing it ', blob)
-      const newImage = document.createElement('img')
-      const url = URL.createObjectURL(blob)
-
-      newImage.onload = () => URL.revokeObjectURL(url)
-
-      newImage.src = url
-      console.log(newImage)
+  canvasToBlob(canvas) {
+    return new Promise((resolve, reject) => {
+      canvas.toBlob(blob => resolve(blob))
     })
+  }
+  async handleDownloadRequest() {
+    const canvas = document.getElementById('my-canvas')
+    const blob = await this.canvasToBlob(canvas)
+    console.log('blobbing it ', blob)
+    const newImage = document.createElement('img')
+    const url = URL.createObjectURL(blob)
+
+    newImage.onload = () => URL.revokeObjectURL(url)
+    newImage.src = url
+
+    console.log(newImage)
+    const response = await fetch('/snapshot', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url })
+    })
+    console.log(response)
   }
   render() {
     return (
