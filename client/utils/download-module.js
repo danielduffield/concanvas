@@ -1,38 +1,69 @@
 import React from 'react'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
 
-export default class DownloadModule extends React.Component {
+class DownloadModule extends React.Component {
   constructor(props) {
     super(props)
 
+    this.link = null
+    this.button = null
     this.handleDownloadRequest = this.handleDownloadRequest.bind(this)
+    this.hideDownloadLink = this.hideDownloadLink.bind(this)
   }
   canvasToBlob(canvas) {
     return new Promise((resolve, reject) => {
       canvas.toBlob(blob => resolve(blob))
     })
   }
+  downloadCanvas(link, canvas, filename) {
+    link.href = canvas.toDataURL()
+    link.download = filename
+  }
   handleDownloadRequest() {
-    const canvas = document.getElementById('my-canvas')
-    const link = document.createElement('a')
-    link.textContent = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-    document.body.appendChild(link)
-    function downloadCanvas(link, canvasId, filename) {
-      link.href = canvas.toDataURL()
-      link.download = filename
-    }
-    downloadCanvas(link, canvas, 'snapshot.png')
-
+    this.downloadCanvas(this.link, this.props.canvas, 'snapshot.png')
+    this.props.dispatch({
+      type: 'ACTIVATED_DOWNLOAD_LINK'
+    })
+  }
+  hideDownloadLink() {
+    this.props.dispatch({
+      type: 'DEACTIVATED_DOWNLOAD_LINK'
+    })
   }
   render() {
     return (
       <div>
-        <DownloadButton className="chat-button"
-          onClick={this.handleDownloadRequest}>Download Snapshot</DownloadButton>
+        <LinkWrapper>
+          <a className={this.props.isDownloadLinkActive ? '' : 'hidden'}
+            onClick={this.hideDownloadLink}
+            ref={link => {
+              this.link = link
+            }}>Download Snapshot</a>
+        </LinkWrapper>
+        <DownloadButton className="chat-button" onClick={this.handleDownloadRequest}>
+          Save Snapshot</DownloadButton>
       </div>
     )
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    isDownloadLinkActive: state.utility.isDownloadLinkActive
+  }
+}
+
+const Connected = connect(mapStateToProps)(DownloadModule)
+export default Connected
+
+const LinkWrapper = styled.div`
+  position: absolute;
+  bottom: 60px;
+  right: 0;
+  width: 200px;
+  text-align: center;
+`
 
 const DownloadButton = styled.button`
   margin: 0;
