@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import PaintSidebar from './paint-sidebar'
 import ColorPicker from './color-picker'
+import DownloadModule from './download-module'
 
 import socket from './socket-connection'
 
@@ -170,6 +171,7 @@ class Canvas extends React.Component {
             <ColorPicker/>
           </Wrapper>
         </SecondWrapper>
+        <DownloadModule canvas={this.canvas}/>
       </Container>
     )
   }
