@@ -2,7 +2,8 @@ import { createStore, combineReducers } from 'redux'
 
 const reducer = combineReducers({
   paint: paintReducer,
-  chat: chatReducer
+  chat: chatReducer,
+  utility: utilityReducer
 })
 
 function paintReducer(state = {
@@ -80,6 +81,19 @@ function chatReducer(state = {
       return Object.assign({}, state, { isUserListHidden: !state.isUserListHidden })
     case 'UPDATED_USER_LIST':
       return Object.assign({}, state, { onlineUsers: action.payload.users })
+    default:
+      return state
+  }
+}
+
+function utilityReducer(state = {
+  isDownloadLinkActive: false
+}, action) {
+  switch (action.type) {
+    case 'ACTIVATED_DOWNLOAD_LINK':
+      return Object.assign({}, state, { isDownloadLinkActive: true })
+    case 'DEACTIVATED_DOWNLOAD_LINK':
+      return Object.assign({}, state, { isDownloadLinkActive: false })
     default:
       return state
   }
