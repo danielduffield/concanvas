@@ -51,6 +51,7 @@ class ChatSidebar extends React.Component {
     }
   }
   sendCookie(event) {
+    if (event.target.value === '') event.target.value = 'GUEST (' + (this.props.socketId ? this.props.socketId.substr(0, 4) : '') + ')'
     if (event.target.value.includes('GUEST') && event.target.value.includes(this.props.socketId.substr(0, 4))) {
       return false
     }
@@ -126,7 +127,7 @@ class ChatSidebar extends React.Component {
                 className={this.props.isChatHidden ? 'hidden' : ''}>
                 Nickname:
                 <IdInput id="chat-id-field" name="id-field" type="text"
-                  value={this.props.nickname
+                  value={this.props.nickname !== null
                     ? this.props.nickname
                     : 'GUEST (' + (this.props.socketId ? this.props.socketId.substr(0, 4) : '') + ')'}
                   onChange={this.updateNickname}
