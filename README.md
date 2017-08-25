@@ -4,6 +4,8 @@ An app for web users who want to draw on a collective, real-time updating canvas
 ### Heroku Hosted URL
 https://con-canvas.herokuapp.com/
 
+![ConCanvas Demo](/demo/concanvas-demo.gif?raw=true "ConCanvas Demonstration")
+
 ### How to Use
 Clone the repository using the following git command:
 ```
