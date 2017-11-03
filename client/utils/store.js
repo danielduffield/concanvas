@@ -51,8 +51,8 @@ function paintReducer(state = {
 }
 
 function chatReducer(state = {
-  isUserListHidden: true,
-  isChatHidden: true,
+  isUserListHidden: false,
+  isChatHidden: false,
   chatFeed: [],
   nickname: null,
   messageContent: '',
