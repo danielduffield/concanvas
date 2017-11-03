@@ -2,8 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
-import UserList from './user-list'
-
 import socket from './socket-connection'
 
 class ChatSidebar extends React.Component {
@@ -102,8 +100,7 @@ class ChatSidebar extends React.Component {
     return (
       <ChatColumn id="chat-column">
         <SidebarContainer id="sidebar-container">
-          <UserList />
-          <ChatFeed id="chat-feed" className={this.props.isChatHidden ? 'hidden' : ''}>
+          <ChatFeed id="chat-feed" className={this.props.isChatHidden ? 'hidden' : 'hidden'}>
             <MessageList>
               <ChatBlob id="chat-blob">
                 {this.props.chatFeed.map((message, index) => {
