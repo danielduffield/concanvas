@@ -27,9 +27,10 @@ class UserList extends React.Component {
       <div>
         <UsersContainer className={this.props.isUserListHidden ? 'hidden' : ''}>
           <UsersTopBar>
-            <CurrentlyOnline>{'Currently Online (' + this.props.onlineUsers.length + ')'}</CurrentlyOnline>
+            <CurrentlyOnline>Currently Online</CurrentlyOnline>
           </UsersTopBar>
           <Users>
+            <ArtistsOnline>{'Artists (' +  + this.props.onlineUsers.length + ')'}</ArtistsOnline>
             {this.props.onlineUsers.map((user, index) => {
               return <OnlineUser key={index}>{user.nickname}</OnlineUser>
             })}
@@ -44,6 +45,11 @@ const CurrentlyOnline = styled.span`
   position: relative;
   top: 20px;
   font-size: 1.5em;
+`
+
+const ArtistsOnline = styled.div`
+  font-size: 1.25em;
+  margin: 10px 0;
 `
 
 const OnlineUser = styled.div`
@@ -64,6 +70,7 @@ const UsersContainer = styled.div`
   width: 100%;
   height: 100%;
   z-index: 5;
+  text-align: left;
 `
 
 const UsersTopBar = styled.div`
@@ -74,13 +81,10 @@ const UsersTopBar = styled.div`
 `
 
 const Users = styled.div`
-  top: 50px;
+  top: 75px;
   position: relative;
   height: 85%;
   width: 90%;
-  margin: 8% 5% 5%;
-  border-radius: 10px;
-  text-align: left;
 `
 
 function mapStateToProps(state) {
