@@ -106,7 +106,7 @@ class ChatSidebar extends React.Component {
       <ChatColumn id="chat-column" className={this.props.isChatHidden ? 'hidden' : ''}>
         <SidebarContainer id="sidebar-container">
           <ChatHeading>
-            <HideChat>X</HideChat>
+            <HideChat onClick={this.toggleChat}>X</HideChat>
           </ChatHeading>
           <ChatFeed id="chat-feed">
             <MessageList>
