@@ -91,13 +91,10 @@ const UsersTopBar = styled.div`
 `
 
 const Users = styled.div`
-  background-color: lightblue;
-  border: 2px solid steelblue;
   height: 85%;
   width: 90%;
   margin: 8% 5% 5%;
   border-radius: 10px;
-  overflow-y: scroll;
 `
 
 function mapStateToProps(state) {
