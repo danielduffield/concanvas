@@ -67,7 +67,7 @@ const SidebarContainer = styled.div`
   height: 100%;
   max-width: 500px;
   background-color: whitesmoke;
-  border-right: 2px solid dimgrey;
+  border-right: 1px solid grey;
 `
 
 const CurrentlyOnline = styled.span`
@@ -108,7 +108,7 @@ const UsersTopBar = styled.div`
   position: absolute;
   height: 75px;
   width: 100%;
-  border-bottom: 2px solid dimgrey;
+  border-bottom: 1px solid grey;
   padding: 0 20px;
 `
 
