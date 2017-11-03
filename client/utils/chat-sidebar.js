@@ -28,7 +28,6 @@ class ChatSidebar extends React.Component {
       content: messageFormData.get('chat-field'),
       locallySubmitted: true
     }
-    console.log(messageFormData, message)
     if (message.content === '') return
     this.props.dispatch({
       type: 'MESSAGE_SENT',
@@ -148,9 +147,6 @@ class ChatSidebar extends React.Component {
             </form>
           </ChatFormContainer>
         </SidebarContainer>
-        <UnhideButton id="unhide-button"
-          className={this.props.isChatHidden ? 'chat-button' : 'chat-button hidden'}
-          onClick={this.toggleChat}>Display Chat</UnhideButton>
       </ChatColumn>
     )
   }
@@ -201,7 +197,7 @@ const SidebarContainer = styled.div`
   height: 100%;
   max-width: 500px;
   background-color: whitesmoke;
-  border-right: 2px solid dimgrey;
+  border-right: 1px solid grey;
 `
 
 const IdInput = styled.input`
@@ -236,16 +232,6 @@ const ChatField = styled.textarea`
   width: 90%;
   height: 80%;
   resize: none;
-`
-
-const UnhideButton = styled.button`
-  margin: 0;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 200px;
-  height: 50px;
-  z-index: 10;
 `
 
 const HideChat = styled.button`
