@@ -24,18 +24,27 @@ class UserList extends React.Component {
   }
   render() {
     return (
-      <SidebarContainer>
-        <UsersContainer className={this.props.isUserListHidden ? 'hidden' : ''}>
+      <SidebarContainer className={this.props.isUserListHidden ? 'hidden' : ''}>
+        <UsersContainer>
           <UsersTopBar>
-            <CurrentlyOnline>Currently Online
+            <CurrentlyOnline>Contributors Online
               <HideUserList>X</HideUserList>
             </CurrentlyOnline>
           </UsersTopBar>
           <Users>
-            <ArtistsOnline>{'Artists (' +  + this.props.onlineUsers.length + ')'}</ArtistsOnline>
-            {this.props.onlineUsers.map((user, index) => {
-              return <OnlineUser key={index}>{user.nickname}</OnlineUser>
-            })}
+            <ArtistsOnline>{'Artists (' +  + this.props.onlineUsers.filter(user => !user.nickname.startsWith('GUEST')).length
+              + ')'}</ArtistsOnline>
+            {this.props.onlineUsers.filter(user => !user.nickname.startsWith('GUEST'))
+              .map((user, index) => {
+                return <OnlineUser key={index}>{user.nickname}</OnlineUser>
+              })
+            }
+            <ArtistsOnline>{'Guests (' + this.props.onlineUsers.filter(user => user.nickname.startsWith('GUEST')).length + ')'}</ArtistsOnline>
+            {this.props.onlineUsers.filter(user => user.nickname.startsWith('GUEST'))
+              .map((user, index) => {
+                return <OnlineUser key={index}>{user.nickname}</OnlineUser>
+              })
+            }
           </Users>
         </UsersContainer>
       </SidebarContainer>
