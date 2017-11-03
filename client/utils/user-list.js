@@ -25,13 +25,9 @@ class UserList extends React.Component {
   render() {
     return (
       <div>
-        <UnhideUsers className={this.props.isUserListHidden ? 'chat-button' : 'chat-button hidden'}
-          onClick={this.toggleUserList}>Display Users</UnhideUsers>
         <UsersContainer className={this.props.isUserListHidden ? 'hidden' : ''}>
           <UsersTopBar>
-            <HideUsers id="chat-hide" className="float-left"
-              onClick={this.toggleUserList}>Hide Users</HideUsers>
-            <UserCount>Online: {this.props.onlineUsers.length}</UserCount>
+            <CurrentlyOnline>{'Currently Online (' + this.props.onlineUsers.length + ')'}</CurrentlyOnline>
           </UsersTopBar>
           <Users>
             {this.props.onlineUsers.map((user, index) => {
@@ -44,28 +40,14 @@ class UserList extends React.Component {
   }
 }
 
+const CurrentlyOnline = styled.span`
+  position: relative;
+  top: 20px;
+  font-size: 1.5em;
+`
+
 const OnlineUser = styled.div`
   margin: 5px;
-`
-
-const UnhideUsers = styled.button`
-  margin: 0;
-  left: 0;
-  position: absolute;
-  width: 200px;
-  height: 50px;
-  z-index: 10;
-  margin: 0;
-`
-
-const HideUsers = styled.button`
-  height: 100%;
-  width: 25%;
-  margin-left: 5%;
-  border-radius: 5px;
-  min-width: 90px;
-  font-size: 1em;
-  min-height: 35px;
 `
 
 const UserCount = styled.div`
@@ -80,21 +62,25 @@ const UserCount = styled.div`
 const UsersContainer = styled.div`
   position: absolute;
   width: 100%;
-  height: 40%;
+  height: 100%;
   z-index: 5;
 `
 
 const UsersTopBar = styled.div`
   position: absolute;
-  height: 5%;
+  height: 75px;
   width: 100%;
+  border-bottom: 2px solid dimgrey;
 `
 
 const Users = styled.div`
+  top: 50px;
+  position: relative;
   height: 85%;
   width: 90%;
   margin: 8% 5% 5%;
   border-radius: 10px;
+  text-align: left;
 `
 
 function mapStateToProps(state) {
