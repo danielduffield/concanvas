@@ -105,6 +105,7 @@ class ChatSidebar extends React.Component {
     return (
       <ChatColumn id="chat-column" className={this.props.isChatHidden ? 'hidden' : ''}>
         <SidebarContainer id="sidebar-container">
+          <ChatHeading></ChatHeading>
           <ChatFeed id="chat-feed">
             <MessageList>
               <ChatBlob id="chat-blob">
@@ -152,6 +153,11 @@ class ChatSidebar extends React.Component {
     )
   }
 }
+
+const ChatHeading = styled.div`
+  height: 10%;
+  width: 100%;
+`
 
 const ChatButton = styled.button`
   border-radius: 5px;
@@ -202,7 +208,7 @@ const IdInput = styled.input`
 `
 
 const ChatFeed = styled.div`
-  height: 70%;
+  height: 60%;
   bottom: 0;
   background-color: whitesmoke;
 `
