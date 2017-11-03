@@ -119,11 +119,11 @@ class ChatSidebar extends React.Component {
               </ChatBlob>
             </MessageList>
           </ChatFeed>
-          <form id="message-form" onSubmit={this.submitMessage}
-            ref={form => {
-              this.messageForm = form
-            }}>
-            <ChatWindow isHidden={this.props.isChatHidden}>
+          <ChatFormContainer>
+            <MessageForm id="message-form" onSubmit={this.submitMessage}
+              ref={form => {
+                this.messageForm = form
+              }}>
               <ChatIdModule id="chat-id-box"
                 className={this.props.isChatHidden ? 'hidden' : ''}>
                 Nickname:
@@ -134,18 +134,15 @@ class ChatSidebar extends React.Component {
                   onChange={this.updateNickname}
                   onBlur={this.sendCookie}/>
               </ChatIdModule>
-              <ChatBox id="chat-box"
-                className={this.props.isChatHidden ? 'hidden' : ''}>
-                <ChatField name="chat-field" id="chat-field" cols="27" rows="4"
-                  maxLength="250" onKeyPress={this.enterSubmit}
-                  value={this.props.messageContent} onChange={this.updateMessageContent}></ChatField>
-                <button id="chat-send" className="chat-button float-right"
-                  onClick={this.submitMessage} type="submit">Chat</button>
-                <button id="chat-hide" className="chat-button float-left"
-                  onClick={this.toggleUsers}>Users</button>
-              </ChatBox>
-            </ChatWindow>
-          </form>
+              <ChatField name="chat-field" id="chat-field" cols="27" rows="4"
+                maxLength="250" onKeyPress={this.enterSubmit}
+                value={this.props.messageContent} onChange={this.updateMessageContent}></ChatField>
+              <ChatButton id="chat-send-btn" className="float-right"
+                onClick={this.submitMessage} type="submit">Chat</ChatButton>
+              <ChatButton id="chat-users-btn" className="float-left"
+                onClick={this.toggleUsers}>Users</ChatButton>
+            </MessageForm>
+          </ChatFormContainer>
         </SidebarContainer>
         <UnhideButton id="unhide-button"
           className={this.props.isChatHidden ? 'chat-button' : 'chat-button hidden'}
@@ -155,13 +152,27 @@ class ChatSidebar extends React.Component {
   }
 }
 
-const StyledNickname = styled.span`
-  color: ${props => props.locallySubmitted ? 'red' : 'blue'};
+const MessageForm = styled.form`
+  height: 75%;
 `
 
-const ChatWindow = styled.div`
-  height: 100%;
-  border-radius: 10px;
+const ChatButton = styled.button`
+  border-radius: 5px;
+  margin: 2% 5% 0;
+  height: 20%;
+  width: 15%;
+  min-width: 42px;
+  font-size: 1em;
+`
+
+const ChatFormContainer = styled.div`
+  height: 30%;
+  width: 100%;
+  position: absolute;
+`
+
+const StyledNickname = styled.span`
+  color: ${props => props.locallySubmitted ? 'red' : 'blue'};
 `
 
 const ChatColumn = styled.div`
@@ -173,7 +184,6 @@ const ChatIdModule = styled.div`
   text-align: left;
   position: relative;
   top: 8px;
-  height: 15%;
   font-family: 'Bubblegum Sans', cursive;
   font-size: 1.25em;
 `
@@ -191,15 +201,10 @@ const IdInput = styled.input`
   width: 55%;
   margin: 0 0 0 10px;
   font-size: 0.85em;
-  line-height: 2%;`
-
-const ChatBox = styled.div`
-  text-align: center;
-  height: 75%;
 `
 
 const ChatFeed = styled.div`
-  height: 80%;
+  height: 70%;
   bottom: 0;
   background-color: whitesmoke;
 `
@@ -222,7 +227,7 @@ const ChatField = styled.textarea`
   font-size: 1em;
   margin: 2% 0 0;
   width: 90%;
-  height: 70%;
+  height: 80%;
   resize: none;
 `
 
