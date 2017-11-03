@@ -73,12 +73,14 @@ const SidebarContainer = styled.div`
 const CurrentlyOnline = styled.span`
   position: relative;
   top: 20px;
-  font-size: 1.5em;
+  font-size: 1.75em;
+  font-family: 'Bubblegum Sans', cursive;
 `
 
 const ArtistsOnline = styled.div`
   font-size: 1.25em;
   margin: 20px 0;
+  font-family: 'Bubblegum Sans', cursive;
 `
 
 const OnlineUser = styled.div`
