@@ -161,8 +161,6 @@ const StyledNickname = styled.span`
 const ChatWindow = styled.div`
   height: 100%;
   border-radius: 10px;
-  border: ${props => props.isHidden ? 'none' : '2px solid steelblue'};
-  background-color: ${props => props.isHidden ? 'whitesmoke' : 'lightblue'};
 `
 
 const ChatColumn = styled.div`
@@ -175,7 +173,6 @@ const ChatIdModule = styled.div`
   position: relative;
   top: 8px;
   height: 15%;
-  background-color: lightblue;
   font-family: 'Bubblegum Sans', cursive;
   font-size: 1.25em;
 `
@@ -186,6 +183,7 @@ const SidebarContainer = styled.div`
   height: 100%;
   max-width: 500px;
   background-color: whitesmoke;
+  border-right: 2px solid dimgrey;
 `
 
 const IdInput = styled.input`
@@ -197,7 +195,6 @@ const IdInput = styled.input`
 const ChatBox = styled.div`
   text-align: center;
   height: 75%;
-  background-color: lightblue;
 `
 
 const ChatFeed = styled.div`
