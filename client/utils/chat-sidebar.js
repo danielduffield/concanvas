@@ -28,6 +28,7 @@ class ChatSidebar extends React.Component {
       content: messageFormData.get('chat-field'),
       locallySubmitted: true
     }
+    console.log(messageFormData, message)
     if (message.content === '') return
     this.props.dispatch({
       type: 'MESSAGE_SENT',
@@ -120,7 +121,7 @@ class ChatSidebar extends React.Component {
             </MessageList>
           </ChatFeed>
           <ChatFormContainer>
-            <MessageForm id="message-form" onSubmit={this.submitMessage}
+            <form id="message-form" onSubmit={this.submitMessage}
               ref={form => {
                 this.messageForm = form
               }}>
@@ -141,7 +142,7 @@ class ChatSidebar extends React.Component {
                 onClick={this.submitMessage} type="submit">Chat</ChatButton>
               <ChatButton id="chat-users-btn" className="float-left"
                 onClick={this.toggleUsers}>Users</ChatButton>
-            </MessageForm>
+            </form>
           </ChatFormContainer>
         </SidebarContainer>
         <UnhideButton id="unhide-button"
@@ -151,10 +152,6 @@ class ChatSidebar extends React.Component {
     )
   }
 }
-
-const MessageForm = styled.form`
-  height: 75%;
-`
 
 const ChatButton = styled.button`
   border-radius: 5px;
@@ -180,6 +177,7 @@ const ChatColumn = styled.div`
 `
 
 const ChatIdModule = styled.div`
+  margin: 5px 0;
   margin-left: 5%;
   text-align: left;
   position: relative;
