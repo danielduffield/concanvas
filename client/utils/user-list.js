@@ -28,7 +28,7 @@ class UserList extends React.Component {
         <UsersContainer>
           <UsersTopBar>
             <CurrentlyOnline>Contributors Online
-              <HideUserList>X</HideUserList>
+              <HideUserList onClick={this.toggleUserList}>X</HideUserList>
             </CurrentlyOnline>
           </UsersTopBar>
           <Users>
