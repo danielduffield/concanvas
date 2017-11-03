@@ -58,11 +58,11 @@ const CurrentlyOnline = styled.span`
 
 const ArtistsOnline = styled.div`
   font-size: 1.25em;
-  margin: 10px 0;
+  margin: 20px 0;
 `
 
 const OnlineUser = styled.div`
-  margin: 5px;
+  margin: 10px;
 `
 
 const UserCount = styled.div`
@@ -87,6 +87,7 @@ const UsersTopBar = styled.div`
   height: 75px;
   width: 100%;
   border-bottom: 2px solid dimgrey;
+  padding: 0 20px;
 `
 
 const Users = styled.div`
@@ -94,6 +95,7 @@ const Users = styled.div`
   position: relative;
   height: 85%;
   width: 90%;
+  padding: 0 20px;
 `
 
 function mapStateToProps(state) {
