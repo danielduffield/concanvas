@@ -27,7 +27,9 @@ class UserList extends React.Component {
       <SidebarContainer>
         <UsersContainer className={this.props.isUserListHidden ? 'hidden' : ''}>
           <UsersTopBar>
-            <CurrentlyOnline>Currently Online</CurrentlyOnline>
+            <CurrentlyOnline>Currently Online
+              <HideUserList>X</HideUserList>
+            </CurrentlyOnline>
           </UsersTopBar>
           <Users>
             <ArtistsOnline>{'Artists (' +  + this.props.onlineUsers.length + ')'}</ArtistsOnline>
@@ -40,6 +42,15 @@ class UserList extends React.Component {
     )
   }
 }
+
+const HideUserList = styled.button`
+  position: relative;
+  top: 20px;
+  float: right;
+  border-radius: 5px;
+  width: 30px;
+  height: 30px;
+`
 
 const SidebarContainer = styled.div`
   position: absolute;
