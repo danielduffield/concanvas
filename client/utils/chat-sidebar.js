@@ -169,7 +169,7 @@ const ChatColumn = styled.div`
 `
 
 const ChatIdModule = styled.div`
-  margin-left: 6%;
+  margin-left: 5%;
   text-align: left;
   position: relative;
   top: 8px;
@@ -207,7 +207,8 @@ const ChatFeed = styled.div`
 const MessageList = styled.div`
   position: relative;
   height: 100%;
-  width: 100%;
+  width: 90%;
+  margin-left: 5%;
 `
 
 const ChatBlob = styled.div`
