@@ -98,9 +98,9 @@ class ChatSidebar extends React.Component {
   }
   render() {
     return (
-      <ChatColumn id="chat-column">
+      <ChatColumn id="chat-column" className={this.props.isChatHidden ? 'hidden' : ''}>
         <SidebarContainer id="sidebar-container">
-          <ChatFeed id="chat-feed" className={this.props.isChatHidden ? 'hidden' : 'hidden'}>
+          <ChatFeed id="chat-feed">
             <MessageList>
               <ChatBlob id="chat-blob">
                 {this.props.chatFeed.map((message, index) => {
