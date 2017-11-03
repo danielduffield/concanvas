@@ -15,6 +15,7 @@ class ChatSidebar extends React.Component {
     this.updateNickname = this.updateNickname.bind(this)
     this.updateMessageContent = this.updateMessageContent.bind(this)
     this.toggleChat = this.toggleChat.bind(this)
+    this.toggleUsers = this.toggleUsers.bind(this)
     this.handleChatEvent = this.handleChatEvent.bind(this)
 
     this.messageForm = null
@@ -42,6 +43,9 @@ class ChatSidebar extends React.Component {
   }
   toggleChat() {
     this.props.dispatch({ type: 'TOGGLED_CHAT' })
+  }
+  toggleUsers() {
+    this.props.dispatch({ type: 'TOGGLED_USER_LIST' })
   }
   enterSubmit(event) {
     if (event.key === 'Enter') {
@@ -138,7 +142,7 @@ class ChatSidebar extends React.Component {
                 <button id="chat-send" className="chat-button float-right"
                   onClick={this.submitMessage} type="submit">Chat</button>
                 <button id="chat-hide" className="chat-button float-left"
-                  onClick={this.toggleChat}>Hide</button>
+                  onClick={this.toggleUsers}>Users</button>
               </ChatBox>
             </ChatWindow>
           </form>
