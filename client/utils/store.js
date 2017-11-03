@@ -52,7 +52,7 @@ function paintReducer(state = {
 
 function chatReducer(state = {
   isUserListHidden: false,
-  isChatHidden: false,
+  isChatHidden: true,
   chatFeed: [],
   nickname: null,
   messageContent: '',
@@ -78,7 +78,7 @@ function chatReducer(state = {
     case 'NICKNAME_SAVED':
       return Object.assign({}, state, { nickname: action.payload.text })
     case 'TOGGLED_USER_LIST':
-      return Object.assign({}, state, { isUserListHidden: !state.isUserListHidden })
+      return Object.assign({}, state, { isUserListHidden: !state.isUserListHidden, isChatHidden: !state.isChatHidden })
     case 'UPDATED_USER_LIST':
       return Object.assign({}, state, { onlineUsers: action.payload.users })
     default:
