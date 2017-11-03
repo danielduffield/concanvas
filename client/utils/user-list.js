@@ -24,7 +24,7 @@ class UserList extends React.Component {
   }
   render() {
     return (
-      <div>
+      <SidebarContainer>
         <UsersContainer className={this.props.isUserListHidden ? 'hidden' : ''}>
           <UsersTopBar>
             <CurrentlyOnline>Currently Online</CurrentlyOnline>
@@ -36,10 +36,19 @@ class UserList extends React.Component {
             })}
           </Users>
         </UsersContainer>
-      </div>
+      </SidebarContainer>
     )
   }
 }
+
+const SidebarContainer = styled.div`
+  position: absolute;
+  width: 34%;
+  height: 100%;
+  max-width: 500px;
+  background-color: whitesmoke;
+  border-right: 2px solid dimgrey;
+`
 
 const CurrentlyOnline = styled.span`
   position: relative;
