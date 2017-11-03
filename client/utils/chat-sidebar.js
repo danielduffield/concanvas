@@ -105,6 +105,7 @@ class ChatSidebar extends React.Component {
       <ChatColumn id="chat-column" className={this.props.isChatHidden ? 'hidden' : ''}>
         <SidebarContainer id="sidebar-container">
           <ChatHeading>
+            <ChatWelcome>Welcome to the chat!</ChatWelcome>
             <HideChat onClick={this.toggleChat}>X</HideChat>
           </ChatHeading>
           <ChatFeed id="chat-feed">
@@ -155,7 +156,12 @@ class ChatSidebar extends React.Component {
 const ChatHeading = styled.div`
   height: 10%;
   width: 100%;
-  padding: 0 20px;
+  padding: 20px;
+`
+
+const ChatWelcome = styled.span`
+  font-family: 'Bubblegum Sans', cursive;
+  font-size: 1.75em;
 `
 
 const ChatButton = styled.button`
@@ -236,7 +242,6 @@ const ChatField = styled.textarea`
 
 const HideChat = styled.button`
   position: relative;
-  top: 20px;
   float: right;
   border-radius: 5px;
   width: 30px;
