@@ -105,7 +105,9 @@ class ChatSidebar extends React.Component {
     return (
       <ChatColumn id="chat-column" className={this.props.isChatHidden ? 'hidden' : ''}>
         <SidebarContainer id="sidebar-container">
-          <ChatHeading></ChatHeading>
+          <ChatHeading>
+            <HideChat>X</HideChat>
+          </ChatHeading>
           <ChatFeed id="chat-feed">
             <MessageList>
               <ChatBlob id="chat-blob">
@@ -157,6 +159,7 @@ class ChatSidebar extends React.Component {
 const ChatHeading = styled.div`
   height: 10%;
   width: 100%;
+  padding: 0 20px;
 `
 
 const ChatButton = styled.button`
@@ -243,6 +246,15 @@ const UnhideButton = styled.button`
   width: 200px;
   height: 50px;
   z-index: 10;
+`
+
+const HideChat = styled.button`
+  position: relative;
+  top: 20px;
+  float: right;
+  border-radius: 5px;
+  width: 30px;
+  height: 30px;
 `
 
 function getNicknameFromCookies() {
