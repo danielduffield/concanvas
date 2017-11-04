@@ -2,8 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
-import UserList from './user-list'
-
 import socket from './socket-connection'
 
 class ChatSidebar extends React.Component {
@@ -17,6 +15,7 @@ class ChatSidebar extends React.Component {
     this.updateNickname = this.updateNickname.bind(this)
     this.updateMessageContent = this.updateMessageContent.bind(this)
     this.toggleChat = this.toggleChat.bind(this)
+    this.toggleUsers = this.toggleUsers.bind(this)
     this.handleChatEvent = this.handleChatEvent.bind(this)
 
     this.messageForm = null
@@ -44,6 +43,9 @@ class ChatSidebar extends React.Component {
   }
   toggleChat() {
     this.props.dispatch({ type: 'TOGGLED_CHAT' })
+  }
+  toggleUsers() {
+    this.props.dispatch({ type: 'TOGGLED_USER_LIST' })
   }
   enterSubmit(event) {
     if (event.key === 'Enter') {
@@ -100,10 +102,13 @@ class ChatSidebar extends React.Component {
   }
   render() {
     return (
-      <ChatColumn id="chat-column">
+      <ChatColumn id="chat-column" className={this.props.isChatHidden ? 'hidden' : ''}>
         <SidebarContainer id="sidebar-container">
-          <UserList />
-          <ChatFeed id="chat-feed" className={this.props.isChatHidden ? 'hidden' : ''}>
+          <ChatHeading>
+            <ChatWelcome>Welcome to the chat!</ChatWelcome>
+            <HideChat onClick={this.toggleChat}>X</HideChat>
+          </ChatHeading>
+          <ChatFeed id="chat-feed">
             <MessageList>
               <ChatBlob id="chat-blob">
                 {this.props.chatFeed.map((message, index) => {
@@ -118,11 +123,11 @@ class ChatSidebar extends React.Component {
               </ChatBlob>
             </MessageList>
           </ChatFeed>
-          <form id="message-form" onSubmit={this.submitMessage}
-            ref={form => {
-              this.messageForm = form
-            }}>
-            <ChatWindow isHidden={this.props.isChatHidden}>
+          <ChatFormContainer>
+            <form id="message-form" onSubmit={this.submitMessage}
+              ref={form => {
+                this.messageForm = form
+              }}>
               <ChatIdModule id="chat-id-box"
                 className={this.props.isChatHidden ? 'hidden' : ''}>
                 Nickname:
@@ -133,36 +138,51 @@ class ChatSidebar extends React.Component {
                   onChange={this.updateNickname}
                   onBlur={this.sendCookie}/>
               </ChatIdModule>
-              <ChatBox id="chat-box"
-                className={this.props.isChatHidden ? 'hidden' : ''}>
-                <ChatField name="chat-field" id="chat-field" cols="27" rows="4"
-                  maxLength="250" onKeyPress={this.enterSubmit}
-                  value={this.props.messageContent} onChange={this.updateMessageContent}></ChatField>
-                <button id="chat-send" className="chat-button float-right"
-                  onClick={this.submitMessage} type="submit">Chat</button>
-                <button id="chat-hide" className="chat-button float-left"
-                  onClick={this.toggleChat}>Hide</button>
-              </ChatBox>
-            </ChatWindow>
-          </form>
+              <ChatField name="chat-field" id="chat-field" cols="27" rows="4"
+                maxLength="250" onKeyPress={this.enterSubmit}
+                value={this.props.messageContent} onChange={this.updateMessageContent}></ChatField>
+              <ChatButton id="chat-send-btn" className="float-right"
+                onClick={this.submitMessage} type="submit">Chat</ChatButton>
+              <ChatButton id="chat-users-btn" className="float-left"
+                onClick={this.toggleUsers}>
+                <i className="fa fa-list-ul" aria-hidden="true"></i>  
+              </ChatButton>
+            </form>
+          </ChatFormContainer>
         </SidebarContainer>
-        <UnhideButton id="unhide-button"
-          className={this.props.isChatHidden ? 'chat-button' : 'chat-button hidden'}
-          onClick={this.toggleChat}>Display Chat</UnhideButton>
       </ChatColumn>
     )
   }
 }
 
-const StyledNickname = styled.span`
-  color: ${props => props.locallySubmitted ? 'red' : 'blue'};
+const ChatHeading = styled.div`
+  height: 10%;
+  width: 100%;
+  padding: 20px;
 `
 
-const ChatWindow = styled.div`
-  height: 100%;
-  border-radius: 10px;
-  border: ${props => props.isHidden ? 'none' : '2px solid steelblue'};
-  background-color: ${props => props.isHidden ? 'whitesmoke' : 'lightblue'};
+const ChatWelcome = styled.span`
+  font-family: 'Bubblegum Sans', cursive;
+  font-size: 1.75em;
+`
+
+const ChatButton = styled.button`
+  border-radius: 5px;
+  margin: 2% 5% 0;
+  height: 20%;
+  width: 15%;
+  min-width: 42px;
+  font-size: 1em;
+`
+
+const ChatFormContainer = styled.div`
+  height: 30%;
+  width: 100%;
+  position: absolute;
+`
+
+const StyledNickname = styled.span`
+  color: ${props => props.locallySubmitted ? 'red' : 'blue'};
 `
 
 const ChatColumn = styled.div`
@@ -170,12 +190,11 @@ const ChatColumn = styled.div`
 `
 
 const ChatIdModule = styled.div`
-  margin-left: 6%;
+  margin: 5px 0;
+  margin-left: 5%;
   text-align: left;
   position: relative;
   top: 8px;
-  height: 15%;
-  background-color: lightblue;
   font-family: 'Bubblegum Sans', cursive;
   font-size: 1.25em;
 `
@@ -186,22 +205,17 @@ const SidebarContainer = styled.div`
   height: 100%;
   max-width: 500px;
   background-color: whitesmoke;
+  border-right: 1px solid grey;
 `
 
 const IdInput = styled.input`
   width: 55%;
   margin: 0 0 0 10px;
   font-size: 0.85em;
-  line-height: 2%;`
-
-const ChatBox = styled.div`
-  text-align: center;
-  height: 75%;
-  background-color: lightblue;
 `
 
 const ChatFeed = styled.div`
-  height: 80%;
+  height: 60%;
   bottom: 0;
   background-color: whitesmoke;
 `
@@ -209,7 +223,8 @@ const ChatFeed = styled.div`
 const MessageList = styled.div`
   position: relative;
   height: 100%;
-  width: 100%;
+  width: 90%;
+  margin-left: 5%;
 `
 
 const ChatBlob = styled.div`
@@ -223,18 +238,16 @@ const ChatField = styled.textarea`
   font-size: 1em;
   margin: 2% 0 0;
   width: 90%;
-  height: 70%;
+  height: 80%;
   resize: none;
 `
 
-const UnhideButton = styled.button`
-  margin: 0;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 200px;
-  height: 50px;
-  z-index: 10;
+const HideChat = styled.button`
+  position: relative;
+  float: right;
+  border-radius: 5px;
+  width: 30px;
+  height: 30px;
 `
 
 function getNicknameFromCookies() {

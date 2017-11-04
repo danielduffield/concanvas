@@ -25,6 +25,7 @@ class Canvas extends React.Component {
     this.painting = false
     this.unsavedData = []
 
+    this.toggleChat = this.toggleChat.bind(this)
     this.updateCoordinates = this.updateCoordinates.bind(this)
     this.handleMouseDown = this.handleMouseDown.bind(this)
     this.handleMouseUp = this.handleMouseUp.bind(this)
@@ -57,6 +58,9 @@ class Canvas extends React.Component {
       }
       this.lastSaved = saved
     }, 10000)
+  }
+  toggleChat() {
+    this.props.dispatch({ type: 'TOGGLED_CHAT' })
   }
   async loadCanvas() {
     this.ctx = this.canvas.getContext('2d')
@@ -172,6 +176,9 @@ class Canvas extends React.Component {
           </Wrapper>
         </SecondWrapper>
         <DownloadModule canvas={this.canvas}/>
+        <UnhideButton id="unhide-button"
+          className={this.props.isChatHidden ? 'chat-button' : 'chat-button hidden'}
+          onClick={this.toggleChat}>Display Chat</UnhideButton>
       </Container>
     )
   }
@@ -184,6 +191,16 @@ function getCoordinates(canvas, event) {
     y: event.clientY - rect.top
   }
 }
+
+const UnhideButton = styled.button`
+  margin: 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200px;
+  height: 50px;
+  z-index: 10;
+`
 
 const SecondWrapper = styled.div`
     position: relative;

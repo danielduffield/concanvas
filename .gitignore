@@ -1,7 +1,5 @@
-.htmlhintrc
-.eslintrc
-.stylelintrc
 node_modules
 .env
 nodemon.json
 canvas-state/instances
+server/public/bundle.js

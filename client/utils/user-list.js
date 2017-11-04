@@ -24,48 +24,67 @@ class UserList extends React.Component {
   }
   render() {
     return (
-      <div>
-        <UnhideUsers className={this.props.isUserListHidden ? 'chat-button' : 'chat-button hidden'}
-          onClick={this.toggleUserList}>Display Users</UnhideUsers>
-        <UsersContainer className={this.props.isUserListHidden ? 'hidden' : ''}>
+      <SidebarContainer className={this.props.isUserListHidden ? 'hidden' : ''}>
+        <UsersContainer>
           <UsersTopBar>
-            <HideUsers id="chat-hide" className="float-left"
-              onClick={this.toggleUserList}>Hide Users</HideUsers>
-            <UserCount>Online: {this.props.onlineUsers.length}</UserCount>
+            <CurrentlyOnline>Contributors Online
+              <HideUserList onClick={this.toggleUserList}>X</HideUserList>
+            </CurrentlyOnline>
           </UsersTopBar>
           <Users>
-            {this.props.onlineUsers.map((user, index) => {
-              return <OnlineUser key={index}>{user.nickname}</OnlineUser>
-            })}
+            <ArtistsOnline>{'Artists (' +  + this.props.onlineUsers.filter(user => !user.nickname.startsWith('GUEST')).length
+              + ')'}</ArtistsOnline>
+            {this.props.onlineUsers.filter(user => !user.nickname.startsWith('GUEST'))
+              .map((user, index) => {
+                return <OnlineUser key={index}>{user.nickname}</OnlineUser>
+              })
+            }
+            <ArtistsOnline>{'Guests (' + this.props.onlineUsers.filter(user => user.nickname.startsWith('GUEST')).length + ')'}</ArtistsOnline>
+            {this.props.onlineUsers.filter(user => user.nickname.startsWith('GUEST'))
+              .map((user, index) => {
+                return <OnlineUser key={index}>{user.nickname}</OnlineUser>
+              })
+            }
           </Users>
         </UsersContainer>
-      </div>
+      </SidebarContainer>
     )
   }
 }
 
-const OnlineUser = styled.div`
-  margin: 5px;
-`
-
-const UnhideUsers = styled.button`
-  margin: 0;
-  left: 0;
-  position: absolute;
-  width: 200px;
-  height: 50px;
-  z-index: 10;
-  margin: 0;
-`
-
-const HideUsers = styled.button`
-  height: 100%;
-  width: 25%;
-  margin-left: 5%;
+const HideUserList = styled.button`
+  position: relative;
+  top: 20px;
+  float: right;
   border-radius: 5px;
-  min-width: 90px;
-  font-size: 1em;
-  min-height: 35px;
+  width: 30px;
+  height: 30px;
+`
+
+const SidebarContainer = styled.div`
+  position: absolute;
+  width: 34%;
+  height: 100%;
+  max-width: 500px;
+  background-color: whitesmoke;
+  border-right: 1px solid grey;
+`
+
+const CurrentlyOnline = styled.span`
+  position: relative;
+  top: 20px;
+  font-size: 1.75em;
+  font-family: 'Bubblegum Sans', cursive;
+`
+
+const ArtistsOnline = styled.div`
+  font-size: 1.25em;
+  margin: 20px 0;
+  font-family: 'Bubblegum Sans', cursive;
+`
+
+const OnlineUser = styled.div`
+  margin: 10px;
 `
 
 const UserCount = styled.div`
@@ -80,24 +99,25 @@ const UserCount = styled.div`
 const UsersContainer = styled.div`
   position: absolute;
   width: 100%;
-  height: 40%;
+  height: 100%;
   z-index: 5;
+  text-align: left;
 `
 
 const UsersTopBar = styled.div`
   position: absolute;
-  height: 5%;
+  height: 75px;
   width: 100%;
+  border-bottom: 1px solid grey;
+  padding: 0 20px;
 `
 
 const Users = styled.div`
-  background-color: lightblue;
-  border: 2px solid steelblue;
+  top: 75px;
+  position: relative;
   height: 85%;
   width: 90%;
-  margin: 8% 5% 5%;
-  border-radius: 10px;
-  overflow-y: scroll;
+  padding: 0 20px;
 `
 
 function mapStateToProps(state) {
