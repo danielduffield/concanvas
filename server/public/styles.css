@@ -124,3 +124,13 @@
 #message-form {
   height: 75%;
 }
+
+i.transparent {
+  background: transparent;
+  color: #312c32;
+}
+
+i.transparent.active {
+  background: transparent;
+  color: #daad86;
+}
