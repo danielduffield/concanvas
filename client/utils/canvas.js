@@ -175,7 +175,7 @@ class Canvas extends React.Component {
           </Wrapper>
         </SecondWrapper>
         <DownloadModule canvas={this.canvas}/>
-        <ToggleButton id="unhide-button"
+        <ToggleButton id="unhide-button" className="toggle-button"
           isActive={!(this.props.isChatHidden && this.props.isUserListHidden)}
           onClick={this.toggleChat}>
           <i className={'fa' + (this.props.isChatHidden && this.props.isUserListHidden
@@ -183,7 +183,7 @@ class Canvas extends React.Component {
             : ' fa-envelope-open-o transparent active')}
             aria-hidden="true"></i>
         </ToggleButton>
-        <ToggleButton id="snapshot-button"
+        <ToggleButton id="snapshot-button" className="toggle-button"
           isActive={this.props.isDownloadLinkActive}>
           <i className={'fa fa-camera-retro transparent' + (this.props.isDownloadLinkActive ? ' active' : '')}
             aria-hidden="true"></i>
@@ -202,10 +202,6 @@ function getCoordinates(canvas, event) {
 }
 
 const ToggleButton = styled.button`
-  width: 100px;
-  height: 100px;
-  z-index: 10;
-  font-size: 4.5em;
   background-color: ${props => props.isActive ? '#312c32' : '#daad86'}
 `
 
