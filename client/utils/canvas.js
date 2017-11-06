@@ -25,7 +25,6 @@ class Canvas extends React.Component {
     this.painting = false
     this.unsavedData = []
 
-    this.toggleChat = this.toggleChat.bind(this)
     this.updateCoordinates = this.updateCoordinates.bind(this)
     this.handleMouseDown = this.handleMouseDown.bind(this)
     this.handleMouseUp = this.handleMouseUp.bind(this)
@@ -58,9 +57,6 @@ class Canvas extends React.Component {
       }
       this.lastSaved = saved
     }, 10000)
-  }
-  toggleChat() {
-    this.props.dispatch({ type: 'TOGGLED_CHAT' })
   }
   async loadCanvas() {
     this.ctx = this.canvas.getContext('2d')
