@@ -202,16 +202,6 @@ function getCoordinates(canvas, event) {
   }
 }
 
-const UnhideButton = styled.button`
-  margin: 0;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 200px;
-  height: 50px;
-  z-index: 10;
-`
-
 const ChatToggleButton = styled.button`
   width: 100px;
   height: 100px;
