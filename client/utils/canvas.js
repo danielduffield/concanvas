@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import PaintSidebar from './paint-sidebar'
 import ColorPicker from './color-picker'
-import DownloadModule from './download-module'
+import UtilToolbar from './util-toolbar'
 
 import socket from './socket-connection'
 
@@ -174,15 +174,7 @@ class Canvas extends React.Component {
             <ColorPicker/>
           </Wrapper>
         </SecondWrapper>
-        <DownloadModule canvas={this.canvas}/>
-        <ToggleButton id="unhide-button" className="toggle-button"
-          isActive={!(this.props.isChatHidden && this.props.isUserListHidden)}
-          onClick={this.toggleChat}>
-          <i className={'fa' + (this.props.isChatHidden && this.props.isUserListHidden
-            ? ' fa-envelope-o transparent'
-            : ' fa-envelope-open-o transparent active')}
-            aria-hidden="true"></i>
-        </ToggleButton>
+        <UtilToolbar canvas={this.canvas}/>
       </Container>
     )
   }
@@ -196,13 +188,9 @@ function getCoordinates(canvas, event) {
   }
 }
 
-const ToggleButton = styled.button`
-  background-color: ${props => props.isActive ? '#312c32' : '#daad86'}
-`
-
 const SecondWrapper = styled.div`
     position: relative;
-    height: 100%;
+    height: 729px;
     width: ${props => props.isHidden ? '704px' : '80%'};
     margin: 0 auto;
 `
