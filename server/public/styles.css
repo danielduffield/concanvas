@@ -134,3 +134,10 @@ i.transparent.active {
   background: transparent;
   color: #daad86;
 }
+
+.toggle-button {
+  width: 100px;
+  height: 100px;
+  z-index: 10;
+  font-size: 4.5em;
+}
