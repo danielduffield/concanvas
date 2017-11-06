@@ -42,20 +42,17 @@ class DownloadModule extends React.Component {
             }}>Download Snapshot</a>
         </LinkWrapper>
         <DownloadButton className="chat-button" onClick={this.handleDownloadRequest}>
-          Save Snapshot</DownloadButton>
+          Save Snapshot
+        </DownloadButton>
+        <ToggleButton id="snapshot-button" className="toggle-button"
+          isActive={this.props.isDownloadLinkActive}>
+          <i className={'fa fa-camera-retro transparent' + (this.props.isDownloadLinkActive ? ' active' : '')}
+            aria-hidden="true"></i>
+        </ToggleButton>
       </div>
     )
   }
 }
-
-function mapStateToProps(state) {
-  return {
-    isDownloadLinkActive: state.utility.isDownloadLinkActive
-  }
-}
-
-const Connected = connect(mapStateToProps)(DownloadModule)
-export default Connected
 
 const LinkWrapper = styled.div`
   position: absolute;
@@ -74,3 +71,15 @@ const DownloadButton = styled.button`
   height: 50px;
   z-index: 10;
 `
+const ToggleButton = styled.button`
+  background-color: ${props => props.isActive ? '#312c32' : '#daad86'}
+`
+
+function mapStateToProps(state) {
+  return {
+    isDownloadLinkActive: state.utility.isDownloadLinkActive
+  }
+}
+
+const Connected = connect(mapStateToProps)(DownloadModule)
+export default Connected
