@@ -36,7 +36,6 @@ class DownloadModule extends React.Component {
       <div>
         <LinkWrapper>
           <a className={this.props.isDownloadLinkActive ? '' : 'hidden'}
-            onClick={this.hideDownloadLink}
             ref={link => {
               this.link = link
             }}>Download Snapshot</a>
@@ -47,7 +46,7 @@ class DownloadModule extends React.Component {
             aria-hidden="true"></i>
         </ToggleButton>
         <DownloadButton id="snapshot-dl-btn" className="toggle-button"
-          isActive={this.props.isDownloadLinkActive}>
+          isActive={this.props.isDownloadLinkActive} onClick={this.hideDownloadLink}>
           <i className={'fa fa-download transparent' + (this.props.isDownloadLinkActive ? ' download-active' : '')}
             aria-hidden="true"></i>
         </DownloadButton>
