@@ -183,11 +183,6 @@ class Canvas extends React.Component {
             : ' fa-envelope-open-o transparent active')}
             aria-hidden="true"></i>
         </ToggleButton>
-        <ToggleButton id="snapshot-button" className="toggle-button"
-          isActive={this.props.isDownloadLinkActive}>
-          <i className={'fa fa-camera-retro transparent' + (this.props.isDownloadLinkActive ? ' active' : '')}
-            aria-hidden="true"></i>
-        </ToggleButton>
       </Container>
     )
   }
@@ -243,8 +238,7 @@ function mapStateToProps(state) {
     isErasing: state.paint.isErasing,
     isChatHidden: state.chat.isChatHidden,
     isUserListHidden: state.chat.isUserListHidden,
-    socketId: state.chat.socketId,
-    isDownloadLinkActive: state.utility.isDownloadLinkActive
+    socketId: state.chat.socketId
   }
 }
 
