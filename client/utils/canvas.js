@@ -175,20 +175,19 @@ class Canvas extends React.Component {
           </Wrapper>
         </SecondWrapper>
         <DownloadModule canvas={this.canvas}/>
-        <ChatToggleButton id="unhide-button"
-          isHidden={this.props.isChatHidden && this.props.isUserListHidden}
+        <ToggleButton id="unhide-button"
+          isActive={!(this.props.isChatHidden && this.props.isUserListHidden)}
           onClick={this.toggleChat}>
           <i className={'fa' + (this.props.isChatHidden && this.props.isUserListHidden
             ? ' fa-envelope-o transparent'
             : ' fa-envelope-open-o transparent active')}
             aria-hidden="true"></i>
-        </ChatToggleButton>
-        <ChatToggleButton id="snapshot-button"
-          isHidden={this.props.isChatHidden && this.props.isUserListHidden}
-          onClick={this.toggleChat}>
-          <i className={'fa fa-camera-retro transparent' + (this.props.isChatHidden && this.props.isUserListHidden ? '' : ' active')}
+        </ToggleButton>
+        <ToggleButton id="snapshot-button"
+          isActive={this.props.isDownloadLinkActive}>
+          <i className={'fa fa-camera-retro transparent'}
             aria-hidden="true"></i>
-        </ChatToggleButton>
+        </ToggleButton>
       </Container>
     )
   }
@@ -202,12 +201,12 @@ function getCoordinates(canvas, event) {
   }
 }
 
-const ChatToggleButton = styled.button`
+const ToggleButton = styled.button`
   width: 100px;
   height: 100px;
   z-index: 10;
   font-size: 4.5em;
-  background-color: ${props => props.isHidden ? '#daad86' : '#312c32'}
+  background-color: ${props => props.isActive ? '#daad86' : '#312c32'}
 `
 
 const SecondWrapper = styled.div`
@@ -248,7 +247,8 @@ function mapStateToProps(state) {
     isErasing: state.paint.isErasing,
     isChatHidden: state.chat.isChatHidden,
     isUserListHidden: state.chat.isUserListHidden,
-    socketId: state.chat.socketId
+    socketId: state.chat.socketId,
+    isDownloadLinkActive: state.utility.isDownloadLinkActive
   }
 }
 
