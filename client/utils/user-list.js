@@ -32,8 +32,9 @@ class UserList extends React.Component {
             </CurrentlyOnline>
           </UsersTopBar>
           <Users>
-            <ArtistsOnline>{'Artists (' +  + this.props.onlineUsers.filter(user => !user.nickname.startsWith('GUEST')).length
-              + ')'}</ArtistsOnline>
+            <ArtistsOnline>
+              {'Artists (' + this.props.onlineUsers.filter(user => !user.nickname.startsWith('GUEST')).length + ')'}
+            </ArtistsOnline>
             {this.props.onlineUsers.filter(user => !user.nickname.startsWith('GUEST'))
               .map((user, index) => {
                 return <OnlineUser key={index}>{user.nickname}</OnlineUser>
@@ -85,15 +86,6 @@ const ArtistsOnline = styled.div`
 
 const OnlineUser = styled.div`
   margin: 10px;
-`
-
-const UserCount = styled.div`
-  line-height: 200%;
-  float: right;
-  height: 100%;
-  margin-right: 5%;
-  font-family: 'Bubblegum Sans', cursive;
-  font-size: 1.25em;
 `
 
 const UsersContainer = styled.div`
