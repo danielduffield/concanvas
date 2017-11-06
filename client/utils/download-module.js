@@ -41,11 +41,8 @@ class DownloadModule extends React.Component {
               this.link = link
             }}>Download Snapshot</a>
         </LinkWrapper>
-        <DownloadButton className="chat-button" onClick={this.handleDownloadRequest}>
-          Save Snapshot
-        </DownloadButton>
         <ToggleButton id="snapshot-button" className="toggle-button"
-          isActive={this.props.isDownloadLinkActive}>
+          isActive={this.props.isDownloadLinkActive} onClick={this.handleDownloadRequest}>
           <i className={'fa fa-camera-retro transparent' + (this.props.isDownloadLinkActive ? ' active' : '')}
             aria-hidden="true"></i>
         </ToggleButton>
@@ -62,15 +59,6 @@ const LinkWrapper = styled.div`
   text-align: center;
 `
 
-const DownloadButton = styled.button`
-  margin: 0;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 200px;
-  height: 50px;
-  z-index: 10;
-`
 const ToggleButton = styled.button`
   background-color: ${props => props.isActive ? '#312c32' : '#daad86'}
 `
