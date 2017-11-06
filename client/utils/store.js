@@ -90,8 +90,8 @@ function utilityReducer(state = {
   isDownloadLinkActive: false
 }, action) {
   switch (action.type) {
-    case 'ACTIVATED_DOWNLOAD_LINK':
-      return Object.assign({}, state, { isDownloadLinkActive: true })
+    case 'TOGGLED_DOWNLOAD_LINK':
+      return Object.assign({}, state, { isDownloadLinkActive: !state.isDownloadLinkActive })
     case 'DEACTIVATED_DOWNLOAD_LINK':
       return Object.assign({}, state, { isDownloadLinkActive: false })
     default:
