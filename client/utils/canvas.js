@@ -158,7 +158,6 @@ class Canvas extends React.Component {
     this.painting = false
   }
   render() {
-
     return (
       <Container id="container" isHidden={this.props.isChatHidden && this.props.isUserListHidden}>
         <SecondWrapper isHidden={this.props.isChatHidden && this.props.isUserListHidden}>
