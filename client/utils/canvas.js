@@ -185,7 +185,7 @@ class Canvas extends React.Component {
         </ToggleButton>
         <ToggleButton id="snapshot-button"
           isActive={this.props.isDownloadLinkActive}>
-          <i className={'fa fa-camera-retro transparent'}
+          <i className={'fa fa-camera-retro transparent' + (this.props.isDownloadLinkActive ? ' active' : '')}
             aria-hidden="true"></i>
         </ToggleButton>
       </Container>
@@ -206,7 +206,7 @@ const ToggleButton = styled.button`
   height: 100px;
   z-index: 10;
   font-size: 4.5em;
-  background-color: ${props => props.isActive ? '#daad86' : '#312c32'}
+  background-color: ${props => props.isActive ? '#312c32' : '#daad86'}
 `
 
 const SecondWrapper = styled.div`
