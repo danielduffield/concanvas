@@ -141,7 +141,7 @@ const PaintTools = styled.div`
   height: 604px;
   width: 135px;
   margin-top: 125px;
-  background-color: palegoldenrod;
+  background-color: #daad86;
 `
 const Palette = styled.div`
   position: relative;
