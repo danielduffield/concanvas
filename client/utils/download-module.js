@@ -23,7 +23,7 @@ class DownloadModule extends React.Component {
   handleDownloadRequest() {
     this.downloadCanvas(this.link, this.props.canvas, 'snapshot.png')
     this.props.dispatch({
-      type: 'ACTIVATED_DOWNLOAD_LINK'
+      type: 'TOGGLED_DOWNLOAD_LINK'
     })
   }
   hideDownloadLink() {
