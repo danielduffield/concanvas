@@ -176,9 +176,20 @@ class Canvas extends React.Component {
           </Wrapper>
         </SecondWrapper>
         <DownloadModule canvas={this.canvas}/>
-        <UnhideButton id="unhide-button"
-          className={this.props.isChatHidden ? 'chat-button' : 'chat-button hidden'}
-          onClick={this.toggleChat}>Display Chat</UnhideButton>
+        <ChatToggleButton id="unhide-button"
+          isHidden={this.props.isChatHidden && this.props.isUserListHidden}
+          onClick={this.toggleChat}>
+          <i className={'fa' + (this.props.isChatHidden && this.props.isUserListHidden
+            ? ' fa-envelope-o transparent'
+            : ' fa-envelope-open-o transparent active')}
+            aria-hidden="true"></i>
+        </ChatToggleButton>
+        <ChatToggleButton id="snapshot-button"
+          isHidden={this.props.isChatHidden && this.props.isUserListHidden}
+          onClick={this.toggleChat}>
+          <i className={'fa fa-camera-retro transparent' + (this.props.isChatHidden && this.props.isUserListHidden ? '' : ' active')}
+            aria-hidden="true"></i>
+        </ChatToggleButton>
       </Container>
     )
   }
@@ -200,6 +211,14 @@ const UnhideButton = styled.button`
   width: 200px;
   height: 50px;
   z-index: 10;
+`
+
+const ChatToggleButton = styled.button`
+  width: 100px;
+  height: 100px;
+  z-index: 10;
+  font-size: 4.5em;
+  background-color: ${props => props.isHidden ? '#daad86' : '#312c32'}
 `
 
 const SecondWrapper = styled.div`
