@@ -145,7 +145,7 @@ class ChatSidebar extends React.Component {
                 onClick={this.submitMessage} type="submit">Chat</ChatButton>
               <ChatButton id="chat-users-btn" className="float-left"
                 onClick={this.toggleUsers}>
-                <i className="fa fa-list-ul" aria-hidden="true"></i>  
+                <i className="fa fa-list-ul" aria-hidden="true"></i>
               </ChatButton>
             </form>
           </ChatFormContainer>
