@@ -92,14 +92,20 @@ class PaintSidebar extends React.Component {
   render() {
     return (
       <PaintTools>
-        <EraserIcon className="toolbar-module-sidebar"
-          onClick={this.toggleEraser}
-          isActive={this.props.isErasing}></EraserIcon>
-        <div className="toolbar-label-sidebar">Eraser</div>
-        <SizeSelector />
-        <div className="toolbar-label-sidebar">Size</div>
-        <CurrentColor className="toolbar-module-sidebar" color={this.props.currentColor}></CurrentColor>
-        <div className="toolbar-label-sidebar">Current</div>
+        <ModuleContainer>
+          <EraserIcon className="toolbar-module-sidebar"
+            onClick={this.toggleEraser}
+            isActive={this.props.isErasing}></EraserIcon>
+          <div className="toolbar-label-sidebar">Eraser</div>
+        </ModuleContainer>
+        <ModuleContainer>
+          <SizeSelector />
+          <div className="toolbar-label-sidebar">Size</div>
+        </ModuleContainer>
+        <ModuleContainer>
+          <CurrentColor className="toolbar-module-sidebar" color={this.props.currentColor}></CurrentColor>
+          <div className="toolbar-label-sidebar">Current</div>
+        </ModuleContainer>
         <Palette id="sidebar-palette">
           {paletteColors.map((colorModule, index) => {
             return (
@@ -122,6 +128,10 @@ class PaintSidebar extends React.Component {
     )
   }
 }
+
+const ModuleContainer = styled.div`
+  float: left;
+`
 
 const ColorDiv = styled.div`
   background-color: ${props => props.color};
@@ -147,7 +157,8 @@ const Palette = styled.div`
   position: relative;
   height: 286px;
   width: 106px;
-  margin: 15px auto 20px;
+  margin: 15px 0 20px;
+  float: left;
   background-color: gainsboro;
   border: 2px solid #312c32;
 `
