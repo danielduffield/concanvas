@@ -25,6 +25,9 @@ class UtilToolbar extends React.Component {
               : 'fa fa-envelope-o transparent active'}
               aria-hidden="true"></i>
           </ToggleButton>
+          <ToggleButton className="toggle-button" title="Toggle Toolbar Position">
+            <i className="fa fa-rotate-90 fa-window-maximize transparent inactive" aria-hidden="true"></i>
+          </ToggleButton>
           <DownloadModule canvas={this.props.canvas}/>
         </ButtonsWrapper>
       </ToolbarContainer>
