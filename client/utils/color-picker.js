@@ -45,10 +45,9 @@ class Component extends React.Component {
 }
 
 const CustomColor = styled.div`
-  position: relative;
-  top: 430px;
-  right: 357px;
-  float: left;
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
   display: ${props => props.isColorPickerHidden ? 'none' : ''};
 `
 
