@@ -63,7 +63,10 @@ function chatReducer(state = {
     case 'SOCKET_ESTABLISHED':
       return Object.assign({}, state, { socketId: action.payload.text })
     case 'TOGGLED_CHAT':
-      return Object.assign({}, state, { isChatHidden: !state.isChatHidden })
+      return Object.assign({}, state, {
+        isChatHidden: (state.isUserListHidden ? !state.isChatHidden : true),
+        isUserListHidden: true
+      })
     case 'MESSAGE_UPDATED':
       return Object.assign({}, state, { messageContent: action.payload.text })
     case 'MESSAGE_SENT':
