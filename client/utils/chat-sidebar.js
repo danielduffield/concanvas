@@ -157,13 +157,14 @@ class ChatSidebar extends React.Component {
 
 const ChatColumn = styled.div`
   float: left;
+  width: 500px;
+  height: 100%;
 `
 
 const SidebarContainer = styled.div`
   position: absolute;
-  width: 34%;
+  width: 500px;
   height: 100%;
-  max-width: 500px;
   background-color: whitesmoke;
   border-right: 1px solid grey;
 `
