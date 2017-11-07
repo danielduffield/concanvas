@@ -91,33 +91,33 @@ class PaintSidebar extends React.Component {
   }
   render() {
     return (
-      <PaintTools orient={this.props.toolbarOrientation}>
-        <ModuleContainer orient={this.props.toolbarOrientation}>
+      <PaintTools isHoriz={this.props.isToolbarHoriz}>
+        <ModuleContainer isHoriz={this.props.isToolbarHoriz}>
           <EraserIcon className="toolbar-module-sidebar"
             onClick={this.toggleEraser}
             isActive={this.props.isErasing}></EraserIcon>
           <div className="toolbar-label-sidebar">Eraser</div>
         </ModuleContainer>
-        <ModuleContainer orient={this.props.toolbarOrientation}>
+        <ModuleContainer isHoriz={this.props.isToolbarHoriz}>
           <SizeSelector />
           <div className="toolbar-label-sidebar">Size</div>
         </ModuleContainer>
-        <ModuleContainer orient={this.props.toolbarOrientation}>
+        <ModuleContainer isHoriz={this.props.isToolbarHoriz}>
           <CurrentColor className="toolbar-module-sidebar" color={this.props.currentColor}></CurrentColor>
           <div className="toolbar-label-sidebar">Current</div>
         </ModuleContainer>
-        <Palette id="sidebar-palette" orient={this.props.toolbarOrientation}>
+        <Palette id="sidebar-palette" isHoriz={this.props.isToolbarHoriz}>
           {paletteColors.map((colorModule, index) => {
             return (
               <ColorDiv id={'color-' + colorModule.index[0] + '-' + colorModule.index[1]}
-                 orient={this.props.toolbarOrientation} data-color={colorModule.color} onClick={this.selectColor}
+                 isHoriz={this.props.isToolbarHoriz} data-color={colorModule.color} onClick={this.selectColor}
                 color={colorModule.color}
                 key={index}></ColorDiv>
             )
           })}
           {this.props.customColors.map((colorModule, index) => {
             return (
-              <ColorDiv id={'custom-color-' + index} orient={this.props.toolbarOrientation}
+              <ColorDiv id={'custom-color-' + index} isHoriz={this.props.isToolbarHoriz}
                 data-color={colorModule} onClick={this.selectCustomColor}
                 color={colorModule} data-index={index}
                 key={index}></ColorDiv>
@@ -130,8 +130,8 @@ class PaintSidebar extends React.Component {
 }
 
 const ModuleContainer = styled.div`
-  float: ${props => props.orient === 'horiz' ? 'left' : 'none'};
-  margin: ${props => props.orient === 'horiz' ? '' : '0 auto'};
+  float: ${props => props.isHoriz ? 'left' : 'none'};
+  margin: ${props => props.isHoriz ? '13px 0 0 10px' : '0 auto'};
   background-color: #daad86;
 `
 
@@ -140,7 +140,7 @@ const ColorDiv = styled.div`
   float: left;
   height: 26px;
   width: 26px;
-  margin: ${props => props.orient === 'horiz' ? '7px 0 0 18px' : '14px 4px 5px'};
+  margin: ${props => props.isHoriz ? '7px 0 0 18px' : '14px 4px 5px'};
   background-color: lightblue;
   background-color: ${props => props.color};
 `
@@ -155,19 +155,19 @@ const EraserIcon = styled.div`
 const PaintTools = styled.div`
   float: left;
   border: 2px solid #312c32;
-  border-top: ${props => props.orient === 'horiz' ? 'none' : '2px solid #312c32'};
-  border-left: ${props => props.orient === 'horiz' ? '2px solid #312c3' : 'none'};
-  height: ${props => props.orient === 'horiz' ? '135px' : '604px'};
-  width: ${props => props.orient === 'horiz' ? '604px' : '135px'};
-  margin-top: ${props => props.orient === 'horiz' ? '0' : '125px'};
+  border-top: ${props => props.isHoriz ? 'none' : '2px solid #312c32'};
+  border-left: ${props => props.isHoriz ? '2px solid #312c3' : 'none'};
+  height: ${props => props.isHoriz ? '135px' : '604px'};
+  width: ${props => props.isHoriz ? '604px' : '135px'};
+  margin-top: ${props => props.isHoriz ? '0' : '125px'};
   background-color: #daad86;
 `
 const Palette = styled.div`
   position: relative;
-  height: ${props => props.orient === 'horiz' ? '106px' : '286px'};
-  width: ${props => props.orient === 'horiz' ? '286px' : '106px'};
-  float: ${props => props.orient === 'horiz' ? 'left' : 'none'};
-  margin: ${props => props.orient === 'horiz' ? '15px 0 20px' : '15px auto 20px'};
+  height: ${props => props.isHoriz ? '106px' : '286px'};
+  width: ${props => props.isHoriz ? '286px' : '106px'};
+  float: ${props => props.isHoriz ? 'left' : 'none'};
+  margin: ${props => props.isHoriz ? '15px 0 20px 13px' : '15px auto 20px'};
   background-color: gainsboro;
   border: 2px solid #312c32;
 `
@@ -188,7 +188,7 @@ function mapStateToProps(state) {
     currentColor: state.paint.currentColor,
     customColors: state.paint.customColors,
     customSelected: state.paint.customSelected,
-    toolbarOrientation: state.utility.toolbarOrientation
+    isToolbarHoriz: state.utility.isToolbarHoriz
   }
 }
 
