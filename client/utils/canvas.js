@@ -158,7 +158,9 @@ class Canvas extends React.Component {
       <Container id="container" isHidden={this.props.isChatHidden && this.props.isUserListHidden}>
         <SecondWrapper isHidden={this.props.isChatHidden && this.props.isUserListHidden}>
           <Wrapper id="wrapper">
-            <MainTitle id="main-title">ConCanvas</MainTitle>
+            <TitleContainer>
+              <MainTitle id="main-title">ConCanvas</MainTitle>
+            </TitleContainer>
             <canvas id="my-canvas" onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp}
               onMouseMove={this.updateCoordinates} onMouseOut={this.handleMouseUp}
               width="600" height="600"
@@ -204,17 +206,19 @@ const Wrapper = styled.div`
   height: 729px;
   margin: 0 auto;
   position: relative;
+  text-align: center;
+`
+
+const TitleContainer = styled.div`
+  position: absolute;
+  top: 25px;
+  width: 100%;
+  text-align: center;
 `
 
 const MainTitle = styled.h1`
-  width: 300px;
-  top: 25px;
   font-size: 4em;
   font-family: 'Bubblegum Sans', cursive;
-  left: 0;
-  right: 25%;
-  position: absolute;
-  margin: 0 auto;
   background-color: whitesmoke;
 `
 
