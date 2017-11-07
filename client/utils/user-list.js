@@ -24,43 +24,50 @@ class UserList extends React.Component {
   }
   render() {
     return (
-      <SidebarContainer className={this.props.isUserListHidden ? 'hidden' : ''}>
-        <UsersContainer>
-          <UsersTopBar>
-            <CurrentlyOnline>Contributors Online
-              <HideUserList onClick={this.toggleUserList}>X</HideUserList>
-            </CurrentlyOnline>
-          </UsersTopBar>
-          <Users>
-            <ArtistsOnline>
-              {'Artists (' + this.props.onlineUsers.filter(user => !user.nickname.startsWith('GUEST')).length + ')'}
-            </ArtistsOnline>
-            {this.props.onlineUsers.filter(user => !user.nickname.startsWith('GUEST'))
-              .map((user, index) => {
-                return <OnlineUser key={index}>{user.nickname}</OnlineUser>
-              })
-            }
-            <ArtistsOnline>{'Guests (' + this.props.onlineUsers.filter(user => user.nickname.startsWith('GUEST')).length + ')'}</ArtistsOnline>
-            {this.props.onlineUsers.filter(user => user.nickname.startsWith('GUEST'))
-              .map((user, index) => {
-                return <OnlineUser key={index}>{user.nickname}</OnlineUser>
-              })
-            }
-          </Users>
-        </UsersContainer>
-      </SidebarContainer>
+      <ChatColumn className={this.props.isUserListHidden ? 'hidden' : ''}>
+        <SidebarContainer>
+          <UsersContainer>
+            <UsersTopBar>
+              <CurrentlyOnline>Contributors Online
+                <HideUserList onClick={this.toggleUserList}>X</HideUserList>
+              </CurrentlyOnline>
+            </UsersTopBar>
+            <Users>
+              <ArtistsOnline>
+                {'Artists (' + this.props.onlineUsers.filter(user => !user.nickname.startsWith('GUEST')).length + ')'}
+              </ArtistsOnline>
+              {this.props.onlineUsers.filter(user => !user.nickname.startsWith('GUEST'))
+                .map((user, index) => {
+                  return <OnlineUser key={index}>{user.nickname}</OnlineUser>
+                })
+              }
+              <ArtistsOnline>{'Guests (' + this.props.onlineUsers.filter(user => user.nickname.startsWith('GUEST')).length + ')'}</ArtistsOnline>
+              {this.props.onlineUsers.filter(user => user.nickname.startsWith('GUEST'))
+                .map((user, index) => {
+                  return <OnlineUser key={index}>{user.nickname}</OnlineUser>
+                })
+              }
+            </Users>
+          </UsersContainer>
+        </SidebarContainer>
+      </ChatColumn>
     )
   }
 }
 
+const ChatColumn = styled.div`
+  color: #312c32;
+  float: left;
+  width: 500px;
+  height: 100%;
+`
+
 const SidebarContainer = styled.div`
   position: absolute;
-  width: 34%;
+  width: 500px;
   height: 100%;
-  max-width: 500px;
   background-color: whitesmoke;
   border-right: 1px solid grey;
-  color: #312c32;
 `
 
 const UsersContainer = styled.div`
