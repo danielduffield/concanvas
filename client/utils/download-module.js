@@ -27,13 +27,10 @@ class DownloadModule extends React.Component {
     })
   }
   hideDownloadLink(event) {
+    if (!this.props.isDownloadLinkActive) event.preventDefault()
     this.props.dispatch({
       type: 'DEACTIVATED_DOWNLOAD_LINK'
     })
-    this.disableLink(event)
-  }
-  disableLink(event) {
-    event.preventDefault()
   }
   render() {
     return (
@@ -44,7 +41,7 @@ class DownloadModule extends React.Component {
             aria-hidden="true"></i>
         </ToggleButton>
         <a title="Download Snapshot" id="snapshot-dl-btn" className="toggle-button"
-          isActive={this.props.isDownloadLinkActive} onClick={this.hideDownloadLink} ref={link => {
+          onClick={this.hideDownloadLink} ref={link => {
             this.link = link
           }}>
           <i className={'fa fa-download transparent' + (this.props.isDownloadLinkActive ? ' download-active' : ' download-inactive')}
