@@ -184,6 +184,13 @@ function getCoordinates(canvas, event) {
   }
 }
 
+const Container = styled.div`
+  height: 100%;
+  float: left;
+  left: ${props => props.isHidden ? 0 : '34%'};
+  width: ${props => props.isHidden ? '100%' : '66%'};
+`
+
 const SecondWrapper = styled.div`
     position: relative;
     height: 729px;
@@ -191,11 +198,9 @@ const SecondWrapper = styled.div`
     margin: 0 auto;
 `
 
-const Container = styled.div`
-  height: 100%;
+const Wrapper = styled.div`
+  min-width: 960px;
   position: absolute;
-  left: ${props => props.isHidden ? 0 : '34%'};
-  width: ${props => props.isHidden ? '100%' : '66%'};
 `
 
 const MainTitle = styled.h1`
@@ -208,11 +213,6 @@ const MainTitle = styled.h1`
   position: absolute;
   margin: 0 auto;
   background-color: whitesmoke;
-`
-
-const Wrapper = styled.div`
-  min-width: 960px;
-  position: absolute;
 `
 
 function mapStateToProps(state) {
