@@ -98,6 +98,8 @@ function utilityReducer(state = {
       return Object.assign({}, state, { isDownloadLinkActive: !state.isDownloadLinkActive })
     case 'DEACTIVATED_DOWNLOAD_LINK':
       return Object.assign({}, state, { isDownloadLinkActive: false })
+    case 'UPDATED_TOOLBAR_ORIENTATION':
+      return Object.assign({}, state, { isToolbarHoriz: !state.isToolbarHoriz })
     default:
       return state
   }
