@@ -23,10 +23,11 @@ class DownloadModule extends React.Component {
   handleDownloadRequest() {
     this.downloadCanvas(this.link, this.props.canvas, 'snapshot.png')
     this.props.dispatch({
-      type: 'ACTIVATED_DOWNLOAD_LINK'
+      type: 'TOGGLED_DOWNLOAD_LINK'
     })
   }
-  hideDownloadLink() {
+  hideDownloadLink(event) {
+    if (!this.props.isDownloadLinkActive) event.preventDefault()
     this.props.dispatch({
       type: 'DEACTIVATED_DOWNLOAD_LINK'
     })
@@ -34,19 +35,28 @@ class DownloadModule extends React.Component {
   render() {
     return (
       <div>
-        <LinkWrapper>
-          <a className={this.props.isDownloadLinkActive ? '' : 'hidden'}
-            onClick={this.hideDownloadLink}
-            ref={link => {
-              this.link = link
-            }}>Download Snapshot</a>
-        </LinkWrapper>
-        <DownloadButton className="chat-button" onClick={this.handleDownloadRequest}>
-          Save Snapshot</DownloadButton>
+        <ToggleButton id="snapshot-button" className="toggle-button" title="Capture Snapshot"
+          isActive={this.props.isDownloadLinkActive} onClick={this.handleDownloadRequest}>
+          <i className={'fa fa-camera-retro transparent' + (this.props.isDownloadLinkActive ? ' active' : ' inactive')}
+            aria-hidden="true"></i>
+        </ToggleButton>
+        <a title="Download Snapshot" id="snapshot-dl-btn"
+          className={'toggle-button' + (this.props.isDownloadLinkActive ? '' : ' disabled')} onClick={this.hideDownloadLink}
+          ref={link => {
+            this.link = link
+          }}>
+          <i className={'fa fa-download transparent' + (this.props.isDownloadLinkActive ? ' download-active' : ' download-inactive')}
+            aria-hidden="true"></i>
+        </a>
       </div>
     )
   }
 }
+
+const ToggleButton = styled.a`
+  background-color: ${props => props.isActive ? '#312c32' : '#daad86'}
+  background-color: whitesmoke;
+`
 
 function mapStateToProps(state) {
   return {
@@ -56,21 +66,3 @@ function mapStateToProps(state) {
 
 const Connected = connect(mapStateToProps)(DownloadModule)
 export default Connected
-
-const LinkWrapper = styled.div`
-  position: absolute;
-  bottom: 60px;
-  right: 0;
-  width: 200px;
-  text-align: center;
-`
-
-const DownloadButton = styled.button`
-  margin: 0;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 200px;
-  height: 50px;
-  z-index: 10;
-`

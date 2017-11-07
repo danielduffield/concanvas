@@ -13,12 +13,12 @@
 #my-canvas {
   float: left;
   margin: 125px 0 0;
-  border: 2px solid black;
+  border: 2px solid #312c32;
   background-color: white;
 }
 
 .toolbar-module {
-  border: 2px solid black;
+  border: 2px solid #312c32;
   position: relative;
   background-color: lightpink;
   float: left;
@@ -30,7 +30,7 @@
 .toolbar-module-sidebar {
   width: 86px;
   height: 66px;
-  border: 2px solid black;
+  border: 2px solid #312c32;
   margin: 10px auto 0;
 }
 
@@ -53,12 +53,12 @@
   margin: 0 auto;
   width: 86px;
   height: 20px;
-  border: 2px solid black;
+  border: 2px solid #312c32;
   border-top: none;
 }
 
 .color-module {
-  border: 2px solid black;
+  border: 2px solid #312c32;
   float: left;
   height: 26px;
   width: 26px;
@@ -67,7 +67,7 @@
 }
 
 .color-module-sidebar {
-  border: 2px solid black;
+  border: 2px solid #312c32;
   float: left;
   height: 26px;
   width: 26px;
@@ -123,4 +123,38 @@
 
 #message-form {
   height: 75%;
+}
+
+i.transparent {
+  background: transparent;
+}
+
+i.transparent.inactive {
+  color: #312c32;
+}
+
+i.transparent.active {
+  color: #98dafc;
+}
+
+.download-active {
+  color: #312c32;
+}
+
+.download-inactive {
+  color: darkgrey;
+}
+
+.toggle-button {
+  width: 100px;
+  height: 100px;
+  z-index: 10;
+  font-size: 4.5em;
+  float: left;
+  margin: 25px 65px;
+}
+
+.disabled {
+  pointer-events: none;
+  cursor: default;
 }

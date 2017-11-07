@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import PaintSidebar from './paint-sidebar'
 import ColorPicker from './color-picker'
-import DownloadModule from './download-module'
+import UtilToolbar from './util-toolbar'
 
 import socket from './socket-connection'
 
@@ -25,7 +25,6 @@ class Canvas extends React.Component {
     this.painting = false
     this.unsavedData = []
 
-    this.toggleChat = this.toggleChat.bind(this)
     this.updateCoordinates = this.updateCoordinates.bind(this)
     this.handleMouseDown = this.handleMouseDown.bind(this)
     this.handleMouseUp = this.handleMouseUp.bind(this)
@@ -58,9 +57,6 @@ class Canvas extends React.Component {
       }
       this.lastSaved = saved
     }, 10000)
-  }
-  toggleChat() {
-    this.props.dispatch({ type: 'TOGGLED_CHAT' })
   }
   async loadCanvas() {
     this.ctx = this.canvas.getContext('2d')
@@ -158,12 +154,13 @@ class Canvas extends React.Component {
     this.painting = false
   }
   render() {
-
     return (
       <Container id="container" isHidden={this.props.isChatHidden && this.props.isUserListHidden}>
         <SecondWrapper isHidden={this.props.isChatHidden && this.props.isUserListHidden}>
           <Wrapper id="wrapper">
-            <MainTitle id="main-title">ConCanvas</MainTitle>
+            <TitleContainer>
+              <MainTitle id="main-title">ConCanvas</MainTitle>
+            </TitleContainer>
             <canvas id="my-canvas" onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp}
               onMouseMove={this.updateCoordinates} onMouseOut={this.handleMouseUp}
               width="600" height="600"
@@ -175,10 +172,7 @@ class Canvas extends React.Component {
             <ColorPicker/>
           </Wrapper>
         </SecondWrapper>
-        <DownloadModule canvas={this.canvas}/>
-        <UnhideButton id="unhide-button"
-          className={this.props.isChatHidden ? 'chat-button' : 'chat-button hidden'}
-          onClick={this.toggleChat}>Display Chat</UnhideButton>
+        <UtilToolbar canvas={this.canvas}/>
       </Container>
     )
   }
@@ -192,45 +186,41 @@ function getCoordinates(canvas, event) {
   }
 }
 
-const UnhideButton = styled.button`
-  margin: 0;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 200px;
-  height: 50px;
-  z-index: 10;
+const Container = styled.div`
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  float: left;
+  width: ${props => props.isHidden ? '100%' : 'calc(100% - 500px)'};
 `
 
 const SecondWrapper = styled.div`
     position: relative;
-    height: 100%;
-    width: ${props => props.isHidden ? '704px' : '80%'};
+    height: 729px;
+    width: ${props => props.isHidden ? '739px' : '80%'};
     margin: 0 auto;
 `
 
-const Container = styled.div`
-  height: 100%;
+const Wrapper = styled.div`
+  width: 739px;
+  height: 729px;
+  margin: 0 auto;
+  position: relative;
+  text-align: center;
+`
+
+const TitleContainer = styled.div`
   position: absolute;
-  left: ${props => props.isHidden ? 0 : '34%'};
-  width: ${props => props.isHidden ? '100%' : '66%'};
+  top: 25px;
+  width: 100%;
+  text-align: center;
 `
 
 const MainTitle = styled.h1`
-  width: 300px;
-  top: 25px;
   font-size: 4em;
   font-family: 'Bubblegum Sans', cursive;
-  left: 0;
-  right: 25%;
-  position: absolute;
-  margin: 0 auto;
   background-color: whitesmoke;
-`
-
-const Wrapper = styled.div`
-  min-width: 960px;
-  position: absolute;
+  color: #312c32;
 `
 
 function mapStateToProps(state) {

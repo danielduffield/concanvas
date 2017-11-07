@@ -136,12 +136,12 @@ const EraserIcon = styled.div`
 
 const PaintTools = styled.div`
   float: left;
-  border: 2px solid black;
+  border: 2px solid #312c32;
   border-left: none;
   height: 604px;
   width: 135px;
   margin-top: 125px;
-  background-color: palegoldenrod;
+  background-color: #daad86;
 `
 const Palette = styled.div`
   position: relative;
@@ -149,7 +149,7 @@ const Palette = styled.div`
   width: 106px;
   margin: 15px auto 20px;
   background-color: gainsboro;
-  border: 2px solid black;
+  border: 2px solid #312c32;
 `
 
 function getColorsFromCookies() {
