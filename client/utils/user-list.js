@@ -53,15 +53,6 @@ class UserList extends React.Component {
   }
 }
 
-const HideUserList = styled.button`
-  position: relative;
-  top: 20px;
-  float: right;
-  border-radius: 5px;
-  width: 30px;
-  height: 30px;
-`
-
 const SidebarContainer = styled.div`
   position: absolute;
   width: 34%;
@@ -69,23 +60,7 @@ const SidebarContainer = styled.div`
   max-width: 500px;
   background-color: whitesmoke;
   border-right: 1px solid grey;
-`
-
-const CurrentlyOnline = styled.span`
-  position: relative;
-  top: 20px;
-  font-size: 1.75em;
-  font-family: 'Bubblegum Sans', cursive;
-`
-
-const ArtistsOnline = styled.div`
-  font-size: 1.25em;
-  margin: 20px 0;
-  font-family: 'Bubblegum Sans', cursive;
-`
-
-const OnlineUser = styled.div`
-  margin: 10px;
+  color: #312c32;
 `
 
 const UsersContainer = styled.div`
@@ -104,12 +79,38 @@ const UsersTopBar = styled.div`
   padding: 0 20px;
 `
 
+const CurrentlyOnline = styled.span`
+  position: relative;
+  top: 20px;
+  font-size: 1.75em;
+  font-family: 'Bubblegum Sans', cursive;
+`
+
+const HideUserList = styled.button`
+  position: relative;
+  top: 20px;
+  float: right;
+  border-radius: 5px;
+  width: 30px;
+  height: 30px;
+`
+
 const Users = styled.div`
   top: 75px;
   position: relative;
   height: 85%;
   width: 90%;
   padding: 0 20px;
+`
+
+const ArtistsOnline = styled.div`
+  font-size: 1.25em;
+  margin: 20px 0;
+  font-family: 'Bubblegum Sans', cursive;
+`
+
+const OnlineUser = styled.div`
+  margin: 10px;
 `
 
 function mapStateToProps(state) {
