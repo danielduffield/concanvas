@@ -186,9 +186,10 @@ function getCoordinates(canvas, event) {
 
 const Container = styled.div`
   height: 100%;
+  width: 100%;
+  margin: 0 auto;
   float: left;
-  left: ${props => props.isHidden ? 0 : '34%'};
-  width: ${props => props.isHidden ? '100%' : '66%'};
+  width: ${props => props.isHidden ? '100%' : 'calc(100% - 500px)'};
 `
 
 const SecondWrapper = styled.div`
