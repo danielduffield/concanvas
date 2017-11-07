@@ -92,21 +92,21 @@ class PaintSidebar extends React.Component {
   render() {
     return (
       <PaintTools>
-        <ModuleContainer>
+        <ModuleContainer orient={this.props.toolbarOrientation}>
           <EraserIcon className="toolbar-module-sidebar"
             onClick={this.toggleEraser}
             isActive={this.props.isErasing}></EraserIcon>
           <div className="toolbar-label-sidebar">Eraser</div>
         </ModuleContainer>
-        <ModuleContainer>
+        <ModuleContainer orient={this.props.toolbarOrientation}>
           <SizeSelector />
           <div className="toolbar-label-sidebar">Size</div>
         </ModuleContainer>
-        <ModuleContainer>
+        <ModuleContainer orient={this.props.toolbarOrientation}>
           <CurrentColor className="toolbar-module-sidebar" color={this.props.currentColor}></CurrentColor>
           <div className="toolbar-label-sidebar">Current</div>
         </ModuleContainer>
-        <Palette id="sidebar-palette">
+        <Palette id="sidebar-palette" orient={this.props.toolbarOrientation}>
           {paletteColors.map((colorModule, index) => {
             return (
               <ColorDiv id={'color-' + colorModule.index[0] + '-' + colorModule.index[1]}
@@ -130,7 +130,9 @@ class PaintSidebar extends React.Component {
 }
 
 const ModuleContainer = styled.div`
-  float: left;
+  float: ${props => props.orient === 'horiz' ? 'left' : 'none'};
+  margin: ${props => props.orient === 'horiz' ? '' : '0 auto'};
+  background-color: #daad86;
 `
 
 const ColorDiv = styled.div`
@@ -157,8 +159,8 @@ const Palette = styled.div`
   position: relative;
   height: 286px;
   width: 106px;
-  margin: 15px 0 20px;
-  float: left;
+  float: ${props => props.orient === 'horiz' ? 'left' : 'none'};
+  margin: ${props => props.orient === 'horiz' ? '15px 0 20px' : '15px auto 20px'};
   background-color: gainsboro;
   border: 2px solid #312c32;
 `
@@ -178,7 +180,8 @@ function mapStateToProps(state) {
     color: state.paint.color,
     currentColor: state.paint.currentColor,
     customColors: state.paint.customColors,
-    customSelected: state.paint.customSelected
+    customSelected: state.paint.customSelected,
+    toolbarOrientation: state.utility.toolbarOrientation
   }
 }
 
