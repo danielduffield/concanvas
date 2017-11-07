@@ -20,9 +20,9 @@ class UtilToolbar extends React.Component {
           <ToggleButton id="unhide-button" className="toggle-button" title="Toggle Chat"
             isActive={!(this.props.isChatHidden && this.props.isUserListHidden)}
             onClick={this.toggleChat}>
-            <i className={'fa' + (this.props.isChatHidden && this.props.isUserListHidden
-              ? ' fa-envelope-o transparent'
-              : ' fa-envelope-open-o transparent active')}
+            <i className={this.props.isChatHidden && this.props.isUserListHidden
+              ? 'fa fa-envelope-o transparent'
+              : 'fa fa-envelope-o transparent active'}
               aria-hidden="true"></i>
           </ToggleButton>
           <DownloadModule canvas={this.props.canvas}/>
