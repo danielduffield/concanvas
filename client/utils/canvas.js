@@ -220,6 +220,7 @@ const MainTitle = styled.h1`
   font-size: 4em;
   font-family: 'Bubblegum Sans', cursive;
   background-color: whitesmoke;
+  color: #312c32;
 `
 
 function mapStateToProps(state) {
