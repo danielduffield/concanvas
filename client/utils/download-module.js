@@ -37,7 +37,7 @@ class DownloadModule extends React.Component {
   render() {
     return (
       <div>
-        <ToggleButton id="snapshot-button" className="toggle-button" title="Save Snapshot"
+        <ToggleButton id="snapshot-button" className="toggle-button" title="Capture Snapshot"
           isActive={this.props.isDownloadLinkActive} onClick={this.handleDownloadRequest}>
           <i className={'fa fa-camera-retro transparent' + (this.props.isDownloadLinkActive ? ' active' : '')}
             aria-hidden="true"></i>
