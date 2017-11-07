@@ -26,10 +26,11 @@ class DownloadModule extends React.Component {
       type: 'TOGGLED_DOWNLOAD_LINK'
     })
   }
-  hideDownloadLink() {
+  hideDownloadLink(event) {
     this.props.dispatch({
       type: 'DEACTIVATED_DOWNLOAD_LINK'
     })
+    this.disableLink(event)
   }
   disableLink(event) {
     event.preventDefault()
@@ -42,15 +43,12 @@ class DownloadModule extends React.Component {
           <i className={'fa fa-camera-retro transparent' + (this.props.isDownloadLinkActive ? ' active' : ' inactive')}
             aria-hidden="true"></i>
         </ToggleButton>
-        <a onClick={this.props.isDownloadLinkActive ? null : this.disableLink} title="Download Snapshot"
-          ref={link => {
+        <a title="Download Snapshot" id="snapshot-dl-btn" className="toggle-button"
+          isActive={this.props.isDownloadLinkActive} onClick={this.hideDownloadLink} ref={link => {
             this.link = link
           }}>
-          <DownloadButton id="snapshot-dl-btn" className="toggle-button"
-            isActive={this.props.isDownloadLinkActive} onClick={this.hideDownloadLink}>
-            <i className={'fa fa-download transparent' + (this.props.isDownloadLinkActive ? ' download-active' : ' download-inactive')}
-              aria-hidden="true"></i>
-          </DownloadButton>
+          <i className={'fa fa-download transparent' + (this.props.isDownloadLinkActive ? ' download-active' : ' download-inactive')}
+            aria-hidden="true"></i>
         </a>
       </div>
     )
@@ -59,11 +57,6 @@ class DownloadModule extends React.Component {
 
 const ToggleButton = styled.a`
   background-color: ${props => props.isActive ? '#312c32' : '#daad86'}
-  background-color: whitesmoke;
-`
-
-const DownloadButton = styled.a`
-  background-color: ${props => props.isActive ? '#daad86' : 'lightgrey'}
   background-color: whitesmoke;
 `
 
