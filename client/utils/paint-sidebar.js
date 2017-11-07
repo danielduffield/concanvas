@@ -91,7 +91,7 @@ class PaintSidebar extends React.Component {
   }
   render() {
     return (
-      <PaintTools>
+      <PaintTools orient={this.props.toolbarOrientation}>
         <ModuleContainer orient={this.props.toolbarOrientation}>
           <EraserIcon className="toolbar-module-sidebar"
             onClick={this.toggleEraser}
@@ -149,16 +149,17 @@ const EraserIcon = styled.div`
 const PaintTools = styled.div`
   float: left;
   border: 2px solid #312c32;
-  border-left: none;
-  height: 604px;
-  width: 135px;
+  border-top: ${props => props.orient === 'horiz' ? 'none' : '2px solid #312c32'};
+  border-left: ${props => props.orient === 'horiz' ? '2px solid #312c3' : 'none'};
+  height: ${props => props.orient === 'horiz' ? '135px' : '604px'};
+  width: ${props => props.orient === 'horiz' ? '604px' : '135px'};
   margin-top: 125px;
   background-color: #daad86;
 `
 const Palette = styled.div`
   position: relative;
-  height: 286px;
-  width: 106px;
+  height: ${props => props.orient === 'horiz' ? '106px' : '286px'};
+  width: ${props => props.orient === 'horiz' ? '286px' : '106px'};
   float: ${props => props.orient === 'horiz' ? 'left' : 'none'};
   margin: ${props => props.orient === 'horiz' ? '15px 0 20px' : '15px auto 20px'};
   background-color: gainsboro;
