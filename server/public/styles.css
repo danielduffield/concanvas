@@ -153,3 +153,8 @@ i.transparent.active {
   float: left;
   margin: 25px 65px;
 }
+
+.disabled {
+  pointer-events: none;
+  cursor: default;
+}
