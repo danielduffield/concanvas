@@ -17,7 +17,7 @@ class UtilToolbar extends React.Component {
     return (
       <ToolbarContainer>
         <ButtonsWrapper>
-          <ToggleButton id="unhide-button" className="toggle-button"
+          <ToggleButton id="unhide-button" className="toggle-button" title="Toggle Chat"
             isActive={!(this.props.isChatHidden && this.props.isUserListHidden)}
             onClick={this.toggleChat}>
             <i className={'fa' + (this.props.isChatHidden && this.props.isUserListHidden
