@@ -195,13 +195,15 @@ const Container = styled.div`
 const SecondWrapper = styled.div`
     position: relative;
     height: 729px;
-    width: ${props => props.isHidden ? '704px' : '80%'};
+    width: ${props => props.isHidden ? '739px' : '80%'};
     margin: 0 auto;
 `
 
 const Wrapper = styled.div`
-  min-width: 960px;
-  position: absolute;
+  width: 739px;
+  height: 729px;
+  margin: 0 auto;
+  position: relative;
 `
 
 const MainTitle = styled.h1`
