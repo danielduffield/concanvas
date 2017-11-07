@@ -127,11 +127,13 @@
 
 i.transparent {
   background: transparent;
+}
+
+i.transparent.inactive {
   color: #312c32;
 }
 
 i.transparent.active {
-  background: transparent;
   color: #daad86;
 }
 
