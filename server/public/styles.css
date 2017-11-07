@@ -134,7 +134,15 @@ i.transparent.inactive {
 }
 
 i.transparent.active {
-  color: #daad86;
+  color: #98dafc;
+}
+
+.download-active {
+  color: #312c32;
+}
+
+.download-inactive {
+  color: darkgrey;
 }
 
 .toggle-button {
