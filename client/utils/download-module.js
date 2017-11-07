@@ -48,7 +48,7 @@ class DownloadModule extends React.Component {
           }}>
           <DownloadButton id="snapshot-dl-btn" className="toggle-button"
             isActive={this.props.isDownloadLinkActive} onClick={this.hideDownloadLink}>
-            <i className={'fa fa-download transparent' + (this.props.isDownloadLinkActive ? ' download-active' : ' inactive')}
+            <i className={'fa fa-download transparent' + (this.props.isDownloadLinkActive ? ' download-active' : ' download-inactive')}
               aria-hidden="true"></i>
           </DownloadButton>
         </a>
@@ -57,12 +57,14 @@ class DownloadModule extends React.Component {
   }
 }
 
-const ToggleButton = styled.button`
+const ToggleButton = styled.a`
   background-color: ${props => props.isActive ? '#312c32' : '#daad86'}
+  background-color: whitesmoke;
 `
 
-const DownloadButton = styled.button`
+const DownloadButton = styled.a`
   background-color: ${props => props.isActive ? '#daad86' : 'lightgrey'}
+  background-color: whitesmoke;
 `
 
 function mapStateToProps(state) {

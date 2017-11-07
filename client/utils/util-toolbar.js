@@ -44,8 +44,9 @@ const ButtonsWrapper = styled.div`
   margin: 0 auto;
 `
 
-const ToggleButton = styled.button`
+const ToggleButton = styled.a`
   background-color: ${props => props.isActive ? '#312c32' : '#daad86'}
+  background-color: whitesmoke;
 `
 
 function mapStateToProps(state) {
