@@ -39,8 +39,8 @@ const ToolbarContainer = styled.div`
 `
 
 const ButtonsWrapper = styled.div`
-  width: 700px;
-  height: 154px;
+  width: 604px;
+  height: 135px;
   margin: 0 auto;
 `
 
