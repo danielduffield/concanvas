@@ -21,7 +21,7 @@ class UtilToolbar extends React.Component {
             isActive={!(this.props.isChatHidden && this.props.isUserListHidden)}
             onClick={this.toggleChat}>
             <i className={this.props.isChatHidden && this.props.isUserListHidden
-              ? 'fa fa-envelope-o transparent'
+              ? 'fa fa-envelope-o transparent inactive'
               : 'fa fa-envelope-o transparent active'}
               aria-hidden="true"></i>
           </ToggleButton>

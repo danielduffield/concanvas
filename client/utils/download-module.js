@@ -39,7 +39,7 @@ class DownloadModule extends React.Component {
       <div>
         <ToggleButton id="snapshot-button" className="toggle-button" title="Capture Snapshot"
           isActive={this.props.isDownloadLinkActive} onClick={this.handleDownloadRequest}>
-          <i className={'fa fa-camera-retro transparent' + (this.props.isDownloadLinkActive ? ' active' : '')}
+          <i className={'fa fa-camera-retro transparent' + (this.props.isDownloadLinkActive ? ' active' : ' inactive')}
             aria-hidden="true"></i>
         </ToggleButton>
         <a onClick={this.props.isDownloadLinkActive ? null : this.disableLink} title="Download Snapshot"
@@ -48,7 +48,7 @@ class DownloadModule extends React.Component {
           }}>
           <DownloadButton id="snapshot-dl-btn" className="toggle-button"
             isActive={this.props.isDownloadLinkActive} onClick={this.hideDownloadLink}>
-            <i className={'fa fa-download transparent' + (this.props.isDownloadLinkActive ? ' download-active' : '')}
+            <i className={'fa fa-download transparent' + (this.props.isDownloadLinkActive ? ' download-active' : ' inactive')}
               aria-hidden="true"></i>
           </DownloadButton>
         </a>
