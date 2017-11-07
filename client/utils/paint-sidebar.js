@@ -118,7 +118,7 @@ class PaintSidebar extends React.Component {
           {this.props.customColors.map((colorModule, index) => {
             return (
               <ColorDiv id={'custom-color-' + index}
-                className="color-module-sidebar" data-color={colorModule} onClick={this.selectCustomColor}
+                data-color={colorModule} onClick={this.selectCustomColor}
                 color={colorModule} data-index={index}
                 key={index}></ColorDiv>
             )
@@ -136,6 +136,12 @@ const ModuleContainer = styled.div`
 `
 
 const ColorDiv = styled.div`
+  border: 2px solid #312c32;
+  float: left;
+  height: 26px;
+  width: 26px;
+  margin: 14px 4px 5px;
+  background-color: lightblue;
   background-color: ${props => props.color};
 `
 
