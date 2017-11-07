@@ -110,14 +110,14 @@ class PaintSidebar extends React.Component {
           {paletteColors.map((colorModule, index) => {
             return (
               <ColorDiv id={'color-' + colorModule.index[0] + '-' + colorModule.index[1]}
-                className="color-module-sidebar" data-color={colorModule.color} onClick={this.selectColor}
+                 orient={this.props.toolbarOrientation} data-color={colorModule.color} onClick={this.selectColor}
                 color={colorModule.color}
                 key={index}></ColorDiv>
             )
           })}
           {this.props.customColors.map((colorModule, index) => {
             return (
-              <ColorDiv id={'custom-color-' + index}
+              <ColorDiv id={'custom-color-' + index} orient={this.props.toolbarOrientation}
                 data-color={colorModule} onClick={this.selectCustomColor}
                 color={colorModule} data-index={index}
                 key={index}></ColorDiv>
@@ -140,7 +140,7 @@ const ColorDiv = styled.div`
   float: left;
   height: 26px;
   width: 26px;
-  margin: 14px 4px 5px;
+  margin: ${props => props.orient === 'horiz' ? '7px 0 0 18px' : '14px 4px 5px'};
   background-color: lightblue;
   background-color: ${props => props.color};
 `
@@ -159,7 +159,7 @@ const PaintTools = styled.div`
   border-left: ${props => props.orient === 'horiz' ? '2px solid #312c3' : 'none'};
   height: ${props => props.orient === 'horiz' ? '135px' : '604px'};
   width: ${props => props.orient === 'horiz' ? '604px' : '135px'};
-  margin-top: 125px;
+  margin-top: ${props => props.orient === 'horiz' ? '0' : '125px'};
   background-color: #daad86;
 `
 const Palette = styled.div`
