@@ -157,7 +157,7 @@ class Canvas extends React.Component {
     return (
       <Container id="container" isHidden={this.props.isChatHidden && this.props.isUserListHidden}>
         <SecondWrapper isHidden={this.props.isChatHidden && this.props.isUserListHidden}>
-          <Wrapper id="wrapper">
+          <Wrapper id="wrapper" isHoriz={this.props.isToolbarHoriz}>
             <TitleContainer>
               <MainTitle id="main-title">ConCanvas</MainTitle>
             </TitleContainer>
@@ -202,7 +202,7 @@ const SecondWrapper = styled.div`
 `
 
 const Wrapper = styled.div`
-  width: 739px;
+  width: ${props => props.isHoriz ? '604px' : '739px'};
   height: 729px;
   margin: 0 auto;
   position: relative;
@@ -230,7 +230,8 @@ function mapStateToProps(state) {
     isErasing: state.paint.isErasing,
     isChatHidden: state.chat.isChatHidden,
     isUserListHidden: state.chat.isUserListHidden,
-    socketId: state.chat.socketId
+    socketId: state.chat.socketId,
+    isToolbarHoriz: state.utility.isToolbarHoriz
   }
 }
 
