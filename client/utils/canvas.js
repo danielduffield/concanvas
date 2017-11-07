@@ -156,7 +156,7 @@ class Canvas extends React.Component {
   render() {
     return (
       <Container id="container" isHidden={this.props.isChatHidden && this.props.isUserListHidden}>
-        <SecondWrapper isHidden={this.props.isChatHidden && this.props.isUserListHidden}>
+        <SecondWrapper isHidden={this.props.isChatHidden && this.props.isUserListHidden} isHoriz={this.props.isToolbarHoriz}>
           <Wrapper id="wrapper" isHoriz={this.props.isToolbarHoriz}>
             <TitleContainer>
               <MainTitle id="main-title">ConCanvas</MainTitle>
@@ -196,7 +196,7 @@ const Container = styled.div`
 
 const SecondWrapper = styled.div`
     position: relative;
-    height: 729px;
+    height: ${props => props.isHoriz ? '864px' : '729px'};
     width: ${props => props.isHidden ? '739px' : '80%'};
     margin: 0 auto;
 `
