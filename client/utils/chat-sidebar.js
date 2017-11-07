@@ -155,48 +155,8 @@ class ChatSidebar extends React.Component {
   }
 }
 
-const ChatHeading = styled.div`
-  height: 10%;
-  width: 100%;
-  padding: 20px;
-`
-
-const ChatWelcome = styled.span`
-  font-family: 'Bubblegum Sans', cursive;
-  font-size: 1.75em;
-`
-
-const ChatButton = styled.button`
-  border-radius: 5px;
-  margin: 2% 5% 0;
-  height: 20%;
-  width: 15%;
-  min-width: 42px;
-  font-size: 1em;
-`
-
-const ChatFormContainer = styled.div`
-  height: 30%;
-  width: 100%;
-  position: absolute;
-`
-
-const StyledNickname = styled.span`
-  color: ${props => props.locallySubmitted ? 'red' : 'blue'};
-`
-
 const ChatColumn = styled.div`
   float: left;
-`
-
-const ChatIdModule = styled.div`
-  margin: 5px 0;
-  margin-left: 5%;
-  text-align: left;
-  position: relative;
-  top: 8px;
-  font-family: 'Bubblegum Sans', cursive;
-  font-size: 1.25em;
 `
 
 const SidebarContainer = styled.div`
@@ -208,10 +168,23 @@ const SidebarContainer = styled.div`
   border-right: 1px solid grey;
 `
 
-const IdInput = styled.input`
-  width: 55%;
-  margin: 0 0 0 10px;
-  font-size: 0.85em;
+const ChatHeading = styled.div`
+  height: 10%;
+  width: 100%;
+  padding: 20px;
+`
+
+const ChatWelcome = styled.span`
+  font-family: 'Bubblegum Sans', cursive;
+  font-size: 1.75em;
+`
+
+const HideChat = styled.button`
+  position: relative;
+  float: right;
+  border-radius: 5px;
+  width: 30px;
+  height: 30px;
 `
 
 const ChatFeed = styled.div`
@@ -233,6 +206,32 @@ const ChatBlob = styled.div`
   bottom: 0;
 `
 
+const StyledNickname = styled.span`
+  color: ${props => props.locallySubmitted ? 'red' : 'blue'};
+`
+
+const ChatFormContainer = styled.div`
+  height: 30%;
+  width: 100%;
+  position: absolute;
+`
+
+const ChatIdModule = styled.div`
+  margin: 5px 0;
+  margin-left: 5%;
+  text-align: left;
+  position: relative;
+  top: 8px;
+  font-family: 'Bubblegum Sans', cursive;
+  font-size: 1.25em;
+`
+
+const IdInput = styled.input`
+  width: 55%;
+  margin: 0 0 0 10px;
+  font-size: 0.85em;
+`
+
 const ChatField = styled.textarea`
   padding: 5px;
   font-size: 1em;
@@ -242,12 +241,13 @@ const ChatField = styled.textarea`
   resize: none;
 `
 
-const HideChat = styled.button`
-  position: relative;
-  float: right;
+const ChatButton = styled.button`
   border-radius: 5px;
-  width: 30px;
-  height: 30px;
+  margin: 2% 5% 0;
+  height: 20%;
+  width: 15%;
+  min-width: 42px;
+  font-size: 1em;
 `
 
 function getNicknameFromCookies() {
