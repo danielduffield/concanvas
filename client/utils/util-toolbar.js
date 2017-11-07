@@ -9,9 +9,13 @@ class UtilToolbar extends React.Component {
     super(props)
 
     this.toggleChat = this.toggleChat.bind(this)
+    this.rotateToolbar = this.rotateToolbar.bind(this)
   }
   toggleChat() {
     this.props.dispatch({ type: 'TOGGLED_CHAT' })
+  }
+  rotateToolbar() {
+    this.props.dispatch({ type: 'UPDATED_TOOLBAR_ORIENTATION' })
   }
   render() {
     return (
@@ -25,7 +29,8 @@ class UtilToolbar extends React.Component {
               : 'fa fa-envelope-o transparent active'}
               aria-hidden="true"></i>
           </ToggleButton>
-          <ToggleButton className="toggle-button" title="Toggle Toolbar Position" aria-hidden="true">
+          <ToggleButton className="toggle-button" title="Toggle Toolbar Position"
+            onClick={this.rotateToolbar} ia-hidden="true">
             <i className={this.props.isToolbarHoriz
               ? 'fa fa-rotate-90 fa-window-maximize transparent inactive'
               : 'fa fa-rotate-180 fa-window-maximize transparent inactive'
