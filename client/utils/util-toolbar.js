@@ -25,8 +25,11 @@ class UtilToolbar extends React.Component {
               : 'fa fa-envelope-o transparent active'}
               aria-hidden="true"></i>
           </ToggleButton>
-          <ToggleButton className="toggle-button" title="Toggle Toolbar Position">
-            <i className="fa fa-rotate-90 fa-window-maximize transparent inactive" aria-hidden="true"></i>
+          <ToggleButton className="toggle-button" title="Toggle Toolbar Position" aria-hidden="true">
+            <i className={this.props.isToolbarHoriz
+              ? 'fa fa-rotate-90 fa-window-maximize transparent inactive'
+              : 'fa fa-rotate-180 fa-window-maximize transparent inactive'
+            }></i>
           </ToggleButton>
           <DownloadModule canvas={this.props.canvas}/>
         </ButtonsWrapper>
@@ -55,7 +58,8 @@ const ToggleButton = styled.a`
 function mapStateToProps(state) {
   return {
     isChatHidden: state.chat.isChatHidden,
-    isUserListHidden: state.chat.isUserListHidden
+    isUserListHidden: state.chat.isUserListHidden,
+    isToolbarHoriz: state.utility.isToolbarHoriz
   }
 }
 
