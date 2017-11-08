@@ -34,34 +34,6 @@
   border-top: none;
 }
 
-.size-tool {
-  display: inline-block;
-  font-size: 2em;
-}
-
-.size-button {
-  width: 32px;
-  display: block;
-  height: 31px;
-}
-
-.size-button-container {
-  float: right;
-}
-
-.line-width-module {
-  width: 86px;
-  height: 66px;
-}
-
-.size-counter-container {
-  padding-left: 5px;
-  height: 62px;
-  width: 40px;
-  text-align: center;
-  float: left;
-}
-
 .float-left {
   float: left;
 }
