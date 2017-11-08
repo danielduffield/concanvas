@@ -27,7 +27,7 @@ class ChatOrientModule extends React.Component {
             : 'fa fa-envelope-o transparent active'}
             aria-hidden="true"></i>
         </ToggleButton>
-        <ToggleButton className="toggle-button" title="Toggle Toolbar Position"
+        <ToggleButton className="toggle-button" title="Rotate Paint Toolbar"
           onClick={this.rotateToolbar} ia-hidden="true">
           <i className={this.props.isToolbarHoriz
             ? 'fa fa-rotate-90 fa-window-maximize transparent inactive'
