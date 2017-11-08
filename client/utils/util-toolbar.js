@@ -19,8 +19,8 @@ class UtilToolbar extends React.Component {
   }
   render() {
     return (
-      <ToolbarContainer>
-        <ButtonsWrapper>
+      <ToolbarContainer isHoriz={this.props.isToolbarHoriz}>
+        <ButtonsWrapper isHoriz={this.props.isToolbarHoriz}>
           <ToggleButton id="unhide-button" className="toggle-button" title="Toggle Chat"
             isActive={!(this.props.isChatHidden && this.props.isUserListHidden)}
             onClick={this.toggleChat}>
@@ -44,13 +44,15 @@ class UtilToolbar extends React.Component {
 }
 
 const ToolbarContainer = styled.div`
-  width: 100%;
+  height: ${props => props.isHoriz ? '135px' : '604px'};
+  width: ${props => props.isHoriz ? '604px' : '135px'};
+  margin-top: ${props => props.isHoriz ? '0' : '125px'};
   text-align: center;
+  float: ${props => props.isHoriz ? 'none' : 'left'}
 `
 
 const ButtonsWrapper = styled.div`
-  width: 604px;
-  height: 135px;
+  background-color: lightblue;
   margin: 0 auto;
 `
 
