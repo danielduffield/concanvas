@@ -217,7 +217,7 @@ const Wrapper = styled.div`
 const TitleContainer = styled.div`
   position: absolute;
   top: 25px;
-  width: 100%;
+  width: 604px;
   text-align: center;
 `
 
