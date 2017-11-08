@@ -44,7 +44,6 @@ class UtilToolbar extends React.Component {
 }
 
 const ToolbarContainer = styled.div`
-  position: relative;
   width: 100%;
   text-align: center;
 `
