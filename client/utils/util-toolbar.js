@@ -8,7 +8,7 @@ import DownloadModule from './download-module'
 class UtilToolbar extends React.Component {
   render() {
     return (
-      <ToolbarContainer isHoriz={this.props.isToolbarHoriz}>
+      <ToolbarContainer isHoriz={this.props.isToolbarHoriz} rotationDisabled={this.props.disableRotation}>
         <ButtonsWrapper>
           <ChatOrientModule />
           <DownloadModule canvas={this.props.canvas}/>
@@ -19,16 +19,16 @@ class UtilToolbar extends React.Component {
 }
 
 const ToolbarContainer = styled.div`
-  height: ${props => props.isHoriz ? '604px' : '135px'};
-  width: ${props => props.isHoriz ? '135px' : '604px'};
-  margin: ${props => props.isHoriz ? '125px 0 0' : '0'};
+  height: ${props => props.isHoriz || props.rotationDisabled ? '604px' : '135px'};
+  width: ${props => props.isHoriz || props.rotationDisabled ? '135px' : '604px'};
+  margin: ${props => props.isHoriz || props.rotationDisabled ? '125px 0 0' : '0'};
   text-align: center;
   float: left;
   background-color: 'lightblue';
 `
 
 const ButtonsWrapper = styled.div`
-  margin: ${props => props.isHoriz ? '0' : '0 auto'};
+  margin: 0 auto;
 `
 
 function mapStateToProps(state) {
