@@ -20,24 +20,22 @@ class UtilToolbar extends React.Component {
   render() {
     return (
       <ToolbarContainer isHoriz={this.props.isToolbarHoriz}>
-        <ButtonsWrapper isHoriz={this.props.isToolbarHoriz}>
-          <ToggleButton id="unhide-button" className="toggle-button" title="Toggle Chat"
-            isActive={!(this.props.isChatHidden && this.props.isUserListHidden)}
-            onClick={this.toggleChat}>
-            <i className={this.props.isChatHidden && this.props.isUserListHidden
-              ? 'fa fa-envelope-o transparent inactive'
-              : 'fa fa-envelope-o transparent active'}
-              aria-hidden="true"></i>
-          </ToggleButton>
-          <ToggleButton className="toggle-button" title="Toggle Toolbar Position"
-            onClick={this.rotateToolbar} ia-hidden="true">
-            <i className={this.props.isToolbarHoriz
-              ? 'fa fa-rotate-90 fa-window-maximize transparent inactive'
-              : 'fa fa-rotate-180 fa-window-maximize transparent inactive'
-            }></i>
-          </ToggleButton>
-          <DownloadModule canvas={this.props.canvas}/>
-        </ButtonsWrapper>
+        <ToggleButton id="unhide-button" className="toggle-button" title="Toggle Chat"
+          isActive={!(this.props.isChatHidden && this.props.isUserListHidden)}
+          onClick={this.toggleChat}>
+          <i className={this.props.isChatHidden && this.props.isUserListHidden
+            ? 'fa fa-envelope-o transparent inactive'
+            : 'fa fa-envelope-o transparent active'}
+            aria-hidden="true"></i>
+        </ToggleButton>
+        <ToggleButton className="toggle-button" title="Toggle Toolbar Position"
+          onClick={this.rotateToolbar} ia-hidden="true">
+          <i className={this.props.isToolbarHoriz
+            ? 'fa fa-rotate-90 fa-window-maximize transparent inactive'
+            : 'fa fa-rotate-180 fa-window-maximize transparent inactive'
+          }></i>
+        </ToggleButton>
+        <DownloadModule canvas={this.props.canvas}/>
       </ToolbarContainer>
     )
   }
@@ -48,12 +46,8 @@ const ToolbarContainer = styled.div`
   width: ${props => props.isHoriz ? '604px' : '135px'};
   margin-top: ${props => props.isHoriz ? '0' : '125px'};
   text-align: center;
-  float: ${props => props.isHoriz ? 'none' : 'left'}
-`
-
-const ButtonsWrapper = styled.div`
-  background-color: lightblue;
-  margin: 0 auto;
+  float: ${props => props.isHoriz ? 'none' : 'left'};
+  background-color: 'lightblue';
 `
 
 const ToggleButton = styled.a`
