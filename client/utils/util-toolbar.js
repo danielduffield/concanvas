@@ -20,34 +20,40 @@ class UtilToolbar extends React.Component {
   render() {
     return (
       <ToolbarContainer isHoriz={this.props.isToolbarHoriz}>
-        <ToggleButton id="unhide-button" className="toggle-button" title="Toggle Chat"
-          isActive={!(this.props.isChatHidden && this.props.isUserListHidden)}
-          onClick={this.toggleChat}>
-          <i className={this.props.isChatHidden && this.props.isUserListHidden
-            ? 'fa fa-envelope-o transparent inactive'
-            : 'fa fa-envelope-o transparent active'}
-            aria-hidden="true"></i>
-        </ToggleButton>
-        <ToggleButton className="toggle-button" title="Toggle Toolbar Position"
-          onClick={this.rotateToolbar} ia-hidden="true">
-          <i className={this.props.isToolbarHoriz
-            ? 'fa fa-rotate-90 fa-window-maximize transparent inactive'
-            : 'fa fa-rotate-180 fa-window-maximize transparent inactive'
-          }></i>
-        </ToggleButton>
-        <DownloadModule canvas={this.props.canvas}/>
+        <ButtonsWrapper>
+          <ToggleButton id="unhide-button" className="toggle-button" title="Toggle Chat"
+            isActive={!(this.props.isChatHidden && this.props.isUserListHidden)}
+            onClick={this.toggleChat}>
+            <i className={this.props.isChatHidden && this.props.isUserListHidden
+              ? 'fa fa-envelope-o transparent inactive'
+              : 'fa fa-envelope-o transparent active'}
+              aria-hidden="true"></i>
+          </ToggleButton>
+          <ToggleButton className="toggle-button" title="Toggle Toolbar Position"
+            onClick={this.rotateToolbar} ia-hidden="true">
+            <i className={this.props.isToolbarHoriz
+              ? 'fa fa-rotate-90 fa-window-maximize transparent inactive'
+              : 'fa fa-rotate-180 fa-window-maximize transparent inactive'
+            }></i>
+          </ToggleButton>
+          <DownloadModule canvas={this.props.canvas}/>
+        </ButtonsWrapper>
       </ToolbarContainer>
     )
   }
 }
 
 const ToolbarContainer = styled.div`
-  height: ${props => props.isHoriz ? '135px' : '604px'};
-  width: ${props => props.isHoriz ? '604px' : '135px'};
-  margin-top: ${props => props.isHoriz ? '0' : '125px'};
+  height: ${props => props.isHoriz ? '604px' : '135px'};
+  width: ${props => props.isHoriz ? '135px' : '604px'};
+  margin: ${props => props.isHoriz ? '125px 0 0' : '0'};
   text-align: center;
-  float: ${props => props.isHoriz ? 'none' : 'left'};
+  float: left;
   background-color: 'lightblue';
+`
+
+const ButtonsWrapper = styled.div`
+  margin: ${props => props.isHoriz ? '0' : '0 auto'};
 `
 
 const ToggleButton = styled.a`
