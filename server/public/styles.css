@@ -151,7 +151,7 @@ i.transparent.active {
   z-index: 10;
   font-size: 4.5em;
   float: left;
-  margin: 25px;
+  margin: 25px 17px;
 }
 
 .disabled {
