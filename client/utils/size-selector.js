@@ -30,15 +30,15 @@ class SizeSelector extends React.Component {
   }
   render() {
     return (
-      <div className="line-width-module toolbar-module-sidebar">
-        <div className="size-counter-container">
-          <SizeCounter id="size-counter" className="size-tool">{this.props.size}</SizeCounter>
+      <LineWidthModule className="toolbar-module-sidebar">
+        <SizeCounterContainer>
+          <SizeCounter id="size-counter">{this.props.size}</SizeCounter>
+        </SizeCounterContainer>
+        <div className="float-right">
+          <SizeButton id="increment-btn" onClick={this.nextBiggerSize}>+</SizeButton>
+          <SizeButton id="decrement-btn" onClick={this.nextSmallerSize}>-</SizeButton>
         </div>
-        <div className="size-button-container">
-          <button id="increment-btn" className="size-button" onClick={this.nextBiggerSize}>+</button>
-          <button id="decrement-btn" className="size-button" onClick={this.nextSmallerSize}>-</button>
-        </div>
-      </div>
+      </LineWidthModule>
     )
   }
 }
@@ -46,6 +46,27 @@ class SizeSelector extends React.Component {
 const SizeCounter = styled.div`
   position: relative;
   top: 15px;
+  display: inline-block;
+  font-size: 2em;
+`
+
+const SizeCounterContainer = styled.div`
+  padding-left: 5px;
+  height: 62px;
+  width: 40px;
+  text-align: center;
+  float: left;
+`
+
+const SizeButton = styled.button`
+  width: 32px;
+  display: block;
+  height: 31px;
+`
+
+const LineWidthModule = styled.div`
+  width: 86px;
+  height: 66px;
 `
 
 function mapStateToProps(state) {
