@@ -161,9 +161,7 @@ class Canvas extends React.Component {
             <TitleContainer>
               <MainTitle id="main-title">ConCanvas</MainTitle>
             </TitleContainer>
-            <div className={this.props.isToolbarHoriz ? '' : 'hidden'}>
-              <UtilToolbar canvas={this.canvas}/>
-            </div>
+            <UtilToolbar canvas={this.canvas} disableRotation={true}/>
             <canvas id="my-canvas" onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp}
               onMouseMove={this.updateCoordinates} onMouseOut={this.handleMouseUp}
               width="600" height="600"
@@ -173,9 +171,6 @@ class Canvas extends React.Component {
             </canvas>
             <PaintToolbar />
             <ColorPicker/>
-            <div className={this.props.isToolbarHoriz ? 'hidden' : ''}>
-              <UtilToolbar canvas={this.canvas}/>
-            </div>
           </Wrapper>
         </SecondWrapper>
       </Container>
@@ -217,7 +212,7 @@ const Wrapper = styled.div`
 const TitleContainer = styled.div`
   position: absolute;
   top: 25px;
-  width: 604px;
+  width: 874px;
   text-align: center;
 `
 
