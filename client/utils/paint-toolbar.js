@@ -137,6 +137,7 @@ const PaintTools = styled.div`
   height: ${props => props.isHoriz ? '135px' : '604px'};
   width: ${props => props.isHoriz ? '604px' : '135px'};
   margin-top: ${props => props.isHoriz ? '0' : '125px'};
+  margin-left: ${props => props.isHoriz ? '135px' : '0'};
   background-color: #daad86;
 `
 
