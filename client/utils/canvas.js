@@ -170,9 +170,9 @@ class Canvas extends React.Component {
             </canvas>
             <PaintSidebar />
             <ColorPicker/>
+            <UtilToolbar canvas={this.canvas}/>
           </Wrapper>
         </SecondWrapper>
-        <UtilToolbar canvas={this.canvas}/>
       </Container>
     )
   }
