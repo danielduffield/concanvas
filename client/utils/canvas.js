@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
-import PaintSidebar from './paint-sidebar'
+import PaintToolbar from './paint-toolbar'
 import ColorPicker from './color-picker'
 import UtilToolbar from './util-toolbar'
 
@@ -168,7 +168,7 @@ class Canvas extends React.Component {
                 this.canvas = canvas
               }}>
             </canvas>
-            <PaintSidebar />
+            <PaintToolbar />
             <ColorPicker/>
             <UtilToolbar canvas={this.canvas}/>
           </Wrapper>
