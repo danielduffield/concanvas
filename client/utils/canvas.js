@@ -168,9 +168,14 @@ class Canvas extends React.Component {
                 this.canvas = canvas
               }}>
             </canvas>
+            <div className={this.props.isToolbarHoriz ? '' : 'hidden'}>
+              <UtilToolbar canvas={this.canvas}/>
+            </div>
             <PaintToolbar />
             <ColorPicker/>
-            <UtilToolbar canvas={this.canvas}/>
+            <div className={this.props.isToolbarHoriz ? 'hidden' : ''}>
+              <UtilToolbar canvas={this.canvas}/>
+            </div>
           </Wrapper>
         </SecondWrapper>
       </Container>
@@ -195,14 +200,14 @@ const Container = styled.div`
 `
 
 const SecondWrapper = styled.div`
-    position: relative;
-    height: ${props => props.isHoriz ? '864px' : '729px'};
-    width: ${props => props.isHidden ? '739px' : '80%'};
-    margin: 0 auto;
+  position: relative;
+  height: ${props => props.isHoriz ? '864px' : '729px'};
+  width: ${props => props.isHidden ? '739px' : '80%'};
+  margin: 0 auto;
 `
 
 const Wrapper = styled.div`
-  width: ${props => props.isHoriz ? '604px' : '739px'};
+  width: 739px;
   height: 729px;
   margin: 0 auto;
   position: relative;
