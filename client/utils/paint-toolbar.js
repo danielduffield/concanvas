@@ -91,7 +91,7 @@ class PaintSidebar extends React.Component {
   }
   render() {
     return (
-      <PaintTools isHoriz={this.props.isToolbarHoriz} className="hidden">
+      <PaintTools isHoriz={this.props.isToolbarHoriz}>
         <ModuleContainer isHoriz={this.props.isToolbarHoriz}>
           <EraserIcon className="toolbar-module-sidebar"
             onClick={this.toggleEraser}
