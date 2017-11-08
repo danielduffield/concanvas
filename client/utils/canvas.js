@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
-import PaintSidebar from './paint-sidebar'
+import PaintToolbar from './paint-toolbar'
 import ColorPicker from './color-picker'
 import UtilToolbar from './util-toolbar'
 
@@ -156,11 +156,12 @@ class Canvas extends React.Component {
   render() {
     return (
       <Container id="container" isHidden={this.props.isChatHidden && this.props.isUserListHidden}>
-        <SecondWrapper isHidden={this.props.isChatHidden && this.props.isUserListHidden}>
-          <Wrapper id="wrapper">
+        <SecondWrapper isHidden={this.props.isChatHidden && this.props.isUserListHidden} isHoriz={this.props.isToolbarHoriz}>
+          <Wrapper id="wrapper" isHoriz={this.props.isToolbarHoriz}>
             <TitleContainer>
               <MainTitle id="main-title">ConCanvas</MainTitle>
             </TitleContainer>
+            <UtilToolbar canvas={this.canvas} disableRotation={true}/>
             <canvas id="my-canvas" onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp}
               onMouseMove={this.updateCoordinates} onMouseOut={this.handleMouseUp}
               width="600" height="600"
@@ -168,11 +169,10 @@ class Canvas extends React.Component {
                 this.canvas = canvas
               }}>
             </canvas>
-            <PaintSidebar />
+            <PaintToolbar />
             <ColorPicker/>
           </Wrapper>
         </SecondWrapper>
-        <UtilToolbar canvas={this.canvas}/>
       </Container>
     )
   }
@@ -195,14 +195,14 @@ const Container = styled.div`
 `
 
 const SecondWrapper = styled.div`
-    position: relative;
-    height: 729px;
-    width: ${props => props.isHidden ? '739px' : '80%'};
-    margin: 0 auto;
+  position: relative;
+  height: ${props => props.isHoriz ? '864px' : '729px'};
+  width: ${props => props.isHidden ? '874px' : '80%'};
+  margin: 0 auto;
 `
 
 const Wrapper = styled.div`
-  width: 739px;
+  width: 874px;
   height: 729px;
   margin: 0 auto;
   position: relative;
@@ -212,7 +212,7 @@ const Wrapper = styled.div`
 const TitleContainer = styled.div`
   position: absolute;
   top: 25px;
-  width: 100%;
+  width: 874px;
   text-align: center;
 `
 
@@ -230,7 +230,8 @@ function mapStateToProps(state) {
     isErasing: state.paint.isErasing,
     isChatHidden: state.chat.isChatHidden,
     isUserListHidden: state.chat.isUserListHidden,
-    socketId: state.chat.socketId
+    socketId: state.chat.socketId,
+    isToolbarHoriz: state.utility.isToolbarHoriz
   }
 }
 

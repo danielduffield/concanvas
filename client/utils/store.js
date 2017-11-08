@@ -90,13 +90,16 @@ function chatReducer(state = {
 }
 
 function utilityReducer(state = {
-  isDownloadLinkActive: false
+  isDownloadLinkActive: false,
+  isToolbarHoriz: true
 }, action) {
   switch (action.type) {
     case 'TOGGLED_DOWNLOAD_LINK':
       return Object.assign({}, state, { isDownloadLinkActive: !state.isDownloadLinkActive })
     case 'DEACTIVATED_DOWNLOAD_LINK':
       return Object.assign({}, state, { isDownloadLinkActive: false })
+    case 'UPDATED_TOOLBAR_ORIENTATION':
+      return Object.assign({}, state, { isToolbarHoriz: !state.isToolbarHoriz })
     default:
       return state
   }

@@ -2,29 +2,15 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
+import ChatOrientModule from './chat-orient-module'
 import DownloadModule from './download-module'
 
 class UtilToolbar extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.toggleChat = this.toggleChat.bind(this)
-  }
-  toggleChat() {
-    this.props.dispatch({ type: 'TOGGLED_CHAT' })
-  }
   render() {
     return (
-      <ToolbarContainer>
+      <ToolbarContainer isHoriz={this.props.isToolbarHoriz} rotationDisabled={this.props.disableRotation}>
         <ButtonsWrapper>
-          <ToggleButton id="unhide-button" className="toggle-button" title="Toggle Chat"
-            isActive={!(this.props.isChatHidden && this.props.isUserListHidden)}
-            onClick={this.toggleChat}>
-            <i className={this.props.isChatHidden && this.props.isUserListHidden
-              ? 'fa fa-envelope-o transparent inactive'
-              : 'fa fa-envelope-o transparent active'}
-              aria-hidden="true"></i>
-          </ToggleButton>
+          <ChatOrientModule />
           <DownloadModule canvas={this.props.canvas}/>
         </ButtonsWrapper>
       </ToolbarContainer>
@@ -33,26 +19,21 @@ class UtilToolbar extends React.Component {
 }
 
 const ToolbarContainer = styled.div`
-  position: relative;
-  width: 100%;
+  height: ${props => props.isHoriz || props.rotationDisabled ? '604px' : '135px'};
+  width: ${props => props.isHoriz || props.rotationDisabled ? '135px' : '604px'};
+  margin: ${props => props.isHoriz || props.rotationDisabled ? '125px 0 0' : '0'};
   text-align: center;
+  float: left;
+  background-color: 'lightblue';
 `
 
 const ButtonsWrapper = styled.div`
-  width: 700px;
-  height: 154px;
   margin: 0 auto;
-`
-
-const ToggleButton = styled.a`
-  background-color: ${props => props.isActive ? '#312c32' : '#daad86'}
-  background-color: whitesmoke;
 `
 
 function mapStateToProps(state) {
   return {
-    isChatHidden: state.chat.isChatHidden,
-    isUserListHidden: state.chat.isUserListHidden
+    isToolbarHoriz: state.utility.isToolbarHoriz
   }
 }
 
