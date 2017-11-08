@@ -91,7 +91,7 @@ class PaintSidebar extends React.Component {
   }
   render() {
     return (
-      <PaintTools isHoriz={this.props.isToolbarHoriz}>
+      <PaintTools isHoriz={this.props.isToolbarHoriz} className="hidden">
         <ModuleContainer isHoriz={this.props.isToolbarHoriz}>
           <EraserIcon className="toolbar-module-sidebar"
             onClick={this.toggleEraser}
@@ -129,29 +129,6 @@ class PaintSidebar extends React.Component {
   }
 }
 
-const ModuleContainer = styled.div`
-  float: ${props => props.isHoriz ? 'left' : 'none'};
-  margin: ${props => props.isHoriz ? '13px 0 0 10px' : '0 auto'};
-  background-color: #daad86;
-`
-
-const ColorDiv = styled.div`
-  border: 2px solid #312c32;
-  float: left;
-  height: 26px;
-  width: 26px;
-  margin: ${props => props.isHoriz ? '7px 0 0 18px' : '14px 4px 5px'};
-  background-color: lightblue;
-  background-color: ${props => props.color};
-`
-
-const CurrentColor = styled.div`
-  background-color: ${props => props.color};
-`
-const EraserIcon = styled.div`
-  background-color: ${props => props.isActive ? 'deeppink' : 'pink'};
-`
-
 const PaintTools = styled.div`
   float: left;
   border: 2px solid #312c32;
@@ -162,6 +139,21 @@ const PaintTools = styled.div`
   margin-top: ${props => props.isHoriz ? '0' : '125px'};
   background-color: #daad86;
 `
+
+const ModuleContainer = styled.div`
+  float: ${props => props.isHoriz ? 'left' : 'none'};
+  margin: ${props => props.isHoriz ? '13px 0 0 10px' : '0 auto'};
+  background-color: #daad86;
+`
+
+const EraserIcon = styled.div`
+  background-color: ${props => props.isActive ? 'deeppink' : 'pink'};
+`
+
+const CurrentColor = styled.div`
+  background-color: ${props => props.color};
+`
+
 const Palette = styled.div`
   position: relative;
   height: ${props => props.isHoriz ? '106px' : '286px'};
@@ -170,6 +162,16 @@ const Palette = styled.div`
   margin: ${props => props.isHoriz ? '15px 0 20px 13px' : '15px auto 20px'};
   background-color: gainsboro;
   border: 2px solid #312c32;
+`
+
+const ColorDiv = styled.div`
+  border: 2px solid #312c32;
+  float: left;
+  height: 26px;
+  width: 26px;
+  margin: ${props => props.isHoriz ? '7px 0 0 18px' : '14px 4px 5px'};
+  background-color: lightblue;
+  background-color: ${props => props.color};
 `
 
 function getColorsFromCookies() {
