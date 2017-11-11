@@ -91,7 +91,7 @@ function chatReducer(state = {
 
 function utilityReducer(state = {
   isDownloadLinkActive: false,
-  isToolbarHoriz: true
+  isToolbarHoriz: false
 }, action) {
   switch (action.type) {
     case 'TOGGLED_DOWNLOAD_LINK':
