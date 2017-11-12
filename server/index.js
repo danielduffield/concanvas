@@ -36,6 +36,13 @@ app.get('/saved-canvas', (req, res) => {
   .catch(err => res.status(500).json(err))
 })
 
+app.get('/meta-image.png', (req, res) => {
+  fs.readFile('server/public/images/concanvas-meta-image.png').then(imageData => {
+    res.contentType('image/png')
+    res.send(imageData)
+  })
+})
+
 app.post('/', (req, res) => {
   fs.readdir('canvas-state/instances').then(instances => {
     if (instances.length > 10) {
