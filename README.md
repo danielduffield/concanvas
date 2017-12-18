@@ -4,15 +4,15 @@ An app for web users who want to draw on a collective, real-time updating canvas
 ### Heroku Hosted URL
 https://con-canvas.herokuapp.com/
 
-![ConCanvas Demo](/demo/concanvas-demo-1.gif?raw=true "Drawing Demonstration")
+![ConCanvas Demo](/server/public/images/concanvas-demo-1.gif?raw=true "Drawing Demonstration")
 
 Draw simultaneously with other users on a shared canvas.
 
-![ConCanvas Demo](/demo/concanvas-demo-2.gif?raw=true "Chat Demonstration")
+![ConCanvas Demo](/server/public/images/concanvas-demo-2.gif?raw=true "Chat Demonstration")
 
 Chat with other artists to collaborate.
 
-![ConCanvas Demo](/demo/concanvas-demo-3.gif?raw=true "Snapshot Demonstration")
+![ConCanvas Demo](/server/public/images/concanvas-demo-3.gif?raw=true "Snapshot Demonstration")
 
 Save and download your masterpiece with the snapshot tool.
 
