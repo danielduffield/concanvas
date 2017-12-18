@@ -36,8 +36,8 @@ npm run watch
 Load the page in a web browser at the provided port. (Ex: localhost:3000)
 
 ### Technologies Used
+* React         v15.6.1
+* Redux         v3.7.2
+* React-Redux   v5.0.5
 * Express       v4.15.4
 * Socket.io     v2.0.3
-* Redux         v3.7.2
-* React         v15.6.1
-* React-Redux   v5.0.5
