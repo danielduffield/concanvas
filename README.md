@@ -6,15 +6,15 @@ https://con-canvas.herokuapp.com/
 
 ![ConCanvas Drawing Demo](/server/public/images/concanvas-demo-1.gif?raw=true "Drawing Demonstration")
 
-<p align="center">Draw simultaneously with other users on a shared canvas.</p>
+<p align="center">Draw simultaneously with other users on a shared canvas.</p><br><br>
 
 ![ConCanvas Chat Demo](/server/public/images/concanvas-demo-2.gif?raw=true "Chat Demonstration")
 
-<p align="center">Chat with other artists to collaborate.</p>
+<p align="center">Chat with other artists to collaborate.</p><br><br>
 
 ![ConCanvas Snapshot Demo](/server/public/images/concanvas-demo-3.gif?raw=true "Snapshot Demonstration")
 
-<p align="center">Save and download your masterpiece with the snapshot tool.</p>
+<p align="center">Save and download your masterpiece with the snapshot tool.</p><br><br>
 
 ### How to Use
 Clone the repository using the following git command:
