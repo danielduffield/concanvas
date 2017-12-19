@@ -83,6 +83,7 @@ i.transparent.active {
   font-size: 4.5em;
   float: left;
   margin: 25px 17px;
+  cursor: pointer;
 }
 
 .disabled {
