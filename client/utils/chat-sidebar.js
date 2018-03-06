@@ -8,81 +8,9 @@ class ChatSidebar extends React.Component {
   constructor(props) {
     super(props)
 
-    this.submitMessage = this.submitMessage.bind(this)
-    this.enterSubmit = this.enterSubmit.bind(this)
-    this.updateChatFeed = this.updateChatFeed.bind(this)
-    this.sendCookie = this.sendCookie.bind(this)
-    this.updateNickname = this.updateNickname.bind(this)
-    this.updateMessageContent = this.updateMessageContent.bind(this)
-    this.toggleChat = this.toggleChat.bind(this)
-    this.toggleUsers = this.toggleUsers.bind(this)
-    this.handleChatEvent = this.handleChatEvent.bind(this)
-
     this.messageForm = null
   }
-  submitMessage(event) {
-    event.preventDefault()
-    const messageFormData = new FormData(this.messageForm)
-    const message = {
-      nickname: messageFormData.get('id-field'),
-      content: messageFormData.get('chat-field'),
-      locallySubmitted: true
-    }
-    if (message.content === '') return
-    this.props.dispatch({
-      type: 'MESSAGE_SENT',
-      payload: { message: message }
-    })
-    socket.emit('chat', message)
-  }
-  updateChatFeed(message) {
-    this.props.dispatch({
-      type: 'MESSAGE_SENT',
-      payload: { message: message }
-    })
-  }
-  toggleChat() {
-    this.props.dispatch({ type: 'TOGGLED_CHAT' })
-  }
-  toggleUsers() {
-    this.props.dispatch({ type: 'TOGGLED_USER_LIST' })
-  }
-  enterSubmit(event) {
-    if (event.key === 'Enter') {
-      this.submitMessage(event)
-    }
-  }
-  sendCookie(event) {
-    if (event.target.value === '') event.target.value = 'GUEST (' + (this.props.socketId ? this.props.socketId.substr(0, 4) : '') + ')'
-    if (event.target.value.includes('GUEST') && event.target.value.includes(this.props.socketId.substr(0, 4))) {
-      return false
-    }
-    const date = new Date()
-    const daysTilExpiration = 3
-    const expiration = date.setTime(date.getTime() + (daysTilExpiration * 24 * 60 * 60 * 1000))
-    document.cookie = 'concanvas_nickname=' + event.target.value + '; expires=' + expiration
-  }
-  updateNickname(event) {
-    this.props.dispatch({
-      type: 'NICKNAME_SAVED',
-      payload: { text: event.target.value }
-    })
-    socket.emit('nickname', event.target.value)
-  }
-  updateMessageContent(event) {
-    this.props.dispatch({
-      type: 'MESSAGE_UPDATED',
-      payload: { text: event.target.value }
-    })
-  }
-  handleChatEvent(chatEvent) {
-    const eventMessage = {
-      nickname: '',
-      content: 'User [' + chatEvent.user.nickname + '] has ' + chatEvent.type + '.',
-      locallySubmitted: false
-    }
-    this.updateChatFeed(eventMessage)
-  }
+
   componentDidMount() {
     socket.on('chat', this.updateChatFeed)
 
@@ -100,6 +28,73 @@ class ChatSidebar extends React.Component {
 
     socket.on('chatEvent', this.handleChatEvent)
   }
+
+  submitMessage = event => {
+    event.preventDefault()
+    const messageFormData = new FormData(this.messageForm)
+    const message = {
+      nickname: messageFormData.get('id-field'),
+      content: messageFormData.get('chat-field'),
+      locallySubmitted: true
+    }
+    if (!message.content) return
+    this.props.dispatch({ type: 'MESSAGE_SENT', payload: { message: message } })
+    socket.emit('chat', message)
+  }
+
+  updateChatFeed = message => {
+    this.props.dispatch({ type: 'MESSAGE_SENT', payload: { message: message } })
+  }
+
+  toggleChat = () => {
+    this.props.dispatch({ type: 'TOGGLED_CHAT' })
+  }
+
+  toggleUsers = () => {
+    this.props.dispatch({ type: 'TOGGLED_USER_LIST' })
+  }
+
+  enterSubmit = event => {
+    if (event.key === 'Enter') {
+      this.submitMessage(event)
+    }
+  }
+
+  sendCookie = event => {
+    if (event.target.value === '') event.target.value = 'GUEST (' + (this.props.socketId ? this.props.socketId.substr(0, 4) : '') + ')'
+    if (event.target.value.includes('GUEST') && event.target.value.includes(this.props.socketId.substr(0, 4))) {
+      return false
+    }
+    const date = new Date()
+    const daysTilExpiration = 3
+    const expiration = date.setTime(date.getTime() + (daysTilExpiration * 24 * 60 * 60 * 1000))
+    document.cookie = 'concanvas_nickname=' + event.target.value + '; expires=' + expiration
+  }
+
+  updateNickname = event => {
+    this.props.dispatch({
+      type: 'NICKNAME_SAVED',
+      payload: { text: event.target.value }
+    })
+    socket.emit('nickname', event.target.value)
+  }
+
+  updateMessageContent = event => {
+    this.props.dispatch({
+      type: 'MESSAGE_UPDATED',
+      payload: { text: event.target.value }
+    })
+  }
+
+  handleChatEvent = (chatEvent) => {
+    const eventMessage = {
+      nickname: '',
+      content: 'User [' + chatEvent.user.nickname + '] has ' + chatEvent.type + '.',
+      locallySubmitted: false
+    }
+    this.updateChatFeed(eventMessage)
+  }
+
   render() {
     return (
       <ChatColumn id="chat-column" className={this.props.isChatHidden ? 'hidden' : ''}>

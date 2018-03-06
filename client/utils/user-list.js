@@ -4,24 +4,18 @@ import { connect } from 'react-redux'
 import socket from './socket-connection'
 
 class UserList extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.toggleUserList = this.toggleUserList.bind(this)
+  componentDidMount() {
+    socket.on('userlist', users => {
+      this.props.dispatch({ type: 'UPDATED_USER_LIST', payload: { users } })
+    })
   }
-  toggleUserList() {
+
+  toggleUserList = () => {
     this.props.dispatch({
       type: 'TOGGLED_USER_LIST'
     })
   }
-  componentDidMount() {
-    socket.on('userlist', users => {
-      this.props.dispatch({
-        type: 'UPDATED_USER_LIST',
-        payload: { users }
-      })
-    })
-  }
+
   render() {
     return (
       <ChatColumn className={this.props.isUserListHidden ? 'hidden' : ''}>
@@ -34,18 +28,23 @@ class UserList extends React.Component {
             </UsersTopBar>
             <Users>
               <ArtistsOnline>
-                {'Artists (' + this.props.onlineUsers.filter(user => !user.nickname.startsWith('GUEST')).length + ')'}
+                {'Artists (' + this.props.onlineUsers
+                  .filter(user => !user.nickname.startsWith('GUEST')).length + ')'}
               </ArtistsOnline>
-              {this.props.onlineUsers.filter(user => !user.nickname.startsWith('GUEST'))
-                .map((user, index) => {
-                  return <OnlineUser key={index}>{user.nickname}</OnlineUser>
-                })
+              {this.props.onlineUsers
+                .filter(user => !user.nickname.startsWith('GUEST'))
+                .map((user, index) => <OnlineUser key={index}>
+                {user.nickname}
+              </OnlineUser>)
               }
-              <ArtistsOnline>{'Guests (' + this.props.onlineUsers.filter(user => user.nickname.startsWith('GUEST')).length + ')'}</ArtistsOnline>
-              {this.props.onlineUsers.filter(user => user.nickname.startsWith('GUEST'))
-                .map((user, index) => {
-                  return <OnlineUser key={index}>{user.nickname}</OnlineUser>
-                })
+              <ArtistsOnline>{'Guests (' + this.props.onlineUsers
+                .filter(user => user.nickname.startsWith('GUEST')).length + ')'}
+              </ArtistsOnline>
+              {this.props.onlineUsers
+                .filter(user => user.nickname.startsWith('GUEST'))
+                .map((user, index) => <OnlineUser key={index}>
+                {user.nickname}
+              </OnlineUser>)
               }
             </Users>
           </UsersContainer>

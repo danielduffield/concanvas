@@ -25,10 +25,6 @@ class Canvas extends React.Component {
     this.painting = false
     this.unsavedData = []
 
-    this.updateCoordinates = this.updateCoordinates.bind(this)
-    this.handleMouseDown = this.handleMouseDown.bind(this)
-    this.handleMouseUp = this.handleMouseUp.bind(this)
-    this.paintEvent = this.paintEvent.bind(this)
     this.loadCanvas = this.loadCanvas.bind(this)
   }
   componentDidMount() {
@@ -58,6 +54,7 @@ class Canvas extends React.Component {
       this.lastSaved = saved
     }, 10000)
   }
+
   async loadCanvas() {
     this.ctx = this.canvas.getContext('2d')
     this.ctx.fillStyle = '#000000'
@@ -72,7 +69,8 @@ class Canvas extends React.Component {
     this.unsavedData.forEach(mark => this.paintEvent(mark.x, mark.y, mark.prevX, mark.prevY, mark.size, mark.color))
     this.unsavedData = []
   }
-  paintEvent(mouseX, mouseY, previousX, previousY, width, color) {
+
+  paintEvent = (mouseX, mouseY, previousX, previousY, width, color) => {
 
     this.ctx.fillStyle = color
 
@@ -124,7 +122,8 @@ class Canvas extends React.Component {
       }
     }
   }
-  updateCoordinates(event) {
+
+  updateCoordinates = event => {
     const coordinates = getCoordinates(this.canvas, event)
 
     this.previousX = this.clientX ? this.clientX : coordinates.x
@@ -147,12 +146,15 @@ class Canvas extends React.Component {
       this.paintEvent(this.clientX, this.clientY, this.previousX, this.previousY, this.props.size, this.props.color)
     }
   }
-  handleMouseDown(event) {
+
+  handleMouseDown = event => {
     this.painting = true
   }
-  handleMouseUp(event) {
+
+  handleMouseUp = event => {
     this.painting = false
   }
+
   render() {
     return (
       <Container id="container" isHidden={this.props.isChatHidden && this.props.isUserListHidden}>

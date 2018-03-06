@@ -27,15 +27,22 @@ for (let i = 0; i < rows; i++) {
 class PaintSidebar extends React.Component {
   constructor(props) {
     super(props)
+
     this.isErasing = this.props.isErasing
-
-    this.selectColor = this.selectColor.bind(this)
-    this.selectCustomColor = this.selectCustomColor.bind(this)
-    this.toggleEraser = this.toggleEraser.bind(this)
-
     this.customSelected = null
   }
-  toggleEraser() {
+
+  componentDidMount() {
+    const loadedColors = getColorsFromCookies()
+    if (loadedColors) {
+      this.props.dispatch({
+        type: 'LOADED_CUSTOM_COLORS',
+        payload: { colors: loadedColors }
+      })
+    }
+  }
+
+  toggleEraser = () => {
     this.isErasing = !this.isErasing
     if (this.isErasing) {
       this.props.dispatch({
@@ -49,14 +56,16 @@ class PaintSidebar extends React.Component {
       })
     }
   }
-  selectColor(event) {
+
+  selectColor = event => {
     if (this.isErasing) this.isErasing = !this.isErasing
     this.props.dispatch({
       type: 'SELECTED_COLOR',
       payload: { text: event.target.dataset.color }
     })
   }
-  selectCustomColor(event) {
+
+  selectCustomColor = event => {
     const selectedIndex = parseInt(event.target.dataset.index, 10)
     if (this.props.customSelected !== selectedIndex) {
       this.props.dispatch({
@@ -73,22 +82,15 @@ class PaintSidebar extends React.Component {
       document.cookie = 'concanvas_colors=' + this.getColorString()
     }
   }
-  getColorString() {
+
+  getColorString = () => {
     let colorString = ''
     this.props.customColors.forEach((color, index) => {
       index === 0 ? colorString += color : colorString += ',' + color
     })
     return colorString
   }
-  componentDidMount() {
-    const loadedColors = getColorsFromCookies()
-    if (loadedColors) {
-      this.props.dispatch({
-        type: 'LOADED_CUSTOM_COLORS',
-        payload: { colors: loadedColors }
-      })
-    }
-  }
+
   render() {
     return (
       <PaintTools isHoriz={this.props.isToolbarHoriz}>

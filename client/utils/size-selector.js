@@ -7,25 +7,23 @@ class SizeSelector extends React.Component {
     super(props)
     this.currentIndex = 0
     this.validSizes = [2, 5, 10, 15]
-    this.nextBiggerSize = this.nextBiggerSize.bind(this)
-    this.nextSmallerSize = this.nextSmallerSize.bind(this)
   }
-  nextBiggerSize() {
+  nextBiggerSize = () => {
     if (this.validSizes[this.currentIndex + 1]) {
       this.props.dispatch({
         type: 'SELECTED_SIZE',
         payload: { text: this.validSizes[this.currentIndex + 1] }
       })
-      this.currentIndex++
+      this.currentIndex += 1
     }
   }
-  nextSmallerSize() {
+  nextSmallerSize = () => {
     if (this.validSizes[this.currentIndex - 1]) {
       this.props.dispatch({
         type: 'SELECTED_SIZE',
         payload: { text: this.validSizes[this.currentIndex - 1] }
       })
-      this.currentIndex--
+      this.currentIndex -= 1
     }
   }
   render() {

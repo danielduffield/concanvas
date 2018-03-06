@@ -8,30 +8,29 @@ class DownloadModule extends React.Component {
 
     this.link = null
     this.button = null
-    this.handleDownloadRequest = this.handleDownloadRequest.bind(this)
-    this.hideDownloadLink = this.hideDownloadLink.bind(this)
   }
-  canvasToBlob(canvas) {
-    return new Promise((resolve, reject) => {
+
+  canvasToBlob = canvas => (
+    new Promise((resolve, reject) => {
       canvas.toBlob(blob => resolve(blob))
     })
-  }
-  downloadCanvas(link, canvas, filename) {
+  )
+
+  downloadCanvas = (link, canvas, filename) => {
     link.href = canvas.toDataURL()
     link.download = filename
   }
-  handleDownloadRequest() {
+
+  handleDownloadRequest = () => {
     this.downloadCanvas(this.link, this.props.canvas, 'snapshot.png')
-    this.props.dispatch({
-      type: 'TOGGLED_DOWNLOAD_LINK'
-    })
+    this.props.dispatch({ type: 'TOGGLED_DOWNLOAD_LINK' })
   }
-  hideDownloadLink(event) {
+
+  hideDownloadLink = event => {
     if (!this.props.isDownloadLinkActive) event.preventDefault()
-    this.props.dispatch({
-      type: 'DEACTIVATED_DOWNLOAD_LINK'
-    })
+    this.props.dispatch({ type: 'DEACTIVATED_DOWNLOAD_LINK' })
   }
+
   render() {
     return (
       <div>

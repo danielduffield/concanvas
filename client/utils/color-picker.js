@@ -4,21 +4,15 @@ import { SketchPicker } from 'react-color'
 import styled from 'styled-components'
 
 class Component extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.getColorString = this.getColorString.bind(this)
-    this.toggleColorPicker = this.toggleColorPicker.bind(this)
-    this.handleCustomSelection = this.handleCustomSelection.bind(this)
-  }
-  getColorString() {
+  getColorString = () => {
     let colorString = ''
     this.props.customColors.forEach((color, index) => {
       index === 0 ? colorString += color : colorString += ',' + color
     })
     return colorString
   }
-  toggleColorPicker() {
+
+  toggleColorPicker = () => {
     console.log(this.props.customColors)
     const color = this.props.customColors[this.props.customSelected]
     this.props.dispatch({
@@ -26,7 +20,8 @@ class Component extends React.Component {
       payload: { color }
     })
   }
-  handleCustomSelection(color, event) {
+
+  handleCustomSelection = (color, event) => {
     const index = this.props.customSelected
     this.props.dispatch({
       type: 'SELECTED_CUSTOM_COLOR',
@@ -34,6 +29,7 @@ class Component extends React.Component {
     })
     document.cookie = 'concanvas_colors=' + this.getColorString()
   }
+
   render() {
     return (
       <CustomColor isColorPickerHidden={this.props.isColorPickerHidden} onDoubleClick={this.toggleColorPicker}>
